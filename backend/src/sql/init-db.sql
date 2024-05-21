@@ -7,8 +7,7 @@ DROP TABLE IF EXISTS Comments;
 
 -- Create messages table
 CREATE TABLE Users (
-    id INTEGER PRIMARY KEY,
-    username VARCHAR(50),
+    username VARCHAR(50) PRIMARY KEY,
     firstName VARCHAR(100),
     lastName VARCHAR(100),
     dob DATE,
@@ -25,13 +24,13 @@ CREATE TABLE Articles (
     username VARCHAR(50),
     text TEXT,
     date DATE,
-    FOREIGN KEY (username) REFERENCES Users (id)
+    FOREIGN KEY (username) REFERENCES Users (username)
 );
 
 CREATE TABLE UserLikedArticles (
     username VARCHAR(50),
     article_id INTEGER,
-    FOREIGN KEY (username) REFERENCES Users (id),
+    FOREIGN KEY (username) REFERENCES Users (username),
     FOREIGN KEY (article_id) REFERENCES Articles (article_id),
     PRIMARY KEY (username, article_id)
 );
@@ -45,7 +44,7 @@ CREATE TABLE Comments (
     username VARCHAR(50),
     parent_comment_id INTEGER,
     FOREIGN KEY (article_id) REFERENCES Articles (article_id),
-    FOREIGN KEY (username) REFERENCES Users (id),
+    FOREIGN KEY (username) REFERENCES Users (username),
     FOREIGN KEY (parent_comment_id) REFERENCES Comments (comment_id)
 );
 

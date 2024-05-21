@@ -5,7 +5,7 @@
 
   let firstName = user.firstName;
   let lastName = user.lastName;
-  let blurb = user.blurb;
+  let desc = user.desc;
   let error = false;
   let success = false;
 
@@ -17,7 +17,7 @@
       method: "PATCH",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ firstName, lastName, blurb })
+      body: JSON.stringify({ firstName, lastName, desc })
     });
 
     success = response.status === 204;
@@ -32,7 +32,7 @@
   <input type="text" name="firstName" bind:value={firstName} required />
   <label for="lastName">Last name:</label>
   <input type="text" name="lastName" bind:value={lastName} required />
-  <textarea bind:value={blurb} rows="12" required />
+  <textarea bind:value={desc} rows="12" required />
   <button type="submit">Save</button>
   {#if error}<span class="error">Could not save!</span>{/if}
   {#if success}<span class="success">Saved!</span>{/if}

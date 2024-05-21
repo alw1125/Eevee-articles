@@ -29,7 +29,7 @@ export async function getUserWithCredentials(username, password) {
 }
 
 /**
- * Schema for "update user". We can optionally supply a first name, last name, password, and / or blurb. We cannot edit the id or username,
+ * Schema for "update user". We can optionally supply a first name, last name, password, and / or desc. We cannot edit thde username or username,
  * or supply any other random data.
  */
 const updateUserSchema = yup
@@ -37,20 +37,20 @@ const updateUserSchema = yup
     firstName: yup.string().min(1).optional(),
     lastName: yup.string().min(1).optional(),
     password: yup.string().min(5).optional(),
-    blurb: yup.string().optional()
+    desc: yup.string().optional()
   })
   .required();
 
 /**
- * Updates the user with the given id if it exists, with the given update data. Update data can optionally include a firstName, lastName,
- * password, and / or blurb.
+ * Updates the user with the given username if it exists, with the given update data. Update data can optionally include a firstName, lastName,
+ * password, and / or desc.
  *
- * @param {*} id the user id to update, will be converted to a number using parseInt().
+ * @param {*} username the username to update, will be converted to a number using parseInt().
  * @param {*} udpateData the update data to apply.
  * @returns true if the database was updated, false otherwise
  * @throws an error if updateData is invalid.
  */
-export async function updateUser(id, udpateData) {
+export async function updateUser(username, udpateData) {
   // Validate incoming data (throw error if invalid)
   const parsedUpdateData = updateUserSchema.validateSync(udpateData, {
     abortEarly: false,
@@ -59,10 +59,10 @@ export async function updateUser(id, udpateData) {
 
   // Build and run update statement
   const [updateOperations, updateParams] = buildUpdateStatement(parsedUpdateData);
-  const sql = `UPDATE Users SET ${updateOperations} WHERE id = ?`;
+  const sql = `UPDATE Users SET ${updateOperations} WHERE username = ?`;
   console.log(sql);
   const db = await getDatabase();
-  const dbResult = await db.run(sql, ...updateParams, parseInt(id));
+  const dbResult = await db.run(sql, ...updateParams, username);
 
   // Return true if changes applied, false otherwise
   return dbResult.changes > 0;

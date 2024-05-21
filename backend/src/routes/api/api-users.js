@@ -17,7 +17,7 @@ router.get("/me", requiresAuthentication, (req, res) => {
 
 /**
  * Sending a PATCH request to /api/users/me will allow requesters to update the currently authenticated user's
- * firstName, lastName, password, and blurb.
+ * firstName, lastName, password, and desc.
  *
  * If there is no currently authenticated user, a 401 response is returned (handled by requiresAuthentication middleware).
  *
@@ -29,7 +29,7 @@ router.get("/me", requiresAuthentication, (req, res) => {
  */
 router.patch("/me", requiresAuthentication, async (req, res) => {
   try {
-    const isUpdated = await updateUser(req.user.id, req.body);
+    const isUpdated = await updateUser(req.user.username, req.body);
     return res.sendStatus(isUpdated ? 204 : 404);
   } catch {
     return res.sendStatus(422);

@@ -25,7 +25,7 @@
   <ul>
     <li><a href="/" class:active={path === "/"}>Home</a></li>
     {#if data.isLoggedIn}
-      <li><a href="/about" class:active={path.startsWith("/about")}>About me</a></li>
+      <li><a href="/profile" class:active={path.startsWith("/profile")}>Profile</a></li>
     {/if}
   </ul>
   <span />
@@ -45,7 +45,7 @@
 
 <style>
   nav {
-    background-color: rgb(42, 139, 70);
+    background-color: rgb(241, 130, 33);
     padding-left: 20px;
     padding-right: 20px;
     box-shadow: 0 5px 3px lightgray;
