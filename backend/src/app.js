@@ -1,3 +1,7 @@
+/**
+ * This program shows how we can use Express Routers to break up our route handlers into multiple, well-organized files.
+ */
+
 // Configure environment variables
 import dotenv from "dotenv";
 dotenv.config();
@@ -13,33 +17,29 @@ const PORT = process.env.PORT ?? 3000;
 // Creates the express server
 const app = express();
 
-/**
- * Configure middleware (logging, CORS support, JSON parsing support,
- * static files support, cookie parser)
- *
- * CORS is configured to allow cookies and these two origins from fetch() requests.
- * Feel free to reconfigure if required, or add your own middleware.
- */
+// Configure middleware (logging, CORS support, JSON parsing support, static files support)
 app.use(morgan("combined"));
-app.use(cookieParser());
+
+// For CORS, since we're using cookies with fetch(), we have to allow credentials and give an explicit list of allowed origins.
 app.use(
   cors({
-    origin: [`http://localhost:${PORT}`, process.env.FRONTEND_ORIGIN],
+    origin: ["http://localhost:3000", "http://localhost:5173"],
     credentials: true
   })
 );
 app.use(express.json());
 app.use(express.static("public"));
+app.use(cookieParser());
 
 // Import and use our application routes.
 import routes from "./routes/routes.js";
 app.use("/", routes);
 
-// Make sure our database is up and running
-import { getDatabase } from "./data/database.js";
+// Make sure DB is created and opened.
+import { getDatabase } from "./db/database.js";
 await getDatabase();
 
 // Start the server running.
 app.listen(PORT, () => {
-  console.log(`PGCIT Final Project server listening on port ${PORT}`);
+  console.log(`Express server listening on port ${PORT}`);
 });

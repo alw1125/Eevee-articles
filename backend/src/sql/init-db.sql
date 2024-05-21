@@ -7,8 +7,10 @@ DROP TABLE IF EXISTS Comments;
 
 -- Create messages table
 CREATE TABLE Users (
-    user_name VARCHAR(50) PRIMARY KEY NOT NULL,
-    real_name VARCHAR(100),
+    id INTEGER PRIMARY KEY,
+    username VARCHAR(50),
+    firstName VARCHAR(100),
+    lastName VARCHAR(100),
     dob DATE,
     is_admin INTEGER,
     desc TEXT,
@@ -20,18 +22,18 @@ CREATE TABLE Articles (
     article_id INTEGER PRIMARY KEY AUTOINCREMENT,
     title VARCHAR(255),
     image TEXT,
-    user_name VARCHAR(50),
+    username VARCHAR(50),
     text TEXT,
     date DATE,
-    FOREIGN KEY (user_name) REFERENCES Users (user_name)
+    FOREIGN KEY (username) REFERENCES Users (id)
 );
 
 CREATE TABLE UserLikedArticles (
-    user_name VARCHAR(50),
+    username VARCHAR(50),
     article_id INTEGER,
-    FOREIGN KEY (user_name) REFERENCES Users (user_name),
+    FOREIGN KEY (username) REFERENCES Users (id),
     FOREIGN KEY (article_id) REFERENCES Articles (article_id),
-    PRIMARY KEY (user_name, article_id)
+    PRIMARY KEY (username, article_id)
 );
 
 CREATE TABLE Comments (
@@ -40,22 +42,22 @@ CREATE TABLE Comments (
     date DATE,
     time TIME,
     article_id INTEGER,
-    user_name VARCHAR(50),
+    username VARCHAR(50),
     parent_comment_id INTEGER,
     FOREIGN KEY (article_id) REFERENCES Articles (article_id),
-    FOREIGN KEY (user_name) REFERENCES Users (user_name),
+    FOREIGN KEY (username) REFERENCES Users (id),
     FOREIGN KEY (parent_comment_id) REFERENCES Comments (comment_id)
 );
 
 -- Dummy messages data
-INSERT INTO Users (user_name, real_name, dob, is_admin, desc, avatar, password) VALUES
-('johndoe', 'John Doe', '1990-01-15', 1, 'Tech enthusiast and blogger.', 'avatar1.jpg', 'password123'),
-('janedoe', 'Jane Doe', '1985-05-20', 0, 'Health and wellness coach.', 'avatar2.jpg', 'Password!');
+INSERT INTO Users (username, firstName, lastName, dob, is_admin, desc, avatar, password) VALUES
+('johndoe', 'John','Doe', '1990-01-15', 1, 'Tech enthusiast and blogger.', 'avatar1.jpg', 'password123'),
+('janedoe', 'Jane','Doe', '1985-05-20', 0, 'Health and wellness coach.', 'avatar2.jpg', 'Password!');
 
-INSERT INTO Articles (title, image, user_name, text, date) VALUES
+INSERT INTO Articles (title, image, username, text, date) VALUES
 ('The Future of Technology', 'tech_future.jpg', 'johndoe', 'Technology is advancing at an unprecedented rate...', '2024-05-01'),
 ('Healthy Eating Habits', 'healthy_eating.jpg', 'janedoe', 'Adopting healthy eating habits can significantly improve...', '2024-05-05');
 
-INSERT INTO Comments (desc, date, time, article_id, user_name) VALUES
+INSERT INTO Comments (desc, date, time, article_id, username) VALUES
 ('Great insights on technology!', '2024-05-02', '10:30:00', 1, 'johndoe'),
 ('Very informative article.', '2024-05-06', '12:15:00', 2, 'janedoe');
