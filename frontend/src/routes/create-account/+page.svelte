@@ -1,5 +1,5 @@
 <script>
-  import { goto } from "$app/navigation";
+  import { invalidate } from "$app/navigation";
   import { NEWUSER_URL } from "$lib/js/api-urls.js";
   import { onMount } from "svelte";
 
@@ -12,6 +12,7 @@
   let description = "";
   let selectedAvatar = "1";
   let error = false;
+  let success = false;
 
   function adjustTextarea() {
     const textarea = document.querySelector('textarea[name="description"]');
