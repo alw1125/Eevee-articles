@@ -102,7 +102,7 @@
   textarea {
     width: 100%;
     padding: 5px;
-    border: 0.5px solid #000000;
+    border: 1px solid #ddd;
     border-radius: 5px;
     box-sizing: border-box;
     margin-bottom: 5px;
@@ -110,27 +110,46 @@
     transition: border-color 0.3s ease;
   }
 
+  input[type="text"]:focus,
+  textarea:focus {
+    border-color: #45a049;
+    outline: none;
+  }
+  
+
   input[type="password"],
   textarea {
     width: 100%;
     padding: 5px;
-    border: 0.5px solid #000000;
+    border: 1px solid #ddd;
     border-radius: 5px;
     box-sizing: border-box;
     margin-bottom: 5px;
     font-size: 14px;
     transition: border-color 0.3s ease;
+  }
+
+  input[type="text"]:focus,
+  textarea:focus {
+    border-color: #45a049;
+    outline: none;
   }
 
   input[type="date"],
   textarea {
     width: 100%;
     padding: 5px;
-    border: 0.5px solid #000000;
+    border: 1px solid #ddd;
     border-radius: 5px;
     box-sizing: border-box;
     margin-bottom: 5px;
     transition: border-color 0.3s ease;
+  }
+  
+  input[type="date"]:focus,
+  textarea:focus {
+    border-color: #45a049;
+    outline: none;
   }
 
   button {

@@ -9,9 +9,7 @@
 
   export let data;
 
-  /**
-   * Handle logout by sending a DELETE request to /api/auth, then invalidating.
-   */
+  
   async function handleLogout() {
     const response = await fetch(AUTH_URL, {
       method: "DELETE",
