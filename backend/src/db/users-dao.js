@@ -34,8 +34,10 @@ export async function getUserWithCredentials(username, password) {
  */
 const updateUserSchema = yup
   .object({
+    username: yup.string().min(1).optional(),
     firstName: yup.string().min(1).optional(),
     lastName: yup.string().min(1).optional(),
+    dob: yup.date().optional(),
     password: yup.string().min(5).optional(),
     desc: yup.string().optional()
   })

@@ -52,10 +52,6 @@ router.post("/login", async(req, res) => {
 router.post("/logout", async(req, res) => {
 });
 
-//Edit user information
-router.patch("/:user_name", async(req, res) => {
-});
-
 //Delete user
 router.delete("/user_name", async(req, res) => {
 });
