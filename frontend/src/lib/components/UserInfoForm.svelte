@@ -1,6 +1,7 @@
 <script>
   import { invalidate } from "$app/navigation";
   import { USER_URL } from "$lib/js/api-urls.js";
+  import Component from "./component.svelte";
   export let user;
 
   let firstName = user.firstName;
@@ -28,16 +29,17 @@
 </script>
 
 <form on:submit|preventDefault={handleSave}>
-  <label for="firstName">First name:</label>
+  <label  for="firstName">First name:</label>
   <input type="text" name="firstName" bind:value={firstName} required />
   <label for="lastName">Last name:</label>
   <input type="text" name="lastName" bind:value={lastName} required />
-  <textarea bind:value={desc} rows="12" required />
+  <textarea id="sup" bind:value={desc} rows="12" required />
   <button type="submit">Save</button>
   {#if error}<span class="error">Could not save!</span>{/if}
   {#if success}<span class="success">Saved!</span>{/if}
 </form>
 
+<Component/>
 <style>
   form {
     margin: auto;
