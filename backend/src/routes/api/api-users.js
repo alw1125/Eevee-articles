@@ -40,14 +40,8 @@ router.patch("/me", requiresAuthentication, async (req, res) => {
 router.post("/", async (req, res) => {
 
 try{
-  let firstName = req.body.firstName;
-  let lastName = req.body.lastName;
-  let username = req.body.username;
-  let password = req.body.password;
-  let dob = req.body.dob;
-  let description = req.body.dob;
 
-  const posted = createUser(firstName, lastName, username, password, dob, description);
+  const created = createUser(req.body);
   return res.sendStatus(posted ? 204 : 404);
 }catch{
   return res.sendStatus(422);

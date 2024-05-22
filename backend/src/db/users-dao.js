@@ -48,12 +48,26 @@ const UserSchema = yup
   })
   .required();
 
-  export async function createUser(firstName, lastName, username, password, dob, description) {
-    const parsedUpdateData = UserSchema.validateSync(udpateData, {
+  export async function createUser(body) {
+    const parsedCreatedData = UserSchema.validateSync(body, {
       abortEarly: false,
       stripUnknown: true
-  }
+  });
 
+  
+ 
+  const [updateOperations, updateParams] = buildUpdateStatement(parsedCreatedData);
+  const sql = `INSERT INTO Users (username, firstname, lastName, dob, desc, password) VALUES (?, ?, ?, ?, ?, ?)`, 
+  body.username, 
+  ;
+  console.log(sql);
+  const db = await getDatabase();
+  const dbResult = await db.run(sql, ...updateParams, username);
+
+  // Return true if changes applied, false otherwise
+  return dbResult.changes > 0;
+
+  }
 
 /**
  * Updates the user with the given username if it exists, with the given update data. Update data can optionally include a firstName, lastName,

@@ -39,7 +39,7 @@
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ firstName, lastName, username, password, dob, description })
+      body: JSON.stringify({ username, firstName, lastName, dob, description, password })
     });
 
     success = response.status === 204;
