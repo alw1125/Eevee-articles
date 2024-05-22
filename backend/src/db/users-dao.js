@@ -34,17 +34,17 @@ export async function getUserWithCredentials(username, password) {
  */
 const UserSchema = yup
   .object({
-    firstName: yup.string().min(1).optional(),
-    lastName: yup.string().min(1).optional(),
-    username: yup.string().min(1).optional(),
+    firstName: yup.string().min(1).required(),
+    lastName: yup.string().min(1).required(),
+    username: yup.string().min(1).required(),
     password: yup
     .string()
     .required('Please Enter your password')
     .matches(
       "^(?=.[A-Za-z])(?=.d)(?=.[@$!%#?&])[A-Za-zd@$!%*#?&]{8,}$",
       "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"),
-    dob: yup.date().optional(),
-    description: yup.string().min(1).max(100).optional()
+    dob: yup.date(),
+    description: yup.string().min(1).max(100).required()
   })
   .required();
 
