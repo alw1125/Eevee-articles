@@ -45,11 +45,14 @@
     toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | ' +
       'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
       'forecolor backcolor emoticons | help',
+      
       menu: {
         favs: { title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons' }
       },
       menubar: 'favs file edit view insert format tools table help',
       content_css: '',
+      image_list: [
+    { title: 'My image 1', value: 'http://localhost:3000/images/Screenshot 2023-03-15 173916.png' } ]
       
     
     
@@ -80,7 +83,9 @@
   <label for="title">Title:</label>
   <input type="text" name="title" bind:value={title} required />
   <textarea id='postText' bind:value={text} rows="12" required />
+  
   <ImageUpload on:upload={handleUpload} />
+  <label>Your image link {image}</label>
   <button type="submit" on:click = {getText}>Post!</button>
   {#if error}<span class="error">Could not save!</span>{/if}
   {#if success}<span class="success">Saved!</span>{/if}
