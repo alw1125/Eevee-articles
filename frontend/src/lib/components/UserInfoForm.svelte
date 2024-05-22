@@ -1,6 +1,7 @@
 <script>
   import { invalidate } from "$app/navigation";
   import { USER_URL } from "$lib/js/api-urls.js";
+  import { onMount } from "svelte";
   export let user;
 
   let firstName = user.firstName;
@@ -9,9 +10,23 @@
   let error = false;
   let success = false;
 
+  function adjustTextarea() {
+    const textarea = document.querySelector('textarea[name="description"]');
+    textarea.style.height = "auto"; 
+    textarea.style.height = textarea.scrollHeight + "px"; 
+  }
+  onMount(() => {
+    adjustTextarea();
+  });
+
   async function handleSave() {
     error = false;
     success = false;
+
+    if (desc.length > 100) {
+      error = true;
+      return;
+    }
 
     const response = await fetch(USER_URL, {
       method: "PATCH",
@@ -32,44 +47,59 @@
   <input type="text" name="firstName" bind:value={firstName} required />
   <label for="lastName">Last name:</label>
   <input type="text" name="lastName" bind:value={lastName} required />
-  <textarea bind:value={desc} rows="12" required />
+  <label for="description">Description (max 100 characters):</label>
+  <textarea name="description" bind:value={desc} on:input={adjustTextarea} maxlength="100"></textarea>
   <button type="submit">Save</button>
   {#if error}<span class="error">Could not save!</span>{/if}
   {#if success}<span class="success">Saved!</span>{/if}
 </form>
 
 <style>
-  form {
-    margin: auto;
-    max-width: 800px;
-    border: 1px dashed green;
-    padding: 10px;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 10px;
-  }
 
-  button,
-  textarea,
-  .error,
-  .success {
-    grid-column: 1 / 3;
-  }
-
-  .error,
-  .success {
+  label {
     font-weight: bold;
-    padding: 5px;
-    text-align: center;
+    margin-bottom: 5px;
+  }
+
+  input[type="text"],
+  textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+  }
+
+  input[type="text"]:focus,
+  textarea:focus {
+    border-color: #45a049;
+    outline: none;
+  }
+
+  button {
+    width: 100%;
+    padding: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #4caf50;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #45a049;
   }
 
   .error {
-    color: darkred;
-    background-color: lightcoral;
+    color: #dc3545;
+    background-color: #f8d7da;
   }
-
-  .success {
-    color: darkgreen;
-    background-color: lightgreen;
+  textarea {
+    resize: vertical;
   }
 </style>

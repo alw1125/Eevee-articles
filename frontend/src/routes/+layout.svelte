@@ -23,18 +23,18 @@
 
 <nav>
   <ul>
-    <li><a href="/" class:active={path === "/"}>Home</a></li>
+    <li class="nav-item"><a href="/" class="{path === '/' ? 'active' : ''}"><img src="logo.png" alt="Home" class="nav-img"></a></li>
     {#if data.isLoggedIn}
       <li><a href="/profile" class:active={path.startsWith("/profile")}>Profile</a></li>
     {/if}
   </ul>
   <span />
   <ul>
-    <!-- Display the login link OR the logout button, not both. -->
     {#if data.isLoggedIn}
       <li><button on:click={handleLogout}>Logout</button></li>
     {:else}
       <li><a href="/login" class:active={path.startsWith("/login")}>Login</a></li>
+      <li><a href="/create account" class:active={path.startsWith("/create account")}>Create Account</a></li>
     {/if}
   </ul>
 </nav>
@@ -45,7 +45,7 @@
 
 <style>
   nav {
-    background-color: rgb(241, 130, 33);
+    background-image: linear-gradient(139deg, rgb(124, 0, 0), rgb(226, 7, 7), rgb(207, 108, 15), rgb(237, 141, 30));
     padding-left: 20px;
     padding-right: 20px;
     box-shadow: 0 5px 3px lightgray;
@@ -60,28 +60,45 @@
     }
 
     & li {
-      padding: 10px;
+      padding-left: 10px;
+      padding-right: 10px;
+      padding-top: 0%;
+      padding-bottom: 0%;
 
       &:hover {
-        background-color: rgba(255, 255, 255, 0.2);
+        background-color: rgba(255, 255, 255, 0);
       }
     }
 
     & :is(a, button) {
-      color: white;
-      font-size: 1.2rem;
-      font-weight: bold;
-      text-decoration: none;
-      background-color: transparent;
-      border: 0;
-      padding: 0;
-      font-family: inherit;
-      cursor: pointer;
+    display: inline-flex; 
+    align-items: center; 
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-decoration: none;
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+    font-family: inherit;
+    cursor: pointer;
+    height: 100%; 
 
-      &.active {
-        text-decoration: underline;
-      }
+    
+    line-height: 100%; 
+
+    transition: transform 0.005s; 
+
+    &:hover {
+        transform: scale(1.03); 
     }
+
+    &.active {
+        text-decoration: underline;
+    }
+}
+
+
 
     & > span {
       flex-grow: 1;
@@ -96,4 +113,16 @@
       width: 100%;
     }
   }
+
+  .nav-item {
+    
+    display: inline-block; 
+}
+
+.nav-img {
+    width: 75px; 
+    height: 60px; 
+    
+}
+
 </style>
