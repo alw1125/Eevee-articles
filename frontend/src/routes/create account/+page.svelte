@@ -10,6 +10,7 @@
   let confirmPassword = "";
   let dob = "";
   let description = "";
+  let selectedIcon = "1";
   let error = false;
 
   function adjustTextarea() {
@@ -77,6 +78,30 @@
 
   <label for="description">Description (max 100 characters):</label>
   <textarea name="description" bind:value={description} on:input={adjustTextarea} maxlength="100"></textarea>
+
+  <label for="profileIcon">Profile Icon:</label>
+  <div>
+    <div>
+
+      <label>
+        <input type="radio" name="profileIcon" value="1" group:selected={selectedIcon} required />
+        <img src="logo.png" alt="Profile Icon 1" />
+      </label>
+
+      <label>
+        <input type="radio" name="profileIcon" value="2" group:selected={selectedIcon} required />
+        <img src="logo.png" alt="Profile Icon 2" />
+      </label>
+
+      <label>
+        <input type="radio" name="profileIcon" value="3" group:selected={selectedIcon} required />
+        <img src="logo.png" alt="Profile Icon 3" />
+      </label>
+      
+      <label>
+        <input type="radio" name="profileIcon" value="4" group:selected={selectedIcon} required />
+        <img src="logo.png" alt="Profile Icon 4" />
+      </label>
 
   <button type="submit">Create Account</button>
 
@@ -184,5 +209,32 @@
 
   textarea {
     resize: vertical;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  input[type="radio"] {
+    display: none;
+  }
+
+  input[type="radio"]:checked + img {
+    transform: scale(1.1);
   }
 </style>
