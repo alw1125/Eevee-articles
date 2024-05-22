@@ -85,7 +85,7 @@
   <textarea id='postText' bind:value={text} rows="12" required />
   
   <ImageUpload on:upload={handleUpload} />
-  <label>Your image link {image}</label>
+  <label for="imageLink">Your image link {image}</label>
   <button type="submit" on:click = {getText}>Post!</button>
   {#if error}<span class="error">Could not save!</span>{/if}
   {#if success}<span class="success">Saved!</span>{/if}
