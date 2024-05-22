@@ -86,6 +86,10 @@
 </form>
 
 <style>
+  h1 {
+      text-align: center;
+    }
+    
   form {
     margin: auto;
     max-width: 500px;

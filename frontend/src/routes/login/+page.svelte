@@ -46,6 +46,11 @@
 </form>
 
 <style>
+
+h1 {
+      text-align: center;
+    }
+
   form {
     margin: auto;
     max-width: 500px;
@@ -57,6 +62,27 @@
     gap: 20px;
     background-color: #f9f9f9;
   }
+
+  input,
+  textarea {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+  }
+
+  input:focus,
+  textarea:focus {
+    border-color: #45a049;
+    outline: none;
+  }
+  
+
+
 
   button {
     grid-column: 1 / 3;
