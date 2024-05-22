@@ -4,6 +4,7 @@
   import { ART_URL } from "$lib/js/api-urls"
   import { invalidate } from "$app/navigation";
   import {onMount} from 'svelte';
+  import ImageUpload from "$lib/components/ImageUpload.svelte";
 
   export let data;
 
@@ -13,6 +14,8 @@
   let error = false;
   let success = false;
   let username = data.user.username;
+  let tempImage; 
+  let image;
 
   async function handlePost() {
     error = false;
@@ -20,7 +23,7 @@
     const response = await fetch(ART_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, text, username })
+      body: JSON.stringify({ title, image, text, username })
     });
 
     success = response.status === 204;
@@ -46,13 +49,24 @@
         favs: { title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons' }
       },
       menubar: 'favs file edit view insert format tools table help',
-      content_css: ''
+      content_css: '',
+      
+    
     
     })
     getText = () => {
         text = tinymce.get('postText').getContent();
+        image =tempImage;
     }
+    
   });
+
+  function handleUpload(event) {
+    const { imageUrl } = event.detail;
+    tempImage=imageUrl;
+  }
+
+   
 
 </script>
 
@@ -66,10 +80,13 @@
   <label for="title">Title:</label>
   <input type="text" name="title" bind:value={title} required />
   <textarea id='postText' bind:value={text} rows="12" required />
+  <ImageUpload on:upload={handleUpload} />
   <button type="submit" on:click = {getText}>Post!</button>
   {#if error}<span class="error">Could not save!</span>{/if}
   {#if success}<span class="success">Saved!</span>{/if}
 </form>
+
+
 <style>
   form {
     margin: auto;
