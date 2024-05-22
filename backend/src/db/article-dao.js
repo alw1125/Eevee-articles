@@ -5,8 +5,11 @@
 
 import { getDatabase } from "./database.js";
 
-export async function getMessages() {
+export async function postArticle(title, username, text, date) {
   const db = await getDatabase();
-  const messages = await db.all("SELECT * FROM Messages");
-  return messages;
+  const postResult = await db.run(`INSERT INTO Articles (title, username, text, date) VALUES (?, ?, ?, ?)`,
+  title, username, text, date);
+
+  // Return true if changes applied, false otherwise
+  return postResult.changes > 0;
 }
