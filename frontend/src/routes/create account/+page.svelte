@@ -1,6 +1,6 @@
 <script>
   import { goto } from "$app/navigation";
-  import { AUTH_URL } from "$lib/js/api-urls.js";
+  import { NEWUSER_URL } from "$lib/js/api-urls.js";
   import { onMount } from "svelte";
 
   let firstName = "";
@@ -10,7 +10,7 @@
   let confirmPassword = "";
   let dob = "";
   let description = "";
-  let selectedIcon = "1";
+  let selectedAvatar = "1";
   let error = false;
 
   function adjustTextarea() {
@@ -35,18 +35,17 @@
       return;
     }
 
-    const response = await fetch(AUTH_URL, {
+    const response = await fetch(NEWUSER_URL, {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ firstName, lastName, username, password, dob, description })
     });
 
-    if (response.status === 401) {
-      error = true;
-    } else {
-      goto("/", { invalidateAll: true, replaceState: true });
-    }
+    success = response.status === 204;
+    error = !success;
+
+    if (success) invalidate(NEWUSER_URL);
   }
 
 </script>
@@ -79,27 +78,27 @@
   <label for="description">Description (max 100 characters):</label>
   <textarea name="description" bind:value={description} on:input={adjustTextarea} maxlength="100"></textarea>
 
-  <label for="profileIcon">Profile Icon:</label>
+  <label for="profileAvatar">Profile Avatar:</label>
   <div>
     <div>
 
       <label>
-        <input type="radio" name="profileIcon" value="1" group:selected={selectedIcon} required />
+        <input type="radio" name="profileAvatar" value="1" group:selected={selectedAvatar} required />
         <img src="logo.png" alt="Profile Icon 1" />
       </label>
 
       <label>
-        <input type="radio" name="profileIcon" value="2" group:selected={selectedIcon} required />
+        <input type="radio" name="profileAvatar" value="2" group:selected={selectedAvatar} required />
         <img src="logo.png" alt="Profile Icon 2" />
       </label>
 
       <label>
-        <input type="radio" name="profileIcon" value="3" group:selected={selectedIcon} required />
+        <input type="radio" name="profileAvatar" value="3" group:selected={selectedAvatar} required />
         <img src="logo.png" alt="Profile Icon 3" />
       </label>
       
       <label>
-        <input type="radio" name="profileIcon" value="4" group:selected={selectedIcon} required />
+        <input type="radio" name="profileAvatar" value="4" group:selected={selectedAvatar} required />
         <img src="logo.png" alt="Profile Icon 4" />
       </label>
 

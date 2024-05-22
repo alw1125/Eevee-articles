@@ -32,14 +32,28 @@ export async function getUserWithCredentials(username, password) {
  * Schema for "update user". We can optionally supply a first name, last name, password, and / or desc. We cannot edit thde username or username,
  * or supply any other random data.
  */
-const updateUserSchema = yup
+const UserSchema = yup
   .object({
     firstName: yup.string().min(1).optional(),
     lastName: yup.string().min(1).optional(),
-    password: yup.string().min(5).optional(),
-    desc: yup.string().optional()
+    username: yup.string().min(1).optional(),
+    password: yup
+    .string()
+    .required('Please Enter your password')
+    .matches(
+      "^(?=.[A-Za-z])(?=.d)(?=.[@$!%#?&])[A-Za-zd@$!%*#?&]{8,}$",
+      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"),
+    dob: yup.date().optional(),
+    description: yup.string().min(1).max(100).optional()
   })
   .required();
+
+  export async function createUser(firstName, lastName, username, password, dob, description) {
+    const parsedUpdateData = UserSchema.validateSync(udpateData, {
+      abortEarly: false,
+      stripUnknown: true
+  }
+
 
 /**
  * Updates the user with the given username if it exists, with the given update data. Update data can optionally include a firstName, lastName,
