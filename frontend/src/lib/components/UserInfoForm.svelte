@@ -6,7 +6,6 @@
   import { invalidate } from "$app/navigation";
   import { USER_URL } from "$lib/js/api-urls.js";
   import {onMount} from 'svelte';
-  import Component from "./component.svelte";
   export let user;
 
 
@@ -39,11 +38,27 @@
   }
 
   onMount(() => {
-    tinymce.init({
-        selector: 'textarea'
+      tinymce.init({
+      selector: 'textarea',
+      width: 600,
+      height: 300,
+      plugins: [
+      'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor', 'pagebreak',
+      'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 'fullscreen', 'insertdatetime',
+      'media', 'table', 'emoticons', 'help'
+    ],
+    toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | ' +
+      'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
+      'forecolor backcolor emoticons | help',
+      menu: {
+        favs: { title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons' }
+      },
+      menubar: 'favs file edit view insert format tools table help',
+      content_css: ''
+    
     })
     getdisc = () => {
-        desc = tinymce.get('sup').getContent();
+        desc = tinymce.get('editDis').getContent();
     }
   });
 
@@ -54,7 +69,7 @@
   <input type="text" name="firstName" bind:value={firstName} required />
   <label for="lastName">Last name:</label>
   <input type="text" name="lastName" bind:value={lastName} required />
-  <textarea id="sup" bind:value={desc} rows="12" required />
+  <textarea id="editDis" bind:value={desc} rows="12" required />
 
   <button type="submit" on:click = {getdisc}>Save</button>
 

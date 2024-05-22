@@ -1,10 +1,14 @@
+<svelte:head><script src="https://cdn.tiny.cloud/1/x0j317jyptd01ki3pnw74apyl45v249opero67lbp6yj5lj7/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script></svelte:head>
+
 <script>
   import { ART_URL } from "$lib/js/api-urls"
   import { invalidate } from "$app/navigation";
+  import {onMount} from 'svelte';
 
   export let data;
 
   let title = "";
+  let getText;
   let text = "";
   let error = false;
   let success = false;
@@ -24,12 +28,36 @@
 
     if (success) invalidate(ART_URL);
   }
+  
+  onMount(() => {
+      tinymce.init({
+      selector: 'textarea',
+      width: 600,
+      height: 300,
+      plugins: [
+      'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor', 'pagebreak',
+      'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 'fullscreen', 'insertdatetime',
+      'media', 'table', 'emoticons', 'help'
+    ],
+    toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | ' +
+      'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
+      'forecolor backcolor emoticons | help',
+      menu: {
+        favs: { title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons' }
+      },
+      menubar: 'favs file edit view insert format tools table help',
+      content_css: ''
+    
+    })
+    getText = () => {
+        text = tinymce.get('postText').getContent();
+    }
+  });
 
 </script>
 
-<svelte:head>
-  <title>Post articles here!</title>
-</svelte:head>
+
+  <title>Post articles here!</title> 
 
 <h1>Post</h1>
 
@@ -37,8 +65,8 @@
 <form on:submit|preventDefault={handlePost}>
   <label for="title">Title:</label>
   <input type="text" name="title" bind:value={title} required />
-  <textarea bind:value={text} rows="12" required />
-  <button type="submit">Post!</button>
+  <textarea id='postText' bind:value={text} rows="12" required />
+  <button type="submit" on:click = {getText}>Post!</button>
   {#if error}<span class="error">Could not save!</span>{/if}
   {#if success}<span class="success">Saved!</span>{/if}
 </form>
