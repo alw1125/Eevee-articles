@@ -54,11 +54,11 @@ const UserSchema = yup
       stripUnknown: true
   });
 
-  
- 
+
+
   const [updateOperations, updateParams] = buildUpdateStatement(parsedCreatedData);
-  const sql = `INSERT INTO Users (username, firstname, lastName, dob, desc, password) VALUES (?, ?, ?, ?, ?, ?)`, 
-  body.username, 
+  const sql = `INSERT INTO Users (username, firstname, lastName, dob, desc, password) VALUES (?, ?, ?, ?, ?, ?)` 
+
   ;
   console.log(sql);
   const db = await getDatabase();
