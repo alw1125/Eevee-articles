@@ -39,7 +39,7 @@ const updateUserSchema = yup
     lastName: yup.string().min(1).optional(),
     dob: yup.date().optional(),
     password: yup.string().min(5).optional(),
-    desc: yup.string().optional()
+    desc: yup.string().max(500).optional()
   })
   .required();
 
