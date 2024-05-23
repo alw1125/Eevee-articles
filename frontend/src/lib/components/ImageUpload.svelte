@@ -1,7 +1,7 @@
 
 <script>
     // this is from example 15 but modified for our purposes. 
-      import { PUBLIC_API_BASE_URL } from "$env/static/public";
+    import { UPLOAD_URL } from "$lib/js/api-urls.js";
       import { createEventDispatcher } from "svelte"; // going to try and dispatch the upload event to get uploaded image into the array in the main component 
     
       let filesToUpload;
@@ -23,7 +23,7 @@
         // We can send a FormData object directly in the body. Send a POST to our API route, with this data.
         // REMEMBER that this is not JSON we're sending - we're sending multipart form data which is handled
         // by the multer middleware on our server.
-        const response = await fetch(`${PUBLIC_API_BASE_URL}/upload`, {
+        const response = await fetch(UPLOAD_URL, {
           method: "POST",
           body: formData
         });
