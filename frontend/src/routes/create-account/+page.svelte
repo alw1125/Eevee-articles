@@ -15,13 +15,17 @@
   let error = false;
   let success = false;
   let avatar; 
-  let images =writable(["logo.png", "favicon.png"])
+  let images =writable(["http://localhost:3000/images/logo.png", "http://localhost:3000/images/favicon.png"])
   let selectedAvatar = "1";
 
   function test(imgurl1) {
-    selectedAvatar=imgurl1;
-    console.log(selectedAvatar)
+    avatar=imgurl1;
+    console.log(avatar)
 
+  }
+  function handleUpload(event) {
+    const { imageUrl } = event.detail;
+    images.update(imgs => [...imgs, imageUrl]);
   }
 
   function adjustTextarea() {
@@ -50,7 +54,7 @@
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, firstName, lastName, dob, description, password })
+      body: JSON.stringify({ username, firstName, lastName, dob, description, avatar, password })
     });
 
     success = response.status === 204;
@@ -93,19 +97,14 @@
   <div>
     <div>
       {#each $images as imgurl1} 
-      
-
-      
-
 
       <label>
-        <input type="radio" name="profileAvatar" value="1" group:selected={selectedAvatar} on:click={() => test(imgurl1)} required />
+        <input type="radio" name="profileAvatar" value="1"  on:click={() => test(imgurl1)} required />
         <img src={imgurl1} alt="Profile Icon 1" />
       </label>
-
       
       {/each}
-      <ImageUpload/>
+      <ImageUpload on:upload={handleUpload}/>
       
 
   <button type="submit">Create Account</button>
