@@ -51,15 +51,13 @@
       },
       menubar: 'favs file edit view insert format tools table help',
       content_css: '',
-      image_list: [
-    { title: 'My image 1', value: 'http://localhost:3000/images/Screenshot 2023-03-15 173916.png' } ]
       
     
     
     })
     getText = () => {
         text = tinymce.get('postText').getContent();
-        image =tempImage;
+        
     }
     
   });
@@ -67,6 +65,7 @@
   function handleUpload(event) {
     const { imageUrl } = event.detail;
     tempImage=imageUrl;
+    image =tempImage;
   }
 
    
