@@ -33,8 +33,9 @@ const createUserSchema = yup
     username: yup.string().min(1).required(),
     firstName: yup.string().min(1).required(),
     lastName: yup.string().min(1).required(),
-    dob: yup.date().optional(),
+    dob: yup.string().optional(),
     description: yup.string().min(1).max(500).required(),
+    avatar: yup.string().min(1).required(),
     password: yup.string().min(5).required()
   })
   .required();
@@ -48,7 +49,7 @@ const updateUserSchema = yup
   username: yup.string().min(1).optional(),
   firstName: yup.string().min(1).optional(),
   lastName: yup.string().min(1).optional(),
-  dob: yup.date().optional(),
+  dob: yup.string().optional(),
   password: yup.string().min(5).optional(),
   desc: yup.string().max(500).optional()
 })
@@ -63,9 +64,9 @@ const updateUserSchema = yup
     
     var dob = new Date(parsedCreatedData.dob).toISOString().slice(0, 10);
 
-    const sql = `INSERT INTO Users (username, firstname, lastName, dob, desc, password) VALUES (?, ?, ?, ?, ?, ?)`;    
+    const sql = `INSERT INTO Users (username, firstname, lastName, dob, desc, avatar, password) VALUES (?, ?, ?, ?, ?, ?,?)`;    
     const db = await getDatabase();
-    const dbResult = await db.run(sql, parsedCreatedData.username, parsedCreatedData.firstName, parsedCreatedData.lastName, dob, parsedCreatedData.description, parsedCreatedData.password);
+    const dbResult = await db.run(sql, parsedCreatedData.username, parsedCreatedData.firstName, parsedCreatedData.lastName, dob, parsedCreatedData.description, parsedCreatedData.avatar, parsedCreatedData.password);
 
     // Return true if changes applied, false otherwise
     return dbResult.changes > 0;
