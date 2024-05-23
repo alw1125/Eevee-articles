@@ -52,7 +52,7 @@
   <label for="lastName">Last name:</label>
   <input type="text" name="lastName" bind:value={lastName} required />
   <label for="dob">Date of birth:</label>
-  <input type="text" name="dob" bind:value={dob} required />
+  <input type="date" name="dob" bind:value={dob} required />
   <label for="password">Password:</label>
   <input type="text" name="password" bind:value={password} required />
   <textarea bind:value={desc} rows="12" required />

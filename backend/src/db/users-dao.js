@@ -33,7 +33,7 @@ const createUserSchema = yup
     username: yup.string().min(1).required(),
     firstName: yup.string().min(1).required(),
     lastName: yup.string().min(1).required(),
-    dob: yup.date().optional(),
+    dob: yup.string().optional(),
     description: yup.string().min(1).max(500).required(),
     password: yup.string().min(5).required()
   })
@@ -48,7 +48,7 @@ const updateUserSchema = yup
   username: yup.string().min(1).optional(),
   firstName: yup.string().min(1).optional(),
   lastName: yup.string().min(1).optional(),
-  dob: yup.date().optional(),
+  dob: yup.string().optional(),
   password: yup.string().min(5).optional(),
   desc: yup.string().max(500).optional()
 })
@@ -81,7 +81,6 @@ const updateUserSchema = yup
  * @throws an error if updateData is invalid.
  */
 export async function updateUser(username, udpateData) {
-
   // Validate incoming data (throw error if invalid)
   const parsedUpdateData = updateUserSchema.validateSync(udpateData, {
     abortEarly: false,
