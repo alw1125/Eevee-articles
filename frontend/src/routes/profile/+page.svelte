@@ -47,7 +47,7 @@
                       <tr>
                           <td>Description</td>
                           <td>:</td>
-                          <td>{data.user.description}</td>
+                          <td>{data.user.desc}</td>
                       </tr>
                       <tr>
                           <td>Avatar</td>
