@@ -25,15 +25,6 @@
     adjustTextarea();
   });
 
-  function adjustTextarea() {
-    const textarea = document.querySelector('textarea[name="description"]');
-    textarea.style.height = "auto"; 
-    textarea.style.height = textarea.scrollHeight + "px"; 
-  }
-  onMount(() => {
-    adjustTextarea();
-  });
-
   //once user clicks save, sends info to backend to be updated.
   async function handleSave() {
     error = false;
