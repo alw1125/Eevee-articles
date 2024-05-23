@@ -2,6 +2,8 @@
   import { invalidate } from "$app/navigation";
   import { NEWUSER_URL } from "$lib/js/api-urls.js";
   import { onMount } from "svelte";
+  import ImageUpload from "$lib/components/ImageUpload.svelte";
+  import { writable } from "svelte/store";
 
   let firstName = "";
   let lastName = "";
@@ -10,9 +12,17 @@
   let confirmPassword = "";
   let dob = "";
   let description = "";
-  let selectedAvatar = "1";
   let error = false;
   let success = false;
+  let avatar; 
+  let images =writable(["logo.png", "favicon.png"])
+  let selectedAvatar = "1";
+
+  function test(imgurl1) {
+    selectedAvatar=imgurl1;
+    console.log(selectedAvatar)
+
+  }
 
   function adjustTextarea() {
     const textarea = document.querySelector('textarea[name="description"]');
@@ -82,26 +92,21 @@
   <label for="profileAvatar">Profile Avatar:</label>
   <div>
     <div>
-
-      <label>
-        <input type="radio" name="profileAvatar" value="1" group:selected={selectedAvatar} required />
-        <img src="logo.png" alt="Profile Icon 1" />
-      </label>
-
-      <label>
-        <input type="radio" name="profileAvatar" value="2" group:selected={selectedAvatar} required />
-        <img src="logo.png" alt="Profile Icon 2" />
-      </label>
-
-      <label>
-        <input type="radio" name="profileAvatar" value="3" group:selected={selectedAvatar} required />
-        <img src="logo.png" alt="Profile Icon 3" />
-      </label>
+      {#each $images as imgurl1} 
       
+
+      
+
+
       <label>
-        <input type="radio" name="profileAvatar" value="4" group:selected={selectedAvatar} required />
-        <img src="logo.png" alt="Profile Icon 4" />
+        <input type="radio" name="profileAvatar" value="1" group:selected={selectedAvatar} on:click={() => test(imgurl1)} required />
+        <img src={imgurl1} alt="Profile Icon 1" />
       </label>
+
+      
+      {/each}
+      <ImageUpload/>
+      
 
   <button type="submit">Create Account</button>
 
