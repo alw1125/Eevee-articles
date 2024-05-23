@@ -27,7 +27,7 @@
       method: "PATCH",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, dob, firstName, lastName, desc, password })
+      body: JSON.stringify({ username, firstName, lastName, dob, password, desc })
     });
 
     success = response.status === 204;
@@ -52,7 +52,7 @@
   <label for="lastName">Last name:</label>
   <input type="text" name="lastName" bind:value={lastName} required />
   <label for="dob">Date of birth:</label>
-  <input type="text" name="dob" bind:value={dob} required />
+  <input type="date" name="dob" bind:value={dob} required />
   <label for="password">Password:</label>
   <input type="text" name="password" bind:value={password} required />
   <textarea bind:value={desc} rows="12" required />
