@@ -6,3 +6,4 @@ export const USER_URL = `${BASE_URL}/users/me`;
 export const NEWUSER_URL = `${BASE_URL}/users`;
 export const AUTH_URL = `${BASE_URL}/auth`;
 export const ART_URL = `${BASE_URL}/articles`;
+export const UPLOAD_URL =`${BASE_URL}/upload`;
