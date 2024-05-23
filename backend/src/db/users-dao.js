@@ -39,6 +39,21 @@ const createUserSchema = yup
   })
   .required();
 
+  /**
+ * Schema for "update user". We can optionally supply a first name, last name, password, and / or desc. We cannot edit thde username or username,
+ * or supply any other random data.
+ */
+const updateUserSchema = yup
+.object({
+  username: yup.string().min(1).optional(),
+  firstName: yup.string().min(1).optional(),
+  lastName: yup.string().min(1).optional(),
+  dob: yup.date().optional(),
+  password: yup.string().min(5).optional(),
+  desc: yup.string().max(500).optional()
+})
+.required();
+
   export async function createUser(createData) {
 
     const parsedCreatedData = createUserSchema.validateSync(createData, {
