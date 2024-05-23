@@ -84,21 +84,25 @@
     <div>
 
       <label>
+        <!-- svelte-ignore illegal-attribute-character -->
         <input type="radio" name="profileAvatar" value="1" group:selected={selectedAvatar} required />
         <img src="logo.png" alt="Profile Icon 1" />
       </label>
 
       <label>
+        <!-- svelte-ignore illegal-attribute-character -->
         <input type="radio" name="profileAvatar" value="2" group:selected={selectedAvatar} required />
         <img src="logo.png" alt="Profile Icon 2" />
       </label>
 
       <label>
+        <!-- svelte-ignore illegal-attribute-character -->
         <input type="radio" name="profileAvatar" value="3" group:selected={selectedAvatar} required />
         <img src="logo.png" alt="Profile Icon 3" />
       </label>
       
       <label>
+        <!-- svelte-ignore illegal-attribute-character -->
         <input type="radio" name="profileAvatar" value="4" group:selected={selectedAvatar} required />
         <img src="logo.png" alt="Profile Icon 4" />
       </label>
