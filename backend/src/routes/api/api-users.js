@@ -29,7 +29,7 @@ router.get("/me", requiresAuthentication, (req, res) => {
  */
 router.patch("/me", requiresAuthentication, async (req, res) => {
   try {
-    const isUpdated = await updateUser(req.user.username, req.body);
+    const isUpdated = await updateUser(req.user.id, req.body);
     return res.sendStatus(isUpdated ? 204 : 404);
   } catch {
     return res.sendStatus(422);

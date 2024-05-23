@@ -7,7 +7,8 @@ DROP TABLE IF EXISTS Comments;
 
 -- Create messages table
 CREATE TABLE Users (
-    username VARCHAR(50) PRIMARY KEY,
+    user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username VARCHAR(50),
     firstName VARCHAR(100),
     lastName VARCHAR(100),
     dob DATE,

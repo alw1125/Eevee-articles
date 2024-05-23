@@ -75,12 +75,12 @@ const updateUserSchema = yup
  * Updates the user with the given username if it exists, with the given update data. Update data can optionally include a firstName, lastName,
  * password, and / or desc.
  *
- * @param {*} username the username to update, will be converted to a number using parseInt().
+ * @param {*} id the id to update, will be converted to a number using parseInt().
  * @param {*} udpateData the update data to apply.
  * @returns true if the database was updated, false otherwise
  * @throws an error if updateData is invalid.
  */
-export async function updateUser(username, udpateData) {
+export async function updateUser(id, udpateData) {
 
   // Validate incoming data (throw error if invalid)
   const parsedUpdateData = updateUserSchema.validateSync(udpateData, {
