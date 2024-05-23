@@ -3,6 +3,7 @@
   import { USER_URL } from "$lib/js/api-urls.js";
   import { createEventDispatcher } from "svelte";
 
+
   export let user;
 
   const dispatch = createEventDispatcher();
@@ -16,14 +17,6 @@
   let error = false;
   let success = false;
 
-  function adjustTextarea() {
-    const textarea = document.querySelector('textarea[name="description"]');
-    textarea.style.height = "auto"; 
-    textarea.style.height = textarea.scrollHeight + "px"; 
-  }
-  onMount(() => {
-    adjustTextarea();
-  });
 
   //once user clicks save, sends info to backend to be updated.
   async function handleSave() {
