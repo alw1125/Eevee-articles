@@ -25,7 +25,7 @@
       method: "PATCH",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, dob, firstName, lastName, desc, password })
+      body: JSON.stringify({ username, firstName, lastName, dob, password, desc })
     });
 
     success = response.status === 204;
