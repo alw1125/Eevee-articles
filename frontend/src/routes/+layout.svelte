@@ -33,7 +33,7 @@
       <li><button on:click={handleLogout}>Logout</button></li>
     {:else}
       <li><a href="/login" class:active={path.startsWith("/login")}>Login</a></li>
-      <li><a href="/create account" class:active={path.startsWith("/create account")}>Create Account</a></li>
+      <li><a href="/create-account" class:active={path.startsWith("/create-account")}>Create Account</a></li>
     {/if}
   </ul>
 </nav>

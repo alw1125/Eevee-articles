@@ -38,15 +38,14 @@ router.patch("/me", requiresAuthentication, async (req, res) => {
 
 //Create new user
 router.post("/", async (req, res) => {
-
-try{
-
-  const created = createUser(req.body);
-  return res.sendStatus(posted ? 204 : 404);
-}catch{
-  return res.sendStatus(422);
+  console.log(req.body);
   
-}
+  try{
+    const created = createUser(req.body);
+    return res.sendStatus(created ? 204 : 404);
+  }catch{
+    return res.sendStatus(422);
+  }
 });
 
 //Return all user list
