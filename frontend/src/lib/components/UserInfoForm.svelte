@@ -16,24 +16,10 @@
   let error = false;
   let success = false;
 
-  function adjustTextarea() {
-    const textarea = document.querySelector('textarea[name="description"]');
-    textarea.style.height = "auto"; 
-    textarea.style.height = textarea.scrollHeight + "px"; 
-  }
-  onMount(() => {
-    adjustTextarea();
-  });
-
   //once user clicks save, sends info to backend to be updated.
   async function handleSave() {
     error = false;
     success = false;
-
-    if (desc.length > 100) {
-      error = true;
-      return;
-    }
 
     const response = await fetch(USER_URL, {
       method: "PATCH",
@@ -46,13 +32,13 @@
     error = !success;
 
     if (success) invalidate(USER_URL);
-  
-  dispatch('save');
+
+    dispatch('save');
   }
-  
+
   //cancel editing profile
   function cancel() {
-  dispatch('cancel');
+    dispatch('cancel');
   }
 </script>
 
@@ -74,54 +60,38 @@
   {#if success}<span class="success">Saved!</span>{/if}
 </form>
 
-
-
 <style>
-
-  label {
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-
-  input[type="text"],
-  textarea {
-    width: 100%;
+  form {
+    margin: auto;
+    max-width: 800px;
+    border: 1px dashed green;
     padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-sizing: border-box;
-    margin-bottom: 15px;
-    font-size: 16px;
-    transition: border-color 0.3s ease;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px;
   }
 
-  input[type="text"]:focus,
-  textarea:focus {
-    border-color: #45a049;
-    outline: none;
+  button,
+  textarea,
+  .error,
+  .success {
+    grid-column: 1 / 3;
   }
 
-  button {
-    width: 100%;
-    padding: 10px 0;
-    border: none;
-    border-radius: 5px;
-    background-color: #4caf50;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-
-  button:hover {
-    background-color: #45a049;
+  .error,
+  .success {
+    font-weight: bold;
+    padding: 5px;
+    text-align: center;
   }
 
   .error {
-    color: #dc3545;
-    background-color: #f8d7da;
+    color: darkred;
+    background-color: lightcoral;
   }
-  textarea {
-    resize: vertical;
+
+  .success {
+    color: darkgreen;
+    background-color: lightgreen;
   }
 </style>
