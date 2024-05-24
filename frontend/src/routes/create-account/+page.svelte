@@ -99,9 +99,6 @@
       {#each $images as imgurl1} 
 
       <label>
-        <!-- svelte-ignore illegal-attribute-character -->
-        <input type="radio" name="profileAvatar" value="1" group:selected={selectedAvatar} required />
-        <img src="logo.png" alt="Profile Icon 1" />
         <input type="radio" name="profileAvatar" value="1"  on:click={() => test(imgurl1)} required />
         <img src={imgurl1} alt="Profile Icon 1" />
       </label>
