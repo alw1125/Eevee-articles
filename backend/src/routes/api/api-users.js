@@ -1,6 +1,6 @@
 import express from "express";
 import { requiresAuthentication } from "../../middleware/auth-middleware.js";
-import { createUser } from "../../db/users-dao.js";
+import { createUser, updateUser } from "../../db/users-dao.js";
 
 const router = express.Router();
 
@@ -29,9 +29,11 @@ router.get("/me", requiresAuthentication, (req, res) => {
  */
 router.patch("/me", requiresAuthentication, async (req, res) => {
   try {
+    console.log("Request Body:", req.body);
     const isUpdated = await updateUser(req.user.username, req.body);
     return res.sendStatus(isUpdated ? 204 : 404);
-  } catch {
+  } catch (error){
+    console.error("Error:", error);
     return res.sendStatus(422);
   }
 });
@@ -58,10 +60,6 @@ router.post("/login", async(req, res) => {
 
 //User logput
 router.post("/logout", async(req, res) => {
-});
-
-//Edit user information
-router.patch("/:user_name", async(req, res) => {
 });
 
 //Delete user

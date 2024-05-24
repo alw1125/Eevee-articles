@@ -2,6 +2,8 @@
   import { invalidate } from "$app/navigation";
   import { NEWUSER_URL } from "$lib/js/api-urls.js";
   import { onMount } from "svelte";
+  import ImageUpload from "$lib/components/ImageUpload.svelte";
+  import { writable } from "svelte/store";
 
   let firstName = "";
   let lastName = "";
@@ -10,9 +12,21 @@
   let confirmPassword = "";
   let dob = "";
   let description = "";
-  let selectedAvatar = "1";
   let error = false;
   let success = false;
+  let avatar; 
+  let images =writable(["http://localhost:3000/images/logo.png", "http://localhost:3000/images/favicon.png"])
+  let selectedAvatar = "1";
+
+  function test(imgurl1) {
+    avatar=imgurl1;
+    console.log(avatar)
+
+  }
+  function handleUpload(event) {
+    const { imageUrl } = event.detail;
+    images.update(imgs => [...imgs, imageUrl]);
+  }
 
   function adjustTextarea() {
     const textarea = document.querySelector('textarea[name="description"]');
@@ -40,7 +54,7 @@
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, firstName, lastName, dob, description, password })
+      body: JSON.stringify({ username, firstName, lastName, dob, description, avatar, password })
     });
 
     success = response.status === 204;
@@ -82,30 +96,19 @@
   <label for="profileAvatar">Profile Avatar:</label>
   <div>
     <div>
+      {#each $images as imgurl1} 
 
       <label>
         <!-- svelte-ignore illegal-attribute-character -->
         <input type="radio" name="profileAvatar" value="1" group:selected={selectedAvatar} required />
         <img src="logo.png" alt="Profile Icon 1" />
-      </label>
-
-      <label>
-        <!-- svelte-ignore illegal-attribute-character -->
-        <input type="radio" name="profileAvatar" value="2" group:selected={selectedAvatar} required />
-        <img src="logo.png" alt="Profile Icon 2" />
-      </label>
-
-      <label>
-        <!-- svelte-ignore illegal-attribute-character -->
-        <input type="radio" name="profileAvatar" value="3" group:selected={selectedAvatar} required />
-        <img src="logo.png" alt="Profile Icon 3" />
+        <input type="radio" name="profileAvatar" value="1"  on:click={() => test(imgurl1)} required />
+        <img src={imgurl1} alt="Profile Icon 1" />
       </label>
       
-      <label>
-        <!-- svelte-ignore illegal-attribute-character -->
-        <input type="radio" name="profileAvatar" value="4" group:selected={selectedAvatar} required />
-        <img src="logo.png" alt="Profile Icon 4" />
-      </label>
+      {/each}
+      <ImageUpload on:upload={handleUpload}/>
+      
 
   <button type="submit">Create Account</button>
 
