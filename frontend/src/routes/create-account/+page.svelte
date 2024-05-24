@@ -4,6 +4,7 @@
   import { onMount } from "svelte";
   import ImageUpload from "$lib/components/ImageUpload.svelte";
   import { writable } from "svelte/store";
+  import { goto } from "$app/navigation";
 
   let firstName = "";
   let lastName = "";
@@ -57,10 +58,11 @@
       body: JSON.stringify({ username, firstName, lastName, dob, description, avatar, password })
     });
 
-    success = response.status === 204;
-    error = !success;
-
-    if (success) invalidate(NEWUSER_URL);
+    if (response.status === 401) {
+      error = true;
+    } else {
+      goto("/login", { invalidateAll: true, replaceState: true });
+    }
   }
 
 </script>

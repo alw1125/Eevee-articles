@@ -12,6 +12,7 @@ const router = express.Router();
  * info to req.user. So we just need to return that.
  */
 router.get("/me", requiresAuthentication, (req, res) => {
+  console.log(req.user);
   return res.json(req.user);
 });
 
@@ -29,7 +30,7 @@ router.get("/me", requiresAuthentication, (req, res) => {
  */
 router.patch("/me", requiresAuthentication, async (req, res) => {
   try {
-    const isUpdated = await updateUser(req.user.id, req.body);
+    const isUpdated = await updateUser(req.user.user_id, req.body);
     return res.sendStatus(isUpdated ? 204 : 404);
   } catch (error){
     console.error("Error:", error);
