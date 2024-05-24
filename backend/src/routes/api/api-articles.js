@@ -1,5 +1,6 @@
 import express from "express";
 import { postArticle } from "../../db/article-dao.js";
+import {getAllArticles} from "../../db/article-dao.js";
 
 const router = express.Router();
 
@@ -20,6 +21,17 @@ try{
 }catch{
     return res.sendStatus(422);
 }
+});
+
+//Get all articles
+router.get("/", async (req, res) => {
+    try {
+    const allArticles = await getAllArticles();
+    console.log(allArticles);
+    return res.json(allArticles);
+} catch {
+    return res.sendStatus(422);
+    }
 });
 
 //Edit article

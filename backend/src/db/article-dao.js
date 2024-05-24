@@ -13,3 +13,9 @@ export async function postArticle(title, username, text, date) {
   // Return true if changes applied, false otherwise
   return postResult.changes > 0;
 }
+
+export async function getAllArticles() {
+  const db = await getDatabase();
+  const articles = await db.all(`SELECT title, username, text, date FROM Articles`);
+  return articles;
+}

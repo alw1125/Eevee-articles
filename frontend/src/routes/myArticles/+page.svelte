@@ -3,7 +3,7 @@
   import { writable } from 'svelte/store';
   import { ART_URL } from "$lib/js/api-urls.js";
 
-  const articles = writable([]);
+  $: articles = [];
 
   async function fetchArticles() {
     try {
@@ -12,13 +12,16 @@
         throw new Error('Failed to fetch articles');
       }
       const data = await response.json();
-      articles.set(data.articles);
+      return data;
     } catch (error) {
       console.error('Error fetching articles:', error);
     }
   }
 
-  onMount(fetchArticles);
+  onMount(async() => {
+    articles = await fetchArticles();
+  });
+
 </script>
 
 <svelte:head>
@@ -26,18 +29,18 @@
 </svelte:head>
 
 <h1>My Articles</h1>
-
-{#if $articles.length > 0}
+{#if articles.length > 0}
   <ul>
-    {#each $articles as article (article.id)}
+    {#each articles as article}
       <li>
         <h2>{article.title}</h2>
-        <p>{article.text}</p> 
+        {article.text}
         <p>Author: {article.username}</p>
-        <p>Date: {article.date}</p> 
+        <p>Date: {article.date}</p>
       </li>
     {/each}
   </ul>
 {:else}
   <p>No articles found.</p>
 {/if}
+
