@@ -25,6 +25,7 @@
     {#if data.isLoggedIn}
       <li><a href="/profile" class:active={path.startsWith("/profile")}>Profile</a></li>
       <li><a href="/post" class:active={path.startsWith("/post")}>Post Articles</a></li>
+      <li><a href="/myArticles" class:active={path.startsWith("/myArticles")}> My Articles</a><li>
     {/if}
   </ul>
   <span />
