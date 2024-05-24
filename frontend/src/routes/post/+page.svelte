@@ -13,7 +13,7 @@
   let text = "";
   let error = false;
   let success = false;
-  let username = data.user.username;
+  let user_id = data.user.user_id;
   let tempImage; 
   let image;
 
@@ -23,7 +23,7 @@
     const response = await fetch(ART_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, image, text, username })
+      body: JSON.stringify({ title, image, text, user_id })
     });
 
     success = response.status === 204;
