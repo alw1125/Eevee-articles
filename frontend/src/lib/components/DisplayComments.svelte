@@ -38,41 +38,61 @@
 </script>
 
 {#if comments.length > 0}
-  <div>
-    {#each comments as comment}
-      <div class="comment-tile">
-        {@html comment.desc}
-        <p class="comment-date">{comment.time} {comment.date}</p>
+  {#each comments as comment}
+    <div class="dialogbox">
+      <div class="body">
+        <span class="tip tip-up"></span>
+        <div class="message">
+          {@html comment.desc}
+          <p class="comment-date">{comment.time} {comment.date}</p>
+        </div>
       </div>
-    {/each}
-  </div>
+    </div>
+  {/each}
 {:else}
   <p>No comments found.</p>
 {/if}
 
-<CommentBox user={user} onCommentPosted={handleCommentPosted} />
+<CommentBox {user} onCommentPosted={handleCommentPosted} />
 
 <style>
-  .comment-tile {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+  .tip {
+    position: absolute;
+    background: transparent;
+    border: 10px solid #ccc;
+    top: -25px;
+    left: 10px;
+    border-right-color: transparent;
+    border-left-color: transparent;
+    border-top-color: transparent;
+  }
+
+  .dialogbox .body {
+    position: relative;
+    max-width: 50%;
+    height: auto;
+    margin: 20px;
+    padding: 5px;
+    background-color: #ebebeb;
+    border-radius: 3px;
+    border: 5px solid #ccc; 
+  }
+
+  .body .message {
+    min-height: 30px;
+    border-radius: 3px;
+    font-family: Arial;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #797979;
+  }
+
+  .dialogbox {
+    margin: 0, auto;
   }
 
   .comment-date {
     font-style: italic;
     align-self: flex-end;
-  }
-
-  .comment-name {
-    font-size: 1.1em;
-    font-style: italic;
   }
 </style>
