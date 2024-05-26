@@ -28,7 +28,6 @@ try{
 router.get("/", async (req, res) => {
     try {
     const allArticles = await getAllArticles();
-    console.log(allArticles);
     return res.json(allArticles);
 } catch {
     return res.sendStatus(422);
@@ -57,18 +56,6 @@ router.delete("/:article_id", async (req, res) => {
 
 //Sort article, need to specify the sort options
 router.get("/sort/{sort_options}", async(req, res) => {
-});
-
-//Create artile comment
-router.post("/:artile_id/comment}", async(req, res) => {
-});
-
-//Get all comments for an artile
-router.post("/:artile_id/comment}", async(req, res) => {
-});
-
-//Delete artile comment
-router.delete("/:artile_id/comment/:comment_id}", async(req, res) => {
 });
 
 export default router;
