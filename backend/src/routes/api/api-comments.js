@@ -1,5 +1,5 @@
 import express from "express";
-import { postComment } from "../../db/comment-dao";
+import { postComment, getAllComments } from "../../db/comment-dao.js";
 
 const router = express.Router();
 
@@ -22,12 +22,13 @@ router.post("/", async (req, res) => {
 });
 
 //Get all comments for an artile
-router.get("/:artile_id", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const allComments = await getAllComments();
-    console.log(allComments);
+    console.log("Fetched comments:", allComments);
     return res.json(allComments);
-  } catch {
+  } catch (error) {
+    console.error("Error fetching comments:", error);
     return res.sendStatus(422);
   }
 });
