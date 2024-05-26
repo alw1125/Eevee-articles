@@ -28,7 +28,6 @@ try{
 router.get("/", async (req, res) => {
     try {
     const allArticles = await getAllArticles();
-    console.log(allArticles);
     return res.json(allArticles);
 } catch {
     return res.sendStatus(422);

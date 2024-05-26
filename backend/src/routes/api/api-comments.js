@@ -1,23 +1,28 @@
 import express from "express";
+import { postComment } from "../../db/comment-dao";
 
 const router = express.Router();
 
 //Create artile comment
-router.post("/:artile_id/comment}", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
-    let text = req.body.text;
+    let desc = req.body.text;
     let user_id = req.body.user_id;
-    let dateNow = new Date().toISOString().slice(0, 10);
+    let date = new Date().toISOString().slice(0, 10);
+    let time = new Date().toISOString().slice(11, 19);
+    console.log(desc, user_id, date, time);
 
-    const posted = postComment(user_id, text, dateNow);
+    const posted = postComment(desc, date, time, user_id);
+    console.log(posted);
     return res.sendStatus(posted ? 204 : 404);
-  } catch {
+  } catch (error){
+    console.error("Post comment error:", error);
     return res.sendStatus(422);
   }
 });
 
 //Get all comments for an artile
-router.post("/:artile_id/comment}", async (req, res) => {
+router.get("/:artile_id", async (req, res) => {
   try {
     const allComments = await getAllComments();
     console.log(allComments);
@@ -28,4 +33,6 @@ router.post("/:artile_id/comment}", async (req, res) => {
 });
 
 //Delete artile comment
-router.delete("/:artile_id/comment/:comment_id}", async (req, res) => {});
+router.delete("/:artile_id/:comment_id", async (req, res) => {});
+
+export default router;
