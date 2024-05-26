@@ -2,9 +2,12 @@
   import { onMount } from "svelte";
   import { COMMENTS_URL } from "$lib/js/api-urls";
   import { decodeHtml, formatDate } from "$lib/js/utils";
+  import CommentBox from "./CommentBox.svelte";
 
   let comments = [];
+  export let user;
 
+  //fetches already existing comments
   async function fetchComments() {
     try {
       const response = await fetch(COMMENTS_URL);
@@ -20,6 +23,13 @@
     } catch (error) {
       console.error("Error fetching comments:", error);
     }
+  }
+
+  //displays new comment (refer to callback function in CommentBox.svelte)
+  function handleCommentPosted(newComment) {
+    newComment.desc = decodeHtml(newComment.desc);
+    newComment.date = formatDate(newComment.date);
+    comments = [...comments, newComment];
   }
 
   onMount(async () => {
@@ -39,6 +49,8 @@
 {:else}
   <p>No comments found.</p>
 {/if}
+
+<CommentBox user={user} onCommentPosted={handleCommentPosted} />
 
 <style>
   .comment-tile {

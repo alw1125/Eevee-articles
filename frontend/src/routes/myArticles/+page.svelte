@@ -1,7 +1,6 @@
 <script>
   // Import the DisplayArticles component
   import DisplayArticles from '$lib/components/DisplayArticles.svelte';
-  import CommentBox from '$lib/components/CommentBox.svelte';
   import DisplayComments from '$lib/components/DisplayComments.svelte';
 
   export let data;
@@ -15,5 +14,4 @@
 
 
   <DisplayArticles />
-  <DisplayComments/>
-  <CommentBox user={data.user}/>
+  <DisplayComments user={data.user}/>
