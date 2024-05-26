@@ -40,7 +40,7 @@
                 article.text = decodeHtml(article.text);
                 article.date = formatDate(article.date); 
             });
-            // Sort articles based on the current sort option
+            
             if (sortBy === 'date') {
                 data.sort((a, b) => new Date(b.date) - new Date(a.date));
             } else if (sortBy === 'username') {
