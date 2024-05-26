@@ -1,6 +1,5 @@
 import express from "express";
-import { postArticle } from "../../db/article-dao.js";
-import {getAllArticles} from "../../db/article-dao.js";
+import { postArticle, getAllArticles, likeArticle, unlikeArticle, getArticleLikesCount, checkIfArticleIsLiked} from "../../db/article-dao.js";
 
 const router = express.Router();
 
@@ -38,17 +37,59 @@ router.get("/", async (req, res) => {
 router.patch("/:article_id", async (req, res) => {
 });
 
-//Like article
-router.patch("/:article_id/like", async (req, res) => {
+
+
+//Get number of likes
+router.get("/:article_id/like", async (req, res) => {
+    try {
+    
+        const article_id = req.params.article_id;
+        const allLikes = await getArticleLikesCount(article_id);
+        return res.json(allLikes);
+    } catch {
+        return res.sendStatus(422);
+        }
 });
+
+//Like article
+
+router.post("/:article_id/like", async (req, res) => {
+    try{
+        const user_id = req.body.user_id;
+        const article_id = req.params.article_id;
+        const liked  = await likeArticle ( user_id, article_id);
+        return res.sendStatus(liked ? 204 : 404);
+    }catch{
+        return res.sendStatus(422);
+    }
+});
+
 
 //Dislike article
 router.delete("/:article_id/like", async (req, res) => {
+    try {
+        const user_id = req.body.user_id;
+        const article_id = req.params.article_id;
+        const unliked = await unlikeArticle(user_id, article_id);
+        return res.sendStatus(unliked ? 204 : 404);
+      } catch {
+        return res.sendStatus(422);
+      }
 });
 
-//Get number of likes
-router.patch("/:article_id/like", async (req, res) => {
-});
+// checks if user liked an article 
+router.get("/:article_id/like", async (req, res) => {
+    try {
+      const { user_id } = req.query;
+      const { article_id } = req.params;
+      const liked = await checkIfArticleIsLiked(user_id, article_id);
+      return res.json( liked );
+    } catch {
+      return res.sendStatus(422);
+    }
+  });
+
+
 
 //Delete article
 router.delete("/:article_id", async (req, res) => {

@@ -19,3 +19,44 @@ export async function getAllArticles() {
   const articles = await db.all(`SELECT title, user_id, text, date FROM Articles`);
   return articles;
 }
+
+
+//likes below
+
+export async function getArticleLikesCount(article_id) {
+  const db = await getDatabase();
+  const result = await db.get(
+    `SELECT COUNT(*) AS likeCount FROM UserLikedArticles WHERE article_id = ?`,
+    article_id
+  );
+
+  return result.likeCount;
+}
+export async function checkIfArticleIsLiked () {
+  const db = await getDatabase();
+  const result = await db.get(`SELECT * FROM UserLikedArticles WHERE user_id = ? AND article_id = ?`, user_id, article_id);
+ 
+ // Return true if changes applied, false otherwise
+  return result.count> 0;
+}
+
+export async function likeArticle( user_id, article_id) {
+  const db = await getDatabase();
+  const postResult = await db.run(`INSERT INTO UserLikedArticles (user_id, article_id) VALUES (?, ?)`,
+  user_id, article_id);
+
+  // Return true if changes applied, false otherwise
+  return postResult.changes > 0;
+}
+
+
+export async function unlikeArticle(user_id, article_id) {
+  const db = await getDatabase();
+  const deleteResult = await db.run(`DELETE FROM UserLikedArticles WHERE user_id = ? AND article_id = ?`, user_id, article_id);
+  
+  // Return true if changes applied, false otherwise
+  return deleteResult.changes > 0;
+}
+
+
+

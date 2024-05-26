@@ -8,3 +8,4 @@ export const AUTH_URL = `${BASE_URL}/auth`;
 export const ART_URL = `${BASE_URL}/articles`;
 export const UPLOAD_URL =`${BASE_URL}/upload`;
 export const COMMENTS_URL = `${BASE_URL}/comments`;
+export const LIKES_URL = `${ART_URL}/:article_id/like`
