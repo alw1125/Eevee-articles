@@ -40,13 +40,7 @@
 
   async function handleSubmit() {
     error = false;
-
     if (password !== confirmPassword) {
-      error = true;
-      return;
-    }
-    
-    if (description.length > 100) {
       error = true;
       return;
     }
@@ -65,6 +59,28 @@
     }
   }
 
+  let username_error;
+  
+  async function checkName(){
+    username_error = null;
+    const response = await fetch(NEWUSER_URL);
+    const userList = await response.json()
+    userList.forEach(user => {
+      if(user.username == username){
+        username_error = "Username occupied"
+      }
+    });
+  }
+
+  let password_error;
+
+  function checkPassword(){
+    password_error = null;
+    if (password !== confirmPassword) {
+      password_error = "Password dont match";
+    }
+  }
+
 </script>
 
 <svelte:head>
@@ -75,25 +91,31 @@
 
 <form on:submit|preventDefault={handleSubmit}>
   <label for="firstName">First Name:</label>
-  <input type="text" name="firstName" bind:value={firstName} required />
+  <input type="text" name="firstName" bind:value={firstName} required/>
 
   <label for="lastName">Last Name:</label>
-  <input type="text" name="lastName" bind:value={lastName} required />
+  <input type="text" name="lastName" bind:value={lastName} required/>
 
   <label for="username">Username:</label>
-  <input type="text" name="username" bind:value={username} required />
+  <input type="text" name="username" id="username" on:blur={checkName} bind:value={username} required/>
+  {#if username_error}
+  <span class = "error">{username_error}</span>
+  {/if}
 
   <label for="password">Password:</label>
-  <input type="password" name="password" bind:value={password} required />
+  <input type="password" name="password" bind:value={password} minlength="5" required />
 
   <label for="confirmPassword">Confirm Password:</label>
-  <input type="password" name="confirmPassword" bind:value={confirmPassword} required />
+  <input type="password" name="confirmPassword" bind:value={confirmPassword} on:blur={checkPassword} required/>
+  {#if password_error}
+  <span class = "error">{password_error}</span>
+  {/if}
 
   <label for="dob">Date of Birth:</label>
-  <input type="date" name="dob" bind:value={dob} required />
+  <input type="date" name="dob" bind:value={dob} required/>
 
-  <label for="description">Description (max 100 characters):</label>
-  <textarea name="description" bind:value={description} on:input={adjustTextarea} maxlength="100"></textarea>
+  <label for="description">Description (max 500 characters):</label>
+  <textarea name="description" bind:value={description} on:input={adjustTextarea} maxlength="500" required></textarea>
 
   <label for="profileAvatar">Profile Avatar:</label>
   <div>

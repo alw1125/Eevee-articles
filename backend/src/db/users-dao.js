@@ -28,23 +28,16 @@ export async function getUserWithCredentials(username, password) {
   );
 }
 
-const createUserSchema = yup
-  .object({
-    username: yup.string().min(1).required(),
-    firstName: yup.string().min(1).required(),
-    lastName: yup.string().min(1).required(),
-    dob: yup.string().optional(),
-    description: yup.string().min(1).max(500).required(),
-    avatar: yup.string().min(1).required(),
-    password: yup.string().min(5).required()
-  })
-  .required();
+export async function getUserList(){
+  const db = await getDatabase();
+  return await db.all("SELECT * from Users");
+}
 
   /**
  * Schema for "update user". We can optionally supply a first name, last name, password, and / or desc. We cannot edit thde username or username,
  * or supply any other random data.
  */
-const updateUserSchema = yup
+const userSchema = yup
 .object({
   username: yup.string().min(1).optional(),
   firstName: yup.string().min(1).optional(),
@@ -57,7 +50,7 @@ const updateUserSchema = yup
 
   export async function createUser(createData) {
 
-    const parsedCreatedData = createUserSchema.validateSync(createData, {
+    const parsedCreatedData =  userSchema.validateSync(createData, {
       abortEarly: false,
       stripUnknown: true
     });
@@ -84,7 +77,7 @@ const updateUserSchema = yup
 export async function updateUser(user_id, updateData) {
 
   // Validate incoming data (throw error if invalid)
-  const parsedUpdateData = updateUserSchema.validateSync(updateData, {
+  const parsedUpdateData = userSchema.validateSync(updateData, {
     abortEarly: false,
     stripUnknown: true
   });
