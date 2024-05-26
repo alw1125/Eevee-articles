@@ -1,6 +1,6 @@
 import express from "express";
 import { requiresAuthentication } from "../../middleware/auth-middleware.js";
-import { createUser, updateUser } from "../../db/users-dao.js";
+import { createUser, updateUser, getUserList } from "../../db/users-dao.js";
 
 const router = express.Router();
 
@@ -12,6 +12,7 @@ const router = express.Router();
  * info to req.user. So we just need to return that.
  */
 router.get("/me", requiresAuthentication, (req, res) => {
+  console.log(req.user);
   return res.json(req.user);
 });
 
@@ -29,8 +30,7 @@ router.get("/me", requiresAuthentication, (req, res) => {
  */
 router.patch("/me", requiresAuthentication, async (req, res) => {
   try {
-    console.log("Request Body:", req.body);
-    const isUpdated = await updateUser(req.user.username, req.body);
+    const isUpdated = await updateUser(req.user.user_id, req.body);
     return res.sendStatus(isUpdated ? 204 : 404);
   } catch (error){
     console.error("Error:", error);
@@ -52,6 +52,8 @@ router.post("/", async (req, res) => {
 
 //Return all user list
 router.get("/", async (req, res) => {
+  const userList = await getUserList();
+  return res.json(userList);
 });
 
 //User login

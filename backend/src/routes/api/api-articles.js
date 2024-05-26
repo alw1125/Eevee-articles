@@ -14,10 +14,10 @@ try{
     let title = req.body.title;
     let text = req.body.text;
     let image = req.body.image; 
-    let username = req.body.username;
+    let user_id = req.body.user_id;
     let dateNow = new Date().toISOString().slice(0, 10);
 
-    const posted = postArticle(title, image, username, text, dateNow);
+    const posted = postArticle(title, image, user_id, text, dateNow);
     return res.sendStatus(posted ? 204 : 404);
 }catch{
     return res.sendStatus(422);
@@ -28,7 +28,6 @@ try{
 router.get("/", async (req, res) => {
     try {
     const allArticles = await getAllArticles();
-    console.log(allArticles);
     return res.json(allArticles);
 } catch {
     return res.sendStatus(422);
@@ -57,18 +56,6 @@ router.delete("/:article_id", async (req, res) => {
 
 //Sort article, need to specify the sort options
 router.get("/sort/{sort_options}", async(req, res) => {
-});
-
-//Create artile comment
-router.post("/:artile_id/comment}", async(req, res) => {
-});
-
-//Get all comments for an artile
-router.post("/:artile_id/comment}", async(req, res) => {
-});
-
-//Delete artile comment
-router.delete("/:artile_id/comment/:comment_id}", async(req, res) => {
 });
 
 export default router;

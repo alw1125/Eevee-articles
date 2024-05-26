@@ -24,7 +24,7 @@
     <li class="nav-item"><a href="/" class="{path === '/' ? 'active' : ''}"><img src="http://localhost:3000/images/logo.png" alt="Home" class="nav-img"></a></li>
     {#if data.isLoggedIn}
       <li><a href="/profile" class:active={path.startsWith("/profile")}>Profile</a></li>
-      <li><a href="/post" class:active={path.startsWith("/post")}>Post Articles</a></li>
+      <li><a href="/postArticle" class:active={path.startsWith("/postArticle")}>Post Articles</a></li>
       <li><a href="/myArticles" class:active={path.startsWith("/myArticles")}> My Articles</a><li>
     {/if}
   </ul>

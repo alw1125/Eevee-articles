@@ -7,7 +7,8 @@ DROP TABLE IF EXISTS Comments;
 
 -- Create messages table
 CREATE TABLE Users (
-    username VARCHAR(50) PRIMARY KEY,
+    user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username VARCHAR(50) UNIQUE,
     firstName VARCHAR(100),
     lastName VARCHAR(100),
     dob DATE,
@@ -21,18 +22,18 @@ CREATE TABLE Articles (
     article_id INTEGER PRIMARY KEY AUTOINCREMENT,
     title VARCHAR(255),
     image TEXT,
-    username VARCHAR(50),
+    user_id INTEGER,
     text TEXT,
     date DATE,
-    FOREIGN KEY (username) REFERENCES Users (username)
+    FOREIGN KEY (user_id) REFERENCES Users (user_id)
 );
 
 CREATE TABLE UserLikedArticles (
-    username VARCHAR(50),
+    user_id  INTEGER,
     article_id INTEGER,
-    FOREIGN KEY (username) REFERENCES Users (username),
+    FOREIGN KEY (user_id ) REFERENCES Users (user_id ),
     FOREIGN KEY (article_id) REFERENCES Articles (article_id),
-    PRIMARY KEY (username, article_id)
+    PRIMARY KEY (user_id, article_id)
 );
 
 CREATE TABLE Comments (
@@ -41,10 +42,10 @@ CREATE TABLE Comments (
     date DATE,
     time TIME,
     article_id INTEGER,
-    username VARCHAR(50),
+    user_id INTEGER,
     parent_comment_id INTEGER,
     FOREIGN KEY (article_id) REFERENCES Articles (article_id),
-    FOREIGN KEY (username) REFERENCES Users (username),
+    FOREIGN KEY (user_id) REFERENCES Users (user_id),
     FOREIGN KEY (parent_comment_id) REFERENCES Comments (comment_id)
 );
 
@@ -53,10 +54,10 @@ INSERT INTO Users (username, firstName, lastName, dob, is_admin, desc, avatar, p
 ('johndoe', 'John','Doe', '1990-01-15', 1, 'Tech enthusiast and blogger.', 'avatar1.jpg', 'password123'),
 ('janedoe', 'Jane','Doe', '1985-05-20', 0, 'Health and wellness coach.', 'avatar2.jpg', 'Password!');
 
-INSERT INTO Articles (title, image, username, text, date) VALUES
-('The Future of Technology', 'tech_future.jpg', 'johndoe', 'Technology is advancing at an unprecedented rate...', '2024-05-01'),
-('Healthy Eating Habits', 'healthy_eating.jpg', 'janedoe', 'Adopting healthy eating habits can significantly improve...', '2024-05-05');
+INSERT INTO Articles (title, image, user_id, text, date) VALUES
+('The Future of Technology', 'tech_future.jpg', 1, 'Technology is advancing at an unprecedented rate...', '2024-05-01'),
+('Healthy Eating Habits', 'healthy_eating.jpg',2, 'Adopting healthy eating habits can significantly improve...', '2024-05-05');
 
-INSERT INTO Comments (desc, date, time, article_id, username) VALUES
-('Great insights on technology!', '2024-05-02', '10:30:00', 1, 'johndoe'),
-('Very informative article.', '2024-05-06', '12:15:00', 2, 'janedoe');
+INSERT INTO Comments (desc, date, time, article_id, user_id) VALUES
+('Great insights on technology!', '2024-05-02', '10:30:00', 1, 2),
+('Very informative article.', '2024-05-06', '12:15:00', 2, 1);

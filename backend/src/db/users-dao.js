@@ -28,23 +28,16 @@ export async function getUserWithCredentials(username, password) {
   );
 }
 
-const createUserSchema = yup
-  .object({
-    username: yup.string().min(1).required(),
-    firstName: yup.string().min(1).required(),
-    lastName: yup.string().min(1).required(),
-    dob: yup.string().optional(),
-    description: yup.string().min(1).max(500).required(),
-    avatar: yup.string().min(1).required(),
-    password: yup.string().min(5).required()
-  })
-  .required();
+export async function getUserList(){
+  const db = await getDatabase();
+  return await db.all("SELECT * from Users");
+}
 
   /**
  * Schema for "update user". We can optionally supply a first name, last name, password, and / or desc. We cannot edit thde username or username,
  * or supply any other random data.
  */
-const updateUserSchema = yup
+const userSchema = yup
 .object({
   username: yup.string().min(1).optional(),
   firstName: yup.string().min(1).optional(),
@@ -57,7 +50,7 @@ const updateUserSchema = yup
 
   export async function createUser(createData) {
 
-    const parsedCreatedData = createUserSchema.validateSync(createData, {
+    const parsedCreatedData =  userSchema.validateSync(createData, {
       abortEarly: false,
       stripUnknown: true
     });
@@ -76,24 +69,26 @@ const updateUserSchema = yup
  * Updates the user with the given username if it exists, with the given update data. Update data can optionally include a firstName, lastName,
  * password, and / or desc.
  *
- * @param {*} username the username to update, will be converted to a number using parseInt().
+ * @param {*} id the id to update, will be converted to a number using parseInt().
  * @param {*} udpateData the update data to apply.
  * @returns true if the database was updated, false otherwise
  * @throws an error if updateData is invalid.
  */
-export async function updateUser(username, udpateData) {
+export async function updateUser(user_id, updateData) {
+
   // Validate incoming data (throw error if invalid)
-  const parsedUpdateData = updateUserSchema.validateSync(udpateData, {
+  const parsedUpdateData = userSchema.validateSync(updateData, {
     abortEarly: false,
     stripUnknown: true
   });
 
   // Build and run update statement
   const [updateOperations, updateParams] = buildUpdateStatement(parsedUpdateData);
-  const sql = `UPDATE Users SET ${updateOperations} WHERE username = ?`;
+  const sql = `UPDATE Users SET ${updateOperations} WHERE user_id = ?`;
   console.log(sql);
+  console.log(parsedUpdateData);
   const db = await getDatabase();
-  const dbResult = await db.run(sql, ...updateParams, username);
+  const dbResult = await db.run(sql, ...updateParams, parseInt(user_id));
 
   // Return true if changes applied, false otherwise
   return dbResult.changes > 0;
