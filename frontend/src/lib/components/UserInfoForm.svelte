@@ -14,9 +14,6 @@
   let lastName = user.lastName;
   let desc = user.desc;
   let password = user.password;
-  let error = false;
-  let success = false;
-
 
   //once user clicks save, sends info to backend to be updated.
   async function handleSave() {

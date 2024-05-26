@@ -6,7 +6,7 @@ const router = express.Router();
 //Create artile comment
 router.post("/", async (req, res) => {
   try {
-    let desc = req.body.text;
+    let desc = req.body.desc;
     let user_id = req.body.user_id;
     let date = new Date().toISOString().slice(0, 10);
     let time = new Date().toISOString().slice(11, 19);
