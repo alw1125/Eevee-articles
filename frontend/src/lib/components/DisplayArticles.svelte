@@ -4,6 +4,7 @@
     import { decodeHtml, formatDate } from '$lib/js/utils';
 
     let articles = [];
+    let sortBy = 'date';
 
     async function fetchArticles() {
         try {
@@ -11,15 +12,28 @@
             if (!response.ok) {
                 throw new Error('Failed to fetch articles');
             }
-            const data = await response.json();
+            let data = await response.json();
             data.forEach(article => {
                 article.text = decodeHtml(article.text);
                 article.date = formatDate(article.date); 
             });
+            
+            if (sortBy === 'date') {
+                data.sort((a, b) => new Date(b.date) - new Date(a.date));
+            } else if (sortBy === 'username') {
+                data.sort((a, b) => a.username.localeCompare(b.username));
+            } else if (sortBy === 'title') {
+                data.sort((a, b) => a.title.localeCompare(b.title));
+            }
             return data;
         } catch (error) {
             console.error('Error fetching articles:', error);
         }
+    }
+
+    async function sortArticles(option) {
+        sortBy = option;
+        articles = await fetchArticles();
     }
 
     onMount(async () => {
@@ -31,29 +45,58 @@
     <title>Articles</title>
     <style>
         .article-tile {
-        max-width: 600px;
-        margin: 0 auto;
-        padding: 20px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        margin-bottom: 20px;
-        text-align: left;
-        display: flex;
-        flex-direction: column; 
-        align-items: flex-start; 
-    }
-    .article-date {
-        font-style: italic;
-        align-self: flex-end; 
-    }
-    .author-name {
-        font-size: 1.1em;
-        font-style: italic;
-    }
-</style>
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: left;
+            display: flex;
+            flex-direction: column; 
+            align-items: flex-start; 
+        }
+        .article-date {
+            font-style: italic;
+            align-self: flex-end; 
+        }
+        .author-name {
+            font-size: 1.1em;
+            font-style: italic;
+        }
+        .sort-buttons {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+        .sort-text {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        .sort-button {
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+            background: none;
+            border: none;
+            padding: 0;
+            font: inherit;
+            outline: inherit;
+        }
+        .sort-button:not(:last-child) {
+            margin-right: 10px;
+        }
+    </style>
 </svelte:head>
 
 <h1>Articles</h1>
+<div class="sort-buttons">
+    <span class="sort-text">Sort:</span>
+    <button class="sort-button" on:click={() => sortArticles('username')}>Username</button>
+    <button class="sort-button" on:click={() => sortArticles('title')}>Title</button>
+    <button class="sort-button" on:click={() => sortArticles('date')}>Date</button>
+</div>
 {#if articles.length > 0}
     <div>
         {#each articles as article}
