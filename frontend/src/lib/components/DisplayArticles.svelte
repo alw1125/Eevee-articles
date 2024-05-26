@@ -1,9 +1,16 @@
 <script>
     import { onMount } from 'svelte';
     import { ART_URL } from "$lib/js/api-urls.js";
+    import {LIKES_URL} from '$lib/js/api-urls'
+
     import { decodeHtml, formatDate } from '$lib/js/utils';
 
     let articles = [];
+
+    let like;
+    let article_id; 
+
+
 
     async function fetchArticles() {
         try {
@@ -22,9 +29,28 @@
         }
     }
 
+    async function handleLike() {
+    error = false;
+    
+    const response = await fetch(LIKES_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ title, image, text, user_id })
+    });
+
+    success = response.status === 204;
+    error = !success;
+
+    if (success) invalidate(ART_URL);
+  }
+  
+
     onMount(async () => {
         articles = await fetchArticles();
+
     });
+
+
 </script>
 
 <svelte:head>
