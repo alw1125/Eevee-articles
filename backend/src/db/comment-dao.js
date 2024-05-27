@@ -14,3 +14,11 @@ export async function getAllComments() {
   const comments = await db.all(`SELECT desc, date, time, user_id FROM Comments`);
   return comments;
 }
+
+export async function deleteComment(user_id, article_id) {
+  const db = await getDatabase();
+  const deleteComm = await db.run(`DELETE FROM Comments WHERE user_id = ? AND article_id = ?`, user_id, article_id);
+  
+  // Return true if changes applied, false otherwise
+  return deleteComm.changes > 0;
+}

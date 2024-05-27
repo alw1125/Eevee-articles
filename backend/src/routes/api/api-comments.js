@@ -1,5 +1,5 @@
 import express from "express";
-import { postComment, getAllComments } from "../../db/comment-dao.js";
+import { postComment, getAllComments, deleteComment } from "../../db/comment-dao.js";
 
 const router = express.Router();
 
@@ -33,7 +33,17 @@ router.get("/", async (req, res) => {
   }
 });
 
-//Delete artile comment
-router.delete("/:artile_id/:comment_id", async (req, res) => {});
+//Delete article comment
+router.delete("/:articleId", async (req, res) => {
+  try {
+    const user_id = req.body.user_id;
+    const article_id = req.params.article_id;
+    const deleted = await deleteComment(user_id, article_id);
+    return res.sendStatus(deleted ? 204 : 404);
+  } catch (error) {
+    console.error("Error deleting comment: ", error);
+    return res.sendStatus(422);
+  }
+});
 
 export default router;

@@ -35,6 +35,23 @@
   onMount(async () => {
     comments = await fetchComments();
   });
+
+  async function deleteComment() {
+    const response = await fetch(`${COMMENTS_URL}/${user.articleId}`, {
+      method: "DELETE",
+      body: {
+        
+      }
+    });
+
+    console.log(`${COMMENTS_URL}/${user.articleId}`);
+    console.log(response.status);
+    if (response.status === 204) {
+      invalidate(COMMENTS_URL);
+    } else {
+      alert(`Unexpected status code received: ${response.status}`);
+    }
+  }
 </script>
 
 {#if comments.length > 0}
@@ -45,6 +62,7 @@
         <div class="message">
           {@html comment.desc}
           <p class="comment-date">{comment.time} {comment.date}</p>
+          <button type="button" on:click={deleteComment}>DELETE COMMENT</button>
         </div>
       </div>
     </div>
@@ -75,7 +93,7 @@
     padding: 5px;
     background-color: #ebebeb;
     border-radius: 3px;
-    border: 5px solid #ccc; 
+    border: 5px solid #ccc;
   }
 
   .body .message {
