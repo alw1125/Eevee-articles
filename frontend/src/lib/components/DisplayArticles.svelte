@@ -8,12 +8,7 @@
     let articles = [];
     let sortBy = 'date';
     $: q= $page.url.searchParams.get('q');
-
-
-    function hi(){
-        console.log(q)
-    }
-    
+ 
 
     async function fetchArticles() {
         try {
@@ -25,6 +20,7 @@
             data.forEach(article => {
                 article.text = decodeHtml(article.text);
                 article.date = formatDate(article.date); 
+               
             });
             
             if (sortBy === 'date') {
@@ -34,6 +30,8 @@
             } else if (sortBy === 'title') {
                 data.sort((a, b) => a.title.localeCompare(b.title));
             }
+
+          
             return data;
         } catch (error) {
             console.error('Error fetching articles:', error);
@@ -103,25 +101,58 @@
 <SearchBar/>
 <h1>Articles</h1>
 
-<button on:click={hi}> click  </button>
-
 <div class="sort-buttons">
     <span class="sort-text">Sort:</span>
     <button class="sort-button" on:click={() => sortArticles('username')}>Username</button>
     <button class="sort-button" on:click={() => sortArticles('title')}>Title</button>
     <button class="sort-button" on:click={() => sortArticles('date')}>Date</button>
 </div>
-{#if articles.length > 0}
+
+
+
+
+{#if q !=null && articles.length > 0}
+
     <div>
         {#each articles as article}
+        {#if article.text.toLowerCase().includes(q) || article.title.toLowerCase().includes(q) || article.username.toLowerCase().includes(q)}
             <div class="article-tile">
                 <h2>{article.title}</h2>
                 <p class="author-name">{article.username}</p>
                 {@html article.text}
                 <p class="article-date">{article.date}</p>
             </div>
+            
+
+            {/if}
         {/each}
     </div>
-{:else}
-    <p>No articles found.</p>
+
 {/if}
+
+{#if q ==null && articles.length > 0}
+
+    <div>
+        {#each articles as article}
+        
+            <div class="article-tile">
+                <h2>{article.title}</h2>
+                <p class="author-name">{article.username}</p>
+                {@html article.text}
+                <p class="article-date">{article.date}</p>
+            </div>
+            
+        {/each}
+    </div>
+
+{/if}
+
+{#if articles.length <= 0 }
+
+<p>No articles found.</p>
+
+{/if}
+
+
+
+
