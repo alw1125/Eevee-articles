@@ -1,6 +1,7 @@
 import yup from "yup";
 import { getDatabase } from "./database.js";
 
+
 /**
  * Gets the user with the given username, if it exists.
  *
@@ -28,44 +29,52 @@ export async function getUserWithCredentials(username, password) {
   );
 }
 
-export async function getUserList(){
+export async function getUserList() {
   const db = await getDatabase();
   return await db.all("SELECT * from Users");
 }
 
-  /**
+/**
  * Schema for "update user". We can optionally supply a first name, last name, password, and / or desc. We cannot edit thde username or username,
  * or supply any other random data.
  */
 const userSchema = yup
-.object({
-  username: yup.string().min(1).optional(),
-  firstName: yup.string().min(1).optional(),
-  lastName: yup.string().min(1).optional(),
-  dob: yup.string().optional(),
-  password: yup.string().min(5).optional(),
-  desc: yup.string().max(500).optional()
-})
-.required();
+  .object({
+    username: yup.string().min(1).optional(),
+    firstName: yup.string().min(1).optional(),
+    lastName: yup.string().min(1).optional(),
+    dob: yup.string().optional(),
+    password: yup.string().min(5).optional(),
+    desc: yup.string().max(500).optional()
+  })
+  .required();
 
-  export async function createUser(createData) {
+export async function createUser(createData) {
+  const parsedCreatedData = userSchema.validateSync(createData, {
+    abortEarly: false,
+    stripUnknown: true
+  });
 
-    const parsedCreatedData =  userSchema.validateSync(createData, {
-      abortEarly: false,
-      stripUnknown: true
-    });
-    
-    var dob = new Date(parsedCreatedData.dob).toISOString().slice(0, 10);
+  let dob = new Date(parsedCreatedData.dob).toISOString().slice(0, 10);
 
-    const sql = `INSERT INTO Users (username, firstname, lastName, dob, desc, avatar, password) VALUES (?, ?, ?, ?, ?, ?,?)`;    
-    const db = await getDatabase();
-    const dbResult = await db.run(sql, parsedCreatedData.username, parsedCreatedData.firstName, parsedCreatedData.lastName, dob, parsedCreatedData.description, parsedCreatedData.avatar, parsedCreatedData.password);
+  const sql = `INSERT INTO Users (username, firstname, lastName, dob, desc, avatar, password) VALUES (?, ?, ?, ?, ?, ?,?)`;
+  const db = await getDatabase();
+  const dbResult = await db.run(
+    sql,
+    parsedCreatedData.username,
+    parsedCreatedData.firstName,
+    parsedCreatedData.lastName,
+    dob,
+    parsedCreatedData.description,
+    parsedCreatedData.avatar,
+    parsedCreatedData.password
+  );
 
-    // Return true if changes applied, false otherwise
-    return dbResult.changes > 0;
-  }
+  // Return true if changes applied, false otherwise
+  return dbResult.changes > 0;
+}
 
-  /**
+/**
  * Updates the user with the given username if it exists, with the given update data. Update data can optionally include a firstName, lastName,
  * password, and / or desc.
  *
@@ -75,7 +84,6 @@ const userSchema = yup
  * @throws an error if updateData is invalid.
  */
 export async function updateUser(user_id, updateData) {
-
   // Validate incoming data (throw error if invalid)
   const parsedUpdateData = userSchema.validateSync(updateData, {
     abortEarly: false,
@@ -106,4 +114,3 @@ function buildUpdateStatement(obj) {
 
   return [updateOperations.join(", "), updateParams];
 }
-
