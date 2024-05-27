@@ -12,7 +12,7 @@
   let password = "";
   let confirmPassword = "";
   let dob = "";
-  let description = "";
+  let desc = "";
   let error = false;
   let success = false;
   let avatar; 
@@ -49,7 +49,7 @@
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, firstName, lastName, dob, description, avatar, password })
+      body: JSON.stringify({ username, firstName, lastName, dob, desc, avatar, password })
     });
 
     if (response.status === 401) {
@@ -115,7 +115,7 @@
   <input type="date" name="dob" bind:value={dob} required/>
 
   <label for="description">Description (max 500 characters):</label>
-  <textarea name="description" bind:value={description} on:input={adjustTextarea} maxlength="500" required></textarea>
+  <textarea name="description" bind:value={desc} on:input={adjustTextarea} maxlength="500" required></textarea>
 
   <label for="profileAvatar">Profile Avatar:</label>
   <div>
