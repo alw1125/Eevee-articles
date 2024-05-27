@@ -19,7 +19,7 @@
   let images =writable(["http://localhost:3000/images/logo.png", "http://localhost:3000/images/favicon.png"])
   let selectedAvatar = "1";
 
-  function test(imgurl1) {
+  function setImage(imgurl1) {
     avatar=imgurl1;
     console.log(avatar)
 
@@ -123,7 +123,7 @@
       {#each $images as imgurl1} 
 
       <label>
-        <input type="radio" name="profileAvatar" value="1"  on:click={() => test(imgurl1)} required />
+        <input type="radio" name="profileAvatar" value="1"  on:click={() => setImage(imgurl1)} required />
         <img src={imgurl1} alt="Profile Icon 1" />
       </label>
       
