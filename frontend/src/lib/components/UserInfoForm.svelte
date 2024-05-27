@@ -12,7 +12,7 @@
   let firstName = user.firstName;
   let lastName = user.lastName;
   let desc = user.desc;
-  let password = user.password;
+  let password = "";
   let error = false;
   let success = false;
 
