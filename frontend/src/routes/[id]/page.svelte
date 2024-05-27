@@ -1,9 +1,9 @@
 <script>
-    import ArticleView from "$lib/components/ArticleView.svelte";
-  
+    import articleView from "$lib/components/articleView.svelte";
+
     export let data;
     $: article = data.currentArticle;
-    $: author = data.author;
-  </script>
-  
-  <ArticleView {article} {author} />
+    $: author = data.username;
+</script>
+
+<articleView {article} {username} />
