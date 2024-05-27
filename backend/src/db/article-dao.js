@@ -25,5 +25,11 @@ export async function getAllArticles() {
   return articles;
 }
 
+export async function getArticleByID(id){
+  const db = await getDatabase();
+  const articleByID = await db.get('SELECT * FROM Articles WHERE article_id = ?', id);
+  return articleByID;
+}
+
 
 

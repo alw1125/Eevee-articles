@@ -1,14 +1,11 @@
 <script>
-import { USER_URL, ART_URL } from "$lib/js/api-urls.js";
-import DisplayArticles from '$lib/components/DisplayArticles.svelte';
-
-    let article;
+export let data;
 
 </script>
 
-<h1>{article.title}</h1>
+<h1>{data.title}</h1>
 <div>
-    <p class="author-name">{article.username}</p>
-    {@html article.text}
-    <p class="article-date">{article.date}</p>
+    <p class="author-name">{data.username}</p>
+    {@html data.text}
+    <p class="article-date">{data.date}</p>
 </div>
