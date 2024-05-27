@@ -98,8 +98,6 @@
     <button class="sort-button" on:click={() => sortArticles('date')}>Date</button>
 </div>
 {#if articles.length > 0}
-    <div>
-        {#each articles as article}
             <div>
                 {#each articles as article}
                     <a href={`/${article.article_id}`} class="article-tile">
@@ -110,8 +108,7 @@
                     </a>
                 {/each}
             </div>
-        {/each}
-    </div>
+
 {:else}
     <p>No articles found.</p>
 {/if}
