@@ -3,9 +3,17 @@
     import { ART_URL } from "$lib/js/api-urls.js";
     import { decodeHtml, formatDate } from '$lib/js/utils';
     import SearchBar from './SearchBar.svelte'; 
+    import { page } from '$app/stores';
 
     let articles = [];
     let sortBy = 'date';
+    $: q= $page.url.searchParams.get('q');
+
+
+    function hi(){
+        console.log(q)
+    }
+    
 
     async function fetchArticles() {
         try {
@@ -94,6 +102,8 @@
 
 <SearchBar/>
 <h1>Articles</h1>
+
+<button on:click={hi}> click  </button>
 
 <div class="sort-buttons">
     <span class="sort-text">Sort:</span>
