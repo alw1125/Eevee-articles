@@ -4,6 +4,7 @@
   import DisplayComments from '$lib/components/DisplayComments.svelte';
 
   export let data;
+  
 </script>
 
 <svelte:head>

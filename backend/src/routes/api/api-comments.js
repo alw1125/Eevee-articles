@@ -34,11 +34,10 @@ router.get("/", async (req, res) => {
 });
 
 //Delete article comment
-router.delete("/:articleId", async (req, res) => {
+router.delete("/:comment_id", async (req, res) => {
   try {
-    const user_id = req.body.user_id;
-    const article_id = req.params.article_id;
-    const deleted = await deleteComment(user_id, article_id);
+    const comment_id = req.params.comment_id;
+    const deleted = await deleteComment(comment_id);
     return res.sendStatus(deleted ? 204 : 404);
   } catch (error) {
     console.error("Error deleting comment: ", error);
@@ -47,3 +46,5 @@ router.delete("/:articleId", async (req, res) => {
 });
 
 export default router;
+
+

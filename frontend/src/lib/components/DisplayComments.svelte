@@ -37,20 +37,9 @@
   });
 
   async function deleteComment() {
-    const response = await fetch(`${COMMENTS_URL}/${user.articleId}`, {
+    const response = await fetch(`${COMMENTS_URL}/${comment_id}`, {
       method: "DELETE",
-      body: {
-        
-      }
     });
-
-    console.log(`${COMMENTS_URL}/${user.articleId}`);
-    console.log(response.status);
-    if (response.status === 204) {
-      invalidate(COMMENTS_URL);
-    } else {
-      alert(`Unexpected status code received: ${response.status}`);
-    }
   }
 </script>
 
