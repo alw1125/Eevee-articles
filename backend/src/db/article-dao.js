@@ -25,11 +25,13 @@ export async function getAllArticles() {
   return articles;
 }
 
+
 export async function getArticleByID(id){
   const db = await getDatabase();
-  const articleByID = await db.get('SELECT * FROM Articles WHERE article_id = ?', id);
+  const articleByID = await db.get('SELECT Articles.*, Users.username FROM Articles INNER JOIN Users ON Articles.user_id = Users.user_id WHERE article_id = ?', id);
   return articleByID;
 }
+
 
 
 
