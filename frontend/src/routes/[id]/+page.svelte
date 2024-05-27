@@ -1,4 +1,6 @@
 <script>
+import { USER_URL, ART_URL } from "$lib/js/api-urls.js";
+import DisplayArticles from '$lib/components/DisplayArticles.svelte';
 
     let article;
 

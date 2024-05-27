@@ -1,7 +1,11 @@
 <script>
     import { onMount } from 'svelte';
     import { ART_URL } from "$lib/js/api-urls.js";
+    import {USER_URL} from "$lib/js/api-urls.js";
     import { decodeHtml, formatDate } from '$lib/js/utils';
+
+    export let user;
+    export let data;
 
     let articles = [];
     let sortBy = 'date';
@@ -17,6 +21,8 @@
                 article.text = decodeHtml(article.text);
                 article.date = formatDate(article.date); 
             });
+
+            data = data.filter(article => article.username === user.username);
             
             if (sortBy === 'date') {
                 data.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -97,6 +103,7 @@
     <button class="sort-button" on:click={() => sortArticles('title')}>Title</button>
     <button class="sort-button" on:click={() => sortArticles('date')}>Date</button>
 </div>
+{#if data.user}
 {#if articles.length > 0}
     <div>
         {#each articles as article}
@@ -110,5 +117,6 @@
     </div>
 {:else}
     <p>No articles found.</p>
+{/if}
 {/if}
 
