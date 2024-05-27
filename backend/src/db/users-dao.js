@@ -46,6 +46,7 @@ const userSchema = yup
     firstName: yup.string().min(1).optional(),
     lastName: yup.string().min(1).optional(),
     dob: yup.string().optional(),
+    avatar: yup.string().min(1).required(),
     password: yup.string().min(5).optional(),
     desc: yup.string().max(500).optional()
   })
