@@ -1,13 +1,12 @@
 <script>
-  import { onMount } from 'svelte';
-  import { ART_URL } from "$lib/js/api-urls.js";
-  export let article, username;
+  export let article, author;
 </script>
 
 <article>
+  <img src={article.imageUrl} alt="" />
   <h1>{article.title}</h1>
-  <p class="author"><strong>Author: </strong>{username}</p>
-  <p>{article.text}</p>
+  <p class="author"><strong>Author: </strong>{author}</p>
+  <p>{article.content}</p>
 </article>
 
 <style>

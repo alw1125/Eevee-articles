@@ -1,9 +1,9 @@
 <script>
-    import DisplayArticles from "$lib/components/DisplayArticles.svelte";
+    import ArticleView from "$lib/components/ArticleView.svelte";
 
     export let data;
-    $: article = data.currentArticle;
+    $: article = data.article;
     $: author = data.username;
 </script>
 
-<DisplayArticles {article} {author} />
+<ArticleView {article} {author} />

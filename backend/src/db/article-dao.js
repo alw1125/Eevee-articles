@@ -16,7 +16,7 @@ export async function postArticle(title, image, user_id, text, date) {
 
 export async function getAllArticles() {
   const db = await getDatabase();
-  const articles = await db.all(`SELECT title, user_id, text, date FROM Articles`);
+  const articles = await db.all(`SELECT article_id, title, user_id, text, date FROM Articles`);
   return articles;
 }
 

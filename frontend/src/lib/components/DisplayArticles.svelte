@@ -2,7 +2,7 @@
     import { onMount } from 'svelte';
     import { ART_URL } from "$lib/js/api-urls.js";
     import { decodeHtml, formatDate } from '$lib/js/utils';
-    import { navigate } from 'svelte-routing';
+    import { navigate } from 'svelte-routing'; 
 
     let articles = [];
     let sortBy = 'date';
@@ -103,7 +103,7 @@
         {#each articles as article}
             <!-- svelte-ignore a11y-click-events-have-key-events -->
             <!-- svelte-ignore a11y-no-static-element-interactions -->
-            <div class="article-tile" on:click={() => navigate(`/article/${article.id}`)} style="cursor: pointer;">
+            <div class="article-tile" on:click={() => navigate(`/article/${article.article_id}`)} style="cursor: pointer;">
                 <h2>{article.title}</h2>
                 <p class="author-name">{article.username}</p>
                 {@html article.text}
