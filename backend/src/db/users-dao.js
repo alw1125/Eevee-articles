@@ -70,7 +70,7 @@ export async function createUser(createData) {
     parsedCreatedData.firstName,
     parsedCreatedData.lastName,
     dob,
-    parsedCreatedData.description,
+    parsedCreatedData.desc,
     parsedCreatedData.avatar,
     parsedCreatedData.password
   );
