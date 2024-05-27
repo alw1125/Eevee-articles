@@ -9,7 +9,7 @@
 
   let username = user.username;
   let dob = user.dob;
-  let firstName = user.firsName;
+  let firstName = user.firstName;
   let lastName = user.lastName;
   let desc = user.desc;
   let password = user.password;

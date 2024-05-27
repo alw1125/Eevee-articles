@@ -1,6 +1,7 @@
 import express from "express";
 import { getUserWithCredentials } from "../../db/users-dao.js";
 import { createUserJWT } from "../../utils/jwt-utils.js";
+import { getUserWithUsername } from "../../db/users-dao.js";
 
 const router = express.Router();
 
@@ -16,12 +17,11 @@ const router = express.Router();
 router.post("/", async (req, res) => {
   // Get user with provided login details; return 401 if not found
   const { username, password } = req.body;
-  console.log(username, password);
-  const user = await getUserWithCredentials(username, password);
-  if (!user) return res.sendStatus(401);
+  const userValid = await getUserWithCredentials(username, password);
+  console.log(userValid);
+  if (!userValid) return res.sendStatus(401);
 
-  // Create user JWT token and send it back as a HTTP-only cookie along with a 204 status.
-  const jwtToken = createUserJWT(user.username);
+  const jwtToken = createUserJWT(username);
 
   // Expires 24 hours from now
   const expires = new Date(Date.now() + 86400000);

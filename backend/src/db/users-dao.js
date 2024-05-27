@@ -1,6 +1,9 @@
 import yup from "yup";
 import { getDatabase } from "./database.js";
 
+import { compareHashed } from "./hash-password.js";
+import { hashPassword } from "./hash-password.js";
+
 
 /**
  * Gets the user with the given username, if it exists.
@@ -22,11 +25,10 @@ export async function getUserWithUsername(username) {
  */
 export async function getUserWithCredentials(username, password) {
   const db = await getDatabase();
-  return await db.get(
-    "SELECT * from Users WHERE username = ? AND password = ?",
-    username,
-    password
+  let hashed = await db.get(
+    "SELECT password from Users WHERE username = ?", username
   );
+    return compareHashed(password, hashed.password);
 }
 
 export async function getUserList() {
@@ -50,6 +52,9 @@ const userSchema = yup
   .required();
 
 export async function createUser(createData) {
+
+  createData.password = await hashPassword(createData.password);
+
   const parsedCreatedData = userSchema.validateSync(createData, {
     abortEarly: false,
     stripUnknown: true
@@ -84,6 +89,9 @@ export async function createUser(createData) {
  * @throws an error if updateData is invalid.
  */
 export async function updateUser(user_id, updateData) {
+
+  updateData.password = await hashPassword(updateData.password);
+
   // Validate incoming data (throw error if invalid)
   const parsedUpdateData = userSchema.validateSync(updateData, {
     abortEarly: false,
