@@ -81,7 +81,7 @@ router.delete("/:article_id/like", async (req, res) => {
 router.get("/:article_id/like", async (req, res) => {
     try {
       const user_id  = req.query;
-      const article_id  = req.params;
+      const article_id  = req.params.article_id;
       const liked = await checkIfArticleIsLiked(user_id, article_id);
       return res.json( liked );
     } catch {

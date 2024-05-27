@@ -45,28 +45,10 @@
         }
     }
 
-<<<<<<< HEAD
-    async function handleLike() {
-    error = false;
-    
-    const response = await fetch(LIKES_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, image, text, user_id })
-    });
-
-    success = response.status === 204;
-    error = !success;
-
-    if (success) invalidate(ART_URL);
-  }
-  
-=======
     async function sortArticles(option) {
         sortBy = option;
         articles = await fetchArticles();
     }
->>>>>>> main
 
     onMount(async () => {
         articles = await fetchArticles();
