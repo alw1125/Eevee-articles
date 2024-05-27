@@ -2,6 +2,7 @@
     import { onMount } from 'svelte';
     import { ART_URL } from "$lib/js/api-urls.js";
     import { decodeHtml, formatDate } from '$lib/js/utils';
+    import SearchBar from './SearchBar.svelte'; 
 
     let articles = [];
     let sortBy = 'date';
@@ -90,7 +91,10 @@
     </style>
 </svelte:head>
 
+
+<SearchBar/>
 <h1>Articles</h1>
+
 <div class="sort-buttons">
     <span class="sort-text">Sort:</span>
     <button class="sort-button" on:click={() => sortArticles('username')}>Username</button>
