@@ -80,8 +80,8 @@ router.delete("/:article_id/like", async (req, res) => {
 // checks if user liked an article 
 router.get("/:article_id/like", async (req, res) => {
     try {
-      const { user_id } = req.query;
-      const { article_id } = req.params;
+      const user_id  = req.query;
+      const article_id  = req.params;
       const liked = await checkIfArticleIsLiked(user_id, article_id);
       return res.json( liked );
     } catch {
