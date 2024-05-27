@@ -19,3 +19,5 @@ export async function getAllArticles() {
   const articles = await db.all(`SELECT title, user_id, text, date FROM Articles`);
   return articles;
 }
+
+
