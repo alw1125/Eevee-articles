@@ -14,10 +14,16 @@ export async function postArticle(title, image, user_id, text, date) {
   return postResult.changes > 0;
 }
 
+
 export async function getAllArticles() {
   const db = await getDatabase();
-  const articles = await db.all(`SELECT article_id, title, user_id, text, date FROM Articles`);
+  const articles = await db.all(`
+      SELECT Articles.article_id, Articles.title, Articles.user_id, Articles.text, Articles.date, Users.username
+      FROM Articles
+      INNER JOIN Users ON Articles.user_id = Users.user_id
+  `);
   return articles;
 }
+
 
 

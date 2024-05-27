@@ -8,7 +8,7 @@
     <a
       class="nav-link"
       class:active={$page.params.id == article.id}
-      href="/articles/{article.id}"
+      href="/{article.id}"
       title={article.title}
     >
       {article.title}

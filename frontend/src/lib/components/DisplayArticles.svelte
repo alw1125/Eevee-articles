@@ -103,7 +103,7 @@
         {#each articles as article}
             <!-- svelte-ignore a11y-click-events-have-key-events -->
             <!-- svelte-ignore a11y-no-static-element-interactions -->
-            <div class="article-tile" on:click={() => navigate(`/article/${article.article_id}`)} style="cursor: pointer;">
+            <div class="article-tile" on:click={() => navigate(`/${article.article_id}`)} style="cursor: pointer;">
                 <h2>{article.title}</h2>
                 <p class="author-name">{article.username}</p>
                 {@html article.text}
