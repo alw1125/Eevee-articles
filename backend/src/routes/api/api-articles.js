@@ -41,26 +41,42 @@ router.patch("/:article_id", async (req, res) => {
 });
 
 
-
 //Get number of likes
 router.get("/:article_id/like", async (req, res) => {
     try {
     
         const article_id = req.params.article_id;
-        const allLikes = await getArticleLikesCount(article_id);
-        return res.json(allLikes);
+        const likeNumber = await getArticleLikesCount(article_id);
+        return res.json( likeNumber );
+       
     } catch {
         return res.sendStatus(422);
         }
 });
 
+// checks if user liked an article 
+router.get("/:article_id/like/:user_id/check", async (req, res) => {
+    try {
+        const user_id = req.params.user_id;
+        const article_id = req.params.article_id;
+        const liked = await checkIfArticleIsLiked(user_id, article_id);
+        return res.json(liked);
+    } catch (error) {
+        console.error(error);
+        return res.sendStatus(422);
+    }
+  });
+
+
+
+
 //Like article
 
 router.post("/:article_id/like", async (req, res) => {
     try{
-        const user_id = req.body.user_id;
+        const user_id  = req.body.user_id;
         const article_id = req.params.article_id;
-        const liked  = await likeArticle ( user_id, article_id);
+        const liked = await likeArticle(user_id, article_id);
         return res.sendStatus(liked ? 204 : 404);
     }catch{
         return res.sendStatus(422);
@@ -69,9 +85,9 @@ router.post("/:article_id/like", async (req, res) => {
 
 
 //Dislike article
-router.delete("/:article_id/like", async (req, res) => {
+router.post("/:article_id/unlike", async (req, res) => {
     try {
-        const user_id = req.body.user_id;
+        const user_id  = req.body.user_id;
         const article_id = req.params.article_id;
         const unliked = await unlikeArticle(user_id, article_id);
         return res.sendStatus(unliked ? 204 : 404);
@@ -80,17 +96,7 @@ router.delete("/:article_id/like", async (req, res) => {
       }
 });
 
-// checks if user liked an article 
-router.get("/:article_id/like", async (req, res) => {
-    try {
-      const user_id  = req.query;
-      const article_id  = req.params.article_id;
-      const liked = await checkIfArticleIsLiked(user_id, article_id);
-      return res.json( liked );
-    } catch {
-      return res.sendStatus(422);
-    }
-  });
+
 
 
 

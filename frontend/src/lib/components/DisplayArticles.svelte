@@ -1,7 +1,7 @@
 <script>
     import { onMount } from "svelte";
     import { ART_URL } from "$lib/js/api-urls.js";
-    import {LIKES_URL} from '$lib/js/api-urls'
+    
 
     import { decodeHtml, formatDate } from '$lib/js/utils';
     import SearchBar from './SearchBar.svelte'; 

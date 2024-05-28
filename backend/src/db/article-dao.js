@@ -38,12 +38,14 @@ export async function getArticleLikesCount(article_id) {
     `SELECT COUNT(*) AS likeCount FROM UserLikedArticles WHERE article_id = ?`,
     article_id
   );
+  
 
   return result.likeCount;
+  
 }
-export async function checkIfArticleIsLiked () {
+export async function checkIfArticleIsLiked (user_id, article_id) {
   const db = await getDatabase();
-  const result = await db.get(`SELECT * FROM UserLikedArticles WHERE user_id = ? AND article_id = ?`, user_id, article_id);
+  const result = await db.get(`SELECT COUNT (*) as count FROM UserLikedArticles WHERE user_id = ? AND article_id = ?`, user_id, article_id);
  
  // Return true if changes applied, false otherwise
   return result.count> 0;

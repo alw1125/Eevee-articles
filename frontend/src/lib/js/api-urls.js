@@ -10,4 +10,5 @@ export const LOGOUT_URL = `${AUTH_URL}/logout`
 export const ART_URL = `${BASE_URL}/articles`;
 export const UPLOAD_URL =`${BASE_URL}/upload`;
 export const COMMENTS_URL = `${BASE_URL}/comments`;
-export const LIKES_URL = `${ART_URL}/:article_id/like`
+
+
