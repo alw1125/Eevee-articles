@@ -5,21 +5,24 @@
   import CommentBox from "./CommentBox.svelte";
 
   let comments = [];
-  export let user;
+
+  export let data;
+
+  let article_id = data.article_id;
 
   //fetches already existing comments
-  async function fetchComments() {
+  async function fetchComments(article_id) {
     try {
-      const response = await fetch(COMMENTS_URL);
+      const response = await fetch(`${COMMENTS_URL}/${article_id}`);
       if (!response.ok) {
-        throw new Error("Failed to fetch comments");
+        throw new Error("Failed to fetch article comments");
       }
-      const data = await response.json();
-      data.forEach((comment) => {
+      const comments = await response.json();
+      comments.forEach((comment) => {
         comment.desc = decodeHtml(comment.desc);
         comment.date = formatDate(comment.date);
       });
-      return data;
+      return comments;
     } catch (error) {
       console.error("Error fetching comments:", error);
     }
@@ -33,27 +36,35 @@
   }
 
   onMount(async () => {
-    comments = await fetchComments();
+    comments = await fetchComments(article_id);
   });
+
 </script>
 
-{#if comments.length > 0}
+{#if comments}
   {#each comments as comment}
     <div class="dialogbox">
       <div class="body">
         <span class="tip tip-up"></span>
         <div class="message">
-          {@html comment.desc}
+          <p>{comment.desc}</p>
+          <p>{comment.username}</p>
           <p class="comment-date">{comment.time} {comment.date}</p>
         </div>
       </div>
     </div>
+    <CommentBox comment_id = {comment.comment_id}/>
   {/each}
 {:else}
-  <p>No comments found.</p>
+  <div class="dialogbox">
+    <div class="body">
+      <span class="tip tip-up"></span>
+      <div class="message">
+        <p class="message">No comments found...</p>
+      </div>
+    </div>
+  </div>
 {/if}
-
-<CommentBox {user} onCommentPosted={handleCommentPosted} />
 
 <style>
   .tip {
@@ -75,7 +86,7 @@
     padding: 5px;
     background-color: #ebebeb;
     border-radius: 3px;
-    border: 5px solid #ccc; 
+    border: 5px solid #ccc;
   }
 
   .body .message {

@@ -14,3 +14,13 @@ export async function getAllComments() {
   const comments = await db.all(`SELECT desc, date, time, user_id FROM Comments`);
   return comments;
 }
+
+//return first layer comments by article id
+export async function getCommentsByArt(article_id){
+
+  const db = await getDatabase();
+  const comments = await db.all(`SELECT Comments.*, Users.username FROM Comments INNER JOIN Users ON Comments.user_id = Users.user_id WHERE article_id = ? AND parent_comment_id is NULL`,
+  article_id
+  );
+  return comments;
+}

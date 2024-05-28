@@ -1,11 +1,13 @@
 <script>
   import { COMMENTS_URL } from "$lib/js/api-urls";
 
-  export let user;
+  export let comment_id;
   export let onCommentPosted;
 
   let desc = "";
-  let user_id = user.user_id;
+  let user_id;
+
+  console.log(comment_id);
 
   async function handleComment() {
     let error = false;
