@@ -16,7 +16,7 @@
   let error = false;
   let success = false;
   let avatar; 
-  let images =writable(["http://localhost:3000/images/logo.png", "http://localhost:3000/images/favicon.png"])
+  let images =writable(["/images/logo.png", "/images/favicon.png"])
   let selectedAvatar = "1";
 
   function setImage(imgurl1) {
