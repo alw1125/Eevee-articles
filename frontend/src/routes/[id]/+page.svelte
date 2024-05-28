@@ -2,6 +2,10 @@
 import { decodeHtml, formatDate } from "$lib/js/utils";
 export let data;
 
+let likeCount;
+let userId;
+let articleId; 
+
 </script>
 
 
@@ -16,6 +20,10 @@ export let data;
     </article>
 </div>
 
+{#if data.article_id == 1}
+
+<div> AHDBHAbd</div>
+{/if}
 
 <style>
     .container {
