@@ -1,34 +1,41 @@
 <script>
     import { onMount } from "svelte";
     import { ART_URL } from "$lib/js/api-urls.js";
-    import { decodeHtml, formatDate } from "$lib/js/utils";
-  
+    import { decodeHtml, formatDate } from '$lib/js/utils';
+    import SearchBar from './SearchBar.svelte'; 
+    import { page } from '$app/stores';
+
     let articles = [];
-    let sortBy = "date";
-  
+    let sortBy = 'date';
+    $: q= $page.url.searchParams.get('q');
+ 
+
     async function fetchArticles() {
-      try {
-        const response = await fetch(ART_URL);
-        if (!response.ok) {
-          throw new Error("Failed to fetch articles");
+        try {
+            const response = await fetch(ART_URL);
+            if (!response.ok) {
+                throw new Error('Failed to fetch articles');
+            }
+            let data = await response.json();
+            data.forEach(article => {
+                article.text = decodeHtml(article.text);
+                article.date = formatDate(article.date); 
+               
+            });
+            
+            if (sortBy === 'date') {
+                data.sort((a, b) => new Date(b.date) - new Date(a.date));
+            } else if (sortBy === 'username') {
+                data.sort((a, b) => a.username.localeCompare(b.username));
+            } else if (sortBy === 'title') {
+                data.sort((a, b) => a.title.localeCompare(b.title));
+            }
+
+          
+            return data;
+        } catch (error) {
+            console.error('Error fetching articles:', error);
         }
-        let data = await response.json();
-        data.forEach((article) => {
-          article.text = decodeHtml(article.text);
-          article.date = formatDate(article.date);
-        });
-  
-        if (sortBy === "date") {
-          data.sort((a, b) => new Date(b.date) - new Date(a.date));
-        } else if (sortBy === "username") {
-          data.sort((a, b) => a.username.localeCompare(b.username));
-        } else if (sortBy === "title") {
-          data.sort((a, b) => a.title.localeCompare(b.title));
-        }
-        return data;
-      } catch (error) {
-        console.error("Error fetching articles:", error);
-      }
     }
   
     async function sortArticles(option) {
@@ -102,28 +109,64 @@
         margin-right: 10px;
       }
     </style>
-  </svelte:head>
-  
-  <h1>Articles</h1>
-  <div class="sort-buttons">
+</svelte:head>
+
+
+<SearchBar/>
+<h1>Articles</h1>
+
+<div class="sort-buttons">
     <span class="sort-text">Sort:</span>
-    <button class="sort-button" on:click={() => sortArticles("username")}>Username</button>
-    <button class="sort-button" on:click={() => sortArticles("title")}>Title</button>
-    <button class="sort-button" on:click={() => sortArticles("date")}>Date</button>
-  </div>
-  
-  <div class="articles-container">
-    {#if articles.length > 0}
-      {#each articles as article}
-        <button onclick={`window.location.href='/${article.article_id}'`} class="article-tile">
-          <h2>{article.title}</h2>
-          <p class="author-name">{article.username}</p>
-          
-          <p class="article-date">{article.date}</p>
-        </button>
-      {/each}
-    {:else}
-      <p>No articles found.</p>
-    {/if}
-  </div>
-  
+    <button class="sort-button" on:click={() => sortArticles('username')}>Username</button>
+    <button class="sort-button" on:click={() => sortArticles('title')}>Title</button>
+    <button class="sort-button" on:click={() => sortArticles('date')}>Date</button>
+</div>
+
+
+
+
+{#if q !=null && articles.length > 0}
+
+    <div>
+        {#each articles as article}
+        {#if article.text.toLowerCase().includes(q) || article.title.toLowerCase().includes(q) || article.username.toLowerCase().includes(q)}
+            <div class="article-tile">
+                <h2>{article.title}</h2>
+                <p class="author-name">{article.username}</p>
+                {@html article.text}
+                <p class="article-date">{article.date}</p>
+            </div>
+            
+
+            {/if}
+        {/each}
+    </div>
+
+{/if}
+
+{#if q ==null && articles.length > 0}
+
+    <div>
+        {#each articles as article}
+        
+            <div class="article-tile">
+                <h2>{article.title}</h2>
+                <p class="author-name">{article.username}</p>
+                {@html article.text}
+                <p class="article-date">{article.date}</p>
+            </div>
+            
+        {/each}
+    </div>
+
+{/if}
+
+{#if articles.length <= 0 }
+
+<p>No articles found.</p>
+
+{/if}
+
+
+
+

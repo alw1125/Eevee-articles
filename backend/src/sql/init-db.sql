@@ -15,7 +15,7 @@ CREATE TABLE Users (
     is_admin INTEGER,
     desc TEXT,
     avatar TEXT,
-    password VARCHAR(255) NOT NULL
+    password VARCHAR(1000) NOT NULL
 );
 
 CREATE TABLE Articles (

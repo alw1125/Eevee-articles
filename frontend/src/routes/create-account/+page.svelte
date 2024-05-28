@@ -12,14 +12,14 @@
   let password = "";
   let confirmPassword = "";
   let dob = "";
-  let description = "";
+  let desc = "";
   let error = false;
   let success = false;
   let avatar; 
   let images =writable(["http://localhost:3000/images/logo.png", "http://localhost:3000/images/favicon.png"])
   let selectedAvatar = "1";
 
-  function test(imgurl1) {
+  function setImage(imgurl1) {
     avatar=imgurl1;
     console.log(avatar)
 
@@ -49,7 +49,7 @@
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, firstName, lastName, dob, description, avatar, password })
+      body: JSON.stringify({ username, firstName, lastName, dob, desc, avatar, password })
     });
 
     if (response.status === 401) {
@@ -115,7 +115,7 @@
   <input type="date" name="dob" bind:value={dob} required/>
 
   <label for="description">Description (max 500 characters):</label>
-  <textarea name="description" bind:value={description} on:input={adjustTextarea} maxlength="500" required></textarea>
+  <textarea name="description" bind:value={desc} on:input={adjustTextarea} maxlength="500" required></textarea>
 
   <label for="profileAvatar">Profile Avatar:</label>
   <div>
@@ -123,7 +123,7 @@
       {#each $images as imgurl1} 
 
       <label>
-        <input type="radio" name="profileAvatar" value="1"  on:click={() => test(imgurl1)} required />
+        <input type="radio" name="profileAvatar" value="1"  on:click={() => setImage(imgurl1)} required />
         <img src={imgurl1} alt="Profile Icon 1" />
       </label>
       
