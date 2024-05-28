@@ -19,7 +19,9 @@
             article.text = decodeHtml(article.text);
             article.date = formatDate(article.date);
         });
-    
+
+
+        
         if (sortBy === "date") {
             data.sort((a, b) => new Date(b.date) - new Date(a.date));
         } else if (sortBy === "username") {
@@ -94,24 +96,22 @@
     
     <h1>Articles</h1>
     <div class="sort-buttons">
-    <span class="sort-text">Sort:</span>
-    <button class="sort-button" on:click={() => sortArticles("username")}>Username</button>
-    <button class="sort-button" on:click={() => sortArticles("title")}>Title</button>
-    <button class="sort-button" on:click={() => sortArticles("date")}>Date</button>
+        <span class="sort-text">Sort:</span>
+        <button class="sort-button" on:click={() => sortArticles('username')}>Username</button>
+        <button class="sort-button" on:click={() => sortArticles('title')}>Title</button>
+        <button class="sort-button" on:click={() => sortArticles('date')}>Date</button>
     </div>
-    {#if data.user}
+    
     {#if articles.length > 0}
-    <div>
-        {#each articles as article}
-        <button onclick={`window.location.href='/${article.article_id}'`} class="article-tile">
+        <div>
+        {#each articles.filter(article => article.user_id === data.user.user_id) as article}
+            <button onclick={`window.location.href='/${article.article_id}'`} class="article-tile">
             <h2>{article.title}</h2>
             <p class="author-name">{article.username}</p>
-            {@html article.text}
             <p class="article-date">{article.date}</p>
-        </button>
+            </button>
         {/each}
-    </div>
+        </div>
     {:else}
-    <p>No articles found.</p>
-    {/if}
+        <p>No articles found.</p>
     {/if}
