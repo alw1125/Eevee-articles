@@ -14,5 +14,5 @@
 <h1>My Articles</h1>
 
 
-  <UserArticle/>
+  <DisplayArticles />
   <DisplayComments user={data.user}/>
