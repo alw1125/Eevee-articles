@@ -58,14 +58,16 @@
       }
   
       .article-tile {
-        width: calc(33.33% - 20px);
-        margin-bottom: 20px;
-        padding: 20px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        text-align: left;
-        transition: transform 0.3s ease; 
-      }
+    width: calc(30.33% - 20px);
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    text-align: left;
+    transition: transform 0.3s ease;
+    margin-right: 20px; 
+    margin-left: 20px; 
+  }
   
       .article-tile:hover {
         transform: scale(1.05); 
@@ -130,14 +132,11 @@
     <div>
         {#each articles as article}
         {#if article.text.toLowerCase().includes(q) || article.title.toLowerCase().includes(q) || article.username.toLowerCase().includes(q)}
-            <div class="article-tile">
+        <button onclick={`window.location.href='/${article.article_id}'`} class="article-tile">
                 <h2>{article.title}</h2>
                 <p class="author-name">{article.username}</p>
-                {@html article.text}
                 <p class="article-date">{article.date}</p>
-            </div>
-            
-
+            </button>
             {/if}
         {/each}
     </div>
@@ -149,12 +148,11 @@
     <div>
         {#each articles as article}
         
-            <div class="article-tile">
-                <h2>{article.title}</h2>
-                <p class="author-name">{article.username}</p>
-                {@html article.text}
-                <p class="article-date">{article.date}</p>
-            </div>
+        <button onclick={`window.location.href='/${article.article_id}'`} class="article-tile">
+            <h2>{article.title}</h2>
+            <p class="author-name">{article.username}</p>
+            <p class="article-date">{article.date}</p>
+        </button>
             
         {/each}
     </div>
