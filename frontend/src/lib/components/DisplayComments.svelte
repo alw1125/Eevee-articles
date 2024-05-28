@@ -6,6 +6,7 @@
 
   let comments = [];
   export let user;
+  console.log(user);
 
   //fetches already existing comments
   async function fetchComments() {
@@ -15,6 +16,7 @@
         throw new Error("Failed to fetch comments");
       }
       const data = await response.json();
+      console.log("comment data: ", data);
       data.forEach((comment) => {
         comment.desc = decodeHtml(comment.desc);
         comment.date = formatDate(comment.date);
@@ -36,7 +38,8 @@
     comments = await fetchComments();
   });
 
-  async function deleteComment() {
+  async function deleteComment(comment_id) {
+
     const response = await fetch(`${COMMENTS_URL}/${comment_id}`, {
       method: "DELETE",
     });
@@ -51,7 +54,8 @@
         <div class="message">
           {@html comment.desc}
           <p class="comment-date">{comment.time} {comment.date}</p>
-          <button type="button" on:click={deleteComment}>DELETE COMMENT</button>
+          <p>{comment.comment_id}</p>
+          <button type="button" on:click={deleteComment(comment.comment_id)}>DELETE COMMENT</button>
         </div>
       </div>
     </div>
