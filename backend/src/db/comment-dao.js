@@ -11,7 +11,7 @@ export async function postComment(desc, date, time, user_id) {
 
 export async function getAllComments() {
   const db = await getDatabase();
-  const comments = await db.all(`SELECT desc, date, time, user_id FROM Comments`);
+  const comments = await db.all(`SELECT desc, date, time, user_id, comment_id FROM Comments`);
   return comments;
 }
 

@@ -6,6 +6,7 @@
 
   let comments = [];
   export let user;
+  console.log("User info: ", user);
 
   //fetches already existing comments
   async function fetchComments() {
@@ -15,6 +16,7 @@
         throw new Error("Failed to fetch comments");
       }
       const data = await response.json();
+      console.log("comment data: ", data);
       data.forEach((comment) => {
         comment.desc = decodeHtml(comment.desc);
         comment.date = formatDate(comment.date);
@@ -36,10 +38,18 @@
     comments = await fetchComments();
   });
 
-  async function deleteComment() {
+  async function deleteComment(comment_id) {
+    try {
     const response = await fetch(`${COMMENTS_URL}/${comment_id}`, {
       method: "DELETE",
     });
+    
+    // Remove the deleted comment from the comments array
+    comments = comments.filter(comment => comment.comment_id !== comment_id);
+
+  } catch (error) {
+    console.error("Error deleting comment: ", error);
+  }
   }
 </script>
 
@@ -49,9 +59,10 @@
       <div class="body">
         <span class="tip tip-up"></span>
         <div class="message">
-          {@html comment.desc}
+          <p><strong>{user.username}</strong></p> 
           <p class="comment-date">{comment.time} {comment.date}</p>
-          <button type="button" on:click={deleteComment}>DELETE COMMENT</button>
+          <p>{@html comment.desc}</p>
+          <button type="button" on:click={deleteComment(comment.comment_id)}>DELETE COMMENT</button>
         </div>
       </div>
     </div>
