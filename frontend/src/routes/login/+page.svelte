@@ -1,6 +1,6 @@
 <script>
   import { goto } from "$app/navigation";
-  import { AUTH_URL } from "$lib/js/api-urls.js";
+  import { LOGIN_URL } from "$lib/js/api-urls.js";
 
   let username = "";
   let password = "";
@@ -13,7 +13,7 @@
    */
   async function handleSubmit() {
     error = false;
-    const response = await fetch(AUTH_URL, {
+    const response = await fetch(LOGIN_URL, {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
