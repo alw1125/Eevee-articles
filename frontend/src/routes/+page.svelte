@@ -1,5 +1,5 @@
 <script>
-  // Import the DisplayArticles component
+  export let data;
   import DisplayArticles from '$lib/components/DisplayArticles.svelte';
 </script>
 
@@ -9,4 +9,9 @@
 
 <h1>Home</h1>
 
-<DisplayArticles />
+<div class="container">
+  <DisplayArticles articles={data.articles} />
+  <div>
+    <slot />
+  </div>
+</div>
