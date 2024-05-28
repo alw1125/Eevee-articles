@@ -30,7 +30,7 @@
     
         serverResponse = await response.json();
         if (response.status !== 401) {
-        eventDispatch(`upload`, { imageUrl: `http://localhost:3000${serverResponse.imageUrl}` });
+        eventDispatch(`upload`, { imageUrl: `${serverResponse.imageUrl}` });
   
       }
       }

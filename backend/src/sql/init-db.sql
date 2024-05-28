@@ -15,7 +15,7 @@ CREATE TABLE Users (
     is_admin INTEGER,
     desc TEXT,
     avatar TEXT,
-    password VARCHAR(255) NOT NULL
+    password VARCHAR(1000) NOT NULL
 );
 
 CREATE TABLE Articles (
@@ -51,7 +51,7 @@ CREATE TABLE Comments (
 
 -- Dummy messages data
 INSERT INTO Users (username, firstName, lastName, dob, is_admin, desc, avatar, password) VALUES
-('johndoe', 'John','Doe', '1990-01-15', 1, 'Tech enthusiast and blogger.', 'avatar1.jpg', 'password123'),
+('johndoe', 'John','Doe', '1990-01-15', 1, 'Tech enthusiast and blogger.', 'avatar1.jpg', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW'),
 ('janedoe', 'Jane','Doe', '1985-05-20', 0, 'Health and wellness coach.', 'avatar2.jpg', 'Password!');
 
 INSERT INTO Articles (title, image, user_id, text, date) VALUES

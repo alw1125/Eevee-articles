@@ -1,6 +1,6 @@
 <script>
   import "$lib/css/app.css";
-  import { AUTH_URL } from "$lib/js/api-urls.js";
+  import { LOGOUT_URL } from "$lib/js/api-urls.js";
 
   import { page } from "$app/stores";
   import { invalidateAll } from "$app/navigation";
@@ -11,8 +11,8 @@
 
   
   async function handleLogout() {
-    const response = await fetch(AUTH_URL, {
-      method: "DELETE",
+    const response = await fetch(LOGOUT_URL, {
+      method: "POST",
       credentials: "include"
     });
     await invalidateAll();
@@ -21,7 +21,7 @@
 
 <nav>
   <ul>
-    <li class="nav-item"><a href="/" class="{path === '/' ? 'active' : ''}"><img src="http://localhost:3000/images/logo.png" alt="Home" class="nav-img"></a></li>
+    <li class="nav-item"><a href="/" class="{path === '/' ? 'active' : ''}"><img src="/images/logo.png" alt="Home" class="nav-img"></a></li>
     {#if data.isLoggedIn}
       <li><a href="/profile" class:active={path.startsWith("/profile")}>Profile</a></li>
       <li><a href="/postArticle" class:active={path.startsWith("/postArticle")}>Post Articles</a></li>

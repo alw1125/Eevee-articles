@@ -1,6 +1,8 @@
 import { getUserWithUsername } from "../db/users-dao.js";
 import { getUsernameFromJWT } from "../utils/jwt-utils.js";
 
+
+
 /**
  * A middleware which will get the auth JWT from req.cookies.authToken, verify it, find the matching user, and add it to req.user.
  *

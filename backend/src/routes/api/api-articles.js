@@ -1,11 +1,8 @@
 import express from "express";
-import { postArticle, getAllArticles, likeArticle, unlikeArticle, getArticleLikesCount, checkIfArticleIsLiked} from "../../db/article-dao.js";
-
+import { postArticle } from "../../db/article-dao.js";
+import {getAllArticles} from "../../db/article-dao.js";
+import {getArticleByID, postArticle, getAllArticles, likeArticle, unlikeArticle, getArticleLikesCount, checkIfArticleIsLiked} from "../../db/article-dao.js";
 const router = express.Router();
-
-//Get user's own article
-router.get("/:user_name", async (req, res) => {
-});
 
 //Create a new article
 router.post("/", async (req, res) => {
@@ -32,6 +29,14 @@ router.get("/", async (req, res) => {
     return res.sendStatus(422);
     }
 });
+
+//Get article by article id
+router.get("/:article_id", async (req, res) => {
+    let article_id = req.params.article_id;
+    let article = await getArticleByID(article_id);
+    return res.json(article);
+});
+
 
 //Edit article
 router.patch("/:article_id", async (req, res) => {

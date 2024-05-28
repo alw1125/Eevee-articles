@@ -14,16 +14,21 @@ export async function postArticle(title, image, user_id, text, date) {
   return postResult.changes > 0;
 }
 
+
 export async function getAllArticles() {
   const db = await getDatabase();
   const articles = await db.all(`
       SELECT Articles.article_id, Articles.title, Articles.user_id, Articles.text, Articles.date, Users.username
       FROM Articles
-      INNER JOIN Users ON Articles.user_id = Users.user_id`
-  );
+      INNER JOIN Users ON Articles.user_id = Users.user_id
+  `);
   return articles;
 }
-
+export async function getArticleByID(id){
+  const db = await getDatabase();
+  const articleByID = await db.get('SELECT Articles.*, Users.username FROM Articles INNER JOIN Users ON Articles.user_id = Users.user_id WHERE article_id = ?', id);
+  return articleByID;
+}
 
 //likes below
 
@@ -59,8 +64,4 @@ export async function unlikeArticle(user_id, article_id) {
   const deleteResult = await db.run(`DELETE FROM UserLikedArticles WHERE user_id = ? AND article_id = ?`, user_id, article_id);
   
   // Return true if changes applied, false otherwise
-  return deleteResult.changes > 0;
-}
-
-
-
+  return deleteResult.changes > 0; }
