@@ -1,6 +1,4 @@
 import express from "express";
-import { postArticle } from "../../db/article-dao.js";
-import {getAllArticles} from "../../db/article-dao.js";
 import {getArticleByID, postArticle, getAllArticles, likeArticle, unlikeArticle, getArticleLikesCount, checkIfArticleIsLiked} from "../../db/article-dao.js";
 const router = express.Router();
 
