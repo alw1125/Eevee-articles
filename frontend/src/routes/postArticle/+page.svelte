@@ -58,7 +58,7 @@
       getText = () => {
         text = tinymce.get('postText').getContent();
       };
-    }, 500);
+    }, 600);
     
   });
 
