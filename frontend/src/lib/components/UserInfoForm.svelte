@@ -12,6 +12,7 @@
   let firstName = user.firstName;
   let lastName = user.lastName;
   let desc = user.desc;
+  let avatar = user.avatar;
   let password = "";
   let error = false;
   let success = false;
@@ -22,7 +23,7 @@
       method: "PATCH",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, firstName, lastName, dob, password, desc })
+      body: JSON.stringify({ username, firstName, lastName, dob, password, desc, avatar })
     });
 
     success = response.status === 204;
