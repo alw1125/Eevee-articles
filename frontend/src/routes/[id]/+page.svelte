@@ -5,15 +5,18 @@ import { ART_URL }from "$lib/js/api-urls"
 import { invalidate } from "$app/navigation";
 export let data;
 
-let likeCount; 
+let likeCount
 $: likeNumber = likeCount; 
-let userId = data.user.user_id
+let userId;
 let articleId = data.article_id; 
 let isLiked= false; 
 let error = false; 
 let success = false;
 let buttonEnabled = true;
- 
+
+
+
+
 
 
 async function handleEnableButton(){
@@ -26,7 +29,7 @@ async function handleEnableButton(){
 
 }
 
-async function getLikeCount (articleId){
+async function getLikeCount (){
     
       const response = await fetch(`${ART_URL}/${articleId}/like`, 
         {
@@ -46,7 +49,8 @@ async function getLikeCount (articleId){
 
 }
 
-async function checkIfUserLiked(articleId,userId){
+async function checkIfUserLiked(){
+    userId = data.user.user_id;
     const response = await fetch(`${ART_URL}/${articleId}/like/${userId}/check`, {
         method: "GET",
         credentials: "include"
@@ -63,7 +67,9 @@ async function checkIfUserLiked(articleId,userId){
     
 
 }
-async function like(){ const response = await fetch(`${ART_URL}/${articleId}/like`, {
+async function like(){
+    userId=data.user.user_id; 
+    const response = await fetch(`${ART_URL}/${articleId}/like`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({  user_id: userId  })
@@ -75,7 +81,9 @@ async function like(){ const response = await fetch(`${ART_URL}/${articleId}/lik
 
     if (success) invalidate(`${ART_URL}/${articleId}/like`);}
 
-async function unLike(){const response = await fetch(`${ART_URL}/${articleId}/unlike`, {
+async function unLike(){
+    userId=data.user.user_id;
+    const response = await fetch(`${ART_URL}/${articleId}/unlike`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({  user_id: userId  })
@@ -91,10 +99,14 @@ async function unLike(){const response = await fetch(`${ART_URL}/${articleId}/un
     function likeOperation(){
         if(isLiked==false) {
             like();
+            getLikeCount();
+            checkIfUserLiked();
         } 
 
         else if (isLiked==true) {
             unLike();
+            getLikeCount();
+            checkIfUserLiked();
         }
         else {
             console.log(`could not conduct like operation`)
@@ -104,8 +116,8 @@ async function unLike(){const response = await fetch(`${ART_URL}/${articleId}/un
 
 
 onMount(()=>{{
-    getLikeCount(articleId)
-    checkIfUserLiked(articleId, userId);
+     getLikeCount();
+    checkIfUserLiked();
     handleEnableButton();
 }})
 
