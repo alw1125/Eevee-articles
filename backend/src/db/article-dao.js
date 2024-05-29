@@ -40,6 +40,14 @@ export async function deleteArticle(article_id) {
   return deleteComm.changes > 0;
 }
 
+export async function getArticleByUserID(id){
+  const db = await getDatabase();
+  const articleByUserID = await db.all('SELECT Articles.*, Users.username FROM Articles INNER JOIN Users ON Articles.user_id = Users.user_id WHERE Articles.user_id = ?', id);
+  return articleByUserID;
+}
+
+
+
 //likes below
 
 export async function getArticleLikesCount(article_id) {
