@@ -27,14 +27,14 @@ CREATE TABLE Articles (
     user_id INTEGER,
     text TEXT,
     date DATE,
-    FOREIGN KEY (user_id) REFERENCES Users (user_id)
+    FOREIGN KEY (user_id) REFERENCES Users (user_id) ON DELETE CASCADE
 );
 
 CREATE TABLE UserLikedArticles (
     user_id  INTEGER,
     article_id INTEGER,
-    FOREIGN KEY (user_id ) REFERENCES Users (user_id ),
-    FOREIGN KEY (article_id) REFERENCES Articles (article_id),
+    FOREIGN KEY (user_id ) REFERENCES Users (user_id ) ON DELETE CASCADE,
+    FOREIGN KEY (article_id) REFERENCES Articles (article_id) ON DELETE CASCADE,
     PRIMARY KEY (user_id, article_id)
 );
 
@@ -47,8 +47,8 @@ CREATE TABLE Comments (
     user_id INTEGER,
     parent_comment_id INTEGER,
     FOREIGN KEY (article_id) REFERENCES Articles (article_id) ON DELETE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES Users (user_id),
-    FOREIGN KEY (parent_comment_id) REFERENCES Comments (comment_id)
+    FOREIGN KEY (user_id) REFERENCES Users (user_id) ON DELETE CASCADE,
+    FOREIGN KEY (parent_comment_id) REFERENCES Comments (comment_id) ON DELETE CASCADE
 );
 
 
