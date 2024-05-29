@@ -6,7 +6,6 @@
 
   let comments = [];
   export let user;
-  console.log("User info: ", user);
 
   //fetches already existing comments
   async function fetchComments() {
@@ -39,17 +38,21 @@
   });
 
   async function deleteComment(comment_id) {
-    try {
-    const response = await fetch(`${COMMENTS_URL}/${comment_id}`, {
-      method: "DELETE",
-    });
-    
-    // Remove the deleted comment from the comments array
-    comments = comments.filter(comment => comment.comment_id !== comment_id);
+    let user_id = user.user_id;
+    let is_admin = user.is_admin;
 
-  } catch (error) {
-    console.error("Error deleting comment: ", error);
-  }
+    try {
+      const response = await fetch(`${COMMENTS_URL}/${comment_id}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_id, is_admin })
+      });
+
+      // Remove the deleted comment from the comments array
+      comments = comments.filter((comment) => comment.comment_id !== comment_id);
+    } catch (error) {
+      console.error("Error deleting comment: ", error);
+    }
   }
 </script>
 
@@ -59,10 +62,14 @@
       <div class="body">
         <span class="tip tip-up"></span>
         <div class="message">
-          <p><strong>{user.username}</strong></p> 
+          <p><strong>{comment.username}</strong></p>
           <p class="comment-date">{comment.time} {comment.date}</p>
           <p>{@html comment.desc}</p>
-          <button type="button" on:click={deleteComment(comment.comment_id)}>DELETE COMMENT</button>
+          {#if user.isLoggedIn}
+            {#if comment.user_id == user.user.user_id}
+              <button type="button" on:click={deleteComment(comment.comment_id)}>DELETE COMMENT</button>
+            {/if}
+          {/if}
         </div>
       </div>
     </div>
@@ -71,7 +78,9 @@
   <p>No comments found.</p>
 {/if}
 
-<CommentBox {user} onCommentPosted={handleCommentPosted} />
+{#if user.isLoggedIn}
+  <CommentBox {user} onCommentPosted={handleCommentPosted} />
+{/if}
 
 <style>
   .tip {

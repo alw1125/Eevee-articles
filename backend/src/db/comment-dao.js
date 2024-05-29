@@ -11,11 +11,19 @@ export async function postComment(desc, date, time, user_id) {
 
 export async function getAllComments() {
   const db = await getDatabase();
-  const comments = await db.all(`SELECT desc, date, time, user_id, comment_id FROM Comments`);
+  const comments = await db.all(`SELECT Comments.*, Users.username FROM Comments JOIN Users ON Comments.user_id = Users.user_id`);
   return comments;
 }
 
-export async function deleteComment(comment_id) {
+export async function deleteComment(comment_id, user_id) {
+  const db = await getDatabase();
+  const deleteComm = await db.run(`DELETE FROM Comments WHERE comment_id = ? AND user_id = ?`, comment_id, user_id);
+  console.log(deleteComm.changes);
+  // Return true if changes applied, false otherwise
+  return deleteComm.changes > 0;
+}
+
+export async function deleteCommentAsAdmin(comment_id) {
   const db = await getDatabase();
   const deleteComm = await db.run(`DELETE FROM Comments WHERE comment_id = ?`, comment_id);
   console.log(deleteComm.changes);

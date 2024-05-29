@@ -1,18 +1,17 @@
 <script>
   import { onMount } from 'svelte';
-  import { NEWUSER_URL } from '$lib/js/api-urls.js';
+  import { USER_URL } from '$lib/js/api-urls.js';
   import { decodeHtml, formatDate } from '$lib/js/utils';
-  import UserArticle from '$lib/components/UserArticle.svelte';
 
   export let data;
 
   let user_id = data.user.user_id;
   let articles = [];
-  let sortBy = 'date';
+  // let sortBy = 'date';
 
   async function fetchArticles() {
     try {
-      const response = await fetch(`${NEWUSER_URL}/${user_id}/articles`);
+      const response = await fetch(`${USER_URL}/${user_id}/articles`);
       if (!response.ok) {
         throw new Error("Failed to fetch user articles");
       }

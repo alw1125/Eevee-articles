@@ -44,7 +44,7 @@ CREATE TABLE Comments (
     article_id INTEGER,
     user_id INTEGER,
     parent_comment_id INTEGER,
-    FOREIGN KEY (article_id) REFERENCES Articles (article_id),
+    FOREIGN KEY (article_id) REFERENCES Articles (article_id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES Users (user_id),
     FOREIGN KEY (parent_comment_id) REFERENCES Comments (comment_id)
 );

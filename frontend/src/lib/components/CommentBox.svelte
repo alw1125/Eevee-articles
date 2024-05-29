@@ -5,7 +5,8 @@
   export let onCommentPosted;
 
   let desc = "";
-  let user_id = user.user_id;
+  let user_id = user.user.user_id;
+  let username = user.user.username;
 
   async function handleComment() {
     let error = false;
@@ -20,11 +21,13 @@
     const newComment = {
       desc,
       user_id,
+      username,
       date: new Date().toISOString().slice(0, 10),
       time: new Date().toISOString().slice(11, 19)
     };
 
     try {
+     
       const response = await fetch(COMMENTS_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
