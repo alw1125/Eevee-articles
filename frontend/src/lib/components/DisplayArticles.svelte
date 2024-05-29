@@ -12,11 +12,6 @@
     $: q= $page.url.searchParams.get('q');
  
 
-    let like;
-    let article_id; 
-
-
-
     async function fetchArticles() {
         try {
             const response = await fetch(ART_URL);

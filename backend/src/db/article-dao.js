@@ -24,10 +24,20 @@ export async function getAllArticles() {
   `);
   return articles;
 }
+
+
 export async function getArticleByID(id){
   const db = await getDatabase();
   const articleByID = await db.get('SELECT Articles.*, Users.username FROM Articles INNER JOIN Users ON Articles.user_id = Users.user_id WHERE article_id = ?', id);
   return articleByID;
+}
+
+export async function deleteArticle(article_id) {
+  const db = await getDatabase();
+  const deleteComm = await db.run(`DELETE FROM Articles WHERE article_id = ?`, article_id);
+  console.log(deleteComm.changes);
+  // Return true if changes applied, false otherwise
+  return deleteComm.changes > 0;
 }
 
 //likes below
@@ -67,3 +77,7 @@ export async function unlikeArticle(user_id, article_id) {
   
   // Return true if changes applied, false otherwise
   return deleteResult.changes > 0; }
+
+
+
+
