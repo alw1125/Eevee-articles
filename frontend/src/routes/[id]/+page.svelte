@@ -157,41 +157,45 @@
 
 <style>
   .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: auto;
-    margin-top: 100px;
-    margin-bottom: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: auto;
+      margin-top: 100px;
+      margin-bottom: 100px;
   }
 
   .article-post {
-    max-width: 600px;
-    padding: 40px;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
+      max-width: 600px;
+      padding: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.3); 
+  border-radius: 8px;
+  text-align: left;
+  transition: transform 0.3s ease;
+  margin-right: 20px; 
+  margin-left: 20px;
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(4px); }
 
   .article-title {
-    font-size: 2em;
-    margin-bottom: 10px;
+      font-size: 2em;
+      margin-bottom: 10px;
   }
 
   .article-author {
-    font-size: 0.9em;
-    color: #666;
-    margin-bottom: 10px;
+      font-size: 0.9em;
+      color: #666;
+      margin-bottom: 10px;
   }
 
   .article-text {
-    font-size: 1.1em;
-    line-height: 1.6;
-    margin-bottom: 20px;
+      font-size: 1.1em;
+      line-height: 1.6;
+      margin-bottom: 20px;
   }
 
   .article-date {
-    font-style: italic;
-    align-self: flex-end;
+      font-style: italic;
+      align-self: flex-end;
   }
 </style>
