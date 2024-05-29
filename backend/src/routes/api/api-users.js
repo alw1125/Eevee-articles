@@ -1,6 +1,7 @@
 import express from "express";
 import { requiresAuthentication } from "../../middleware/auth-middleware.js";
 import { createUser, updateUser, getUserList } from "../../db/users-dao.js";
+import {getArticleByUserID} from "../../db/article-dao.js"
 
 const router = express.Router();
 
@@ -54,6 +55,12 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
   const userList = await getUserList();
   return res.json(userList);
+});
+
+router.get("/:user_id/articles", async(req, res) => {
+  let user_id = req.params.user_id;
+  let userArticles = await getArticleByUserID(user_id);
+  return res.json(userArticles);
 });
 
 //User login

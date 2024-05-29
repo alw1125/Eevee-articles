@@ -32,6 +32,15 @@ export async function getArticleByID(id){
   return articleByID;
 }
 
+export async function getArticleByUserID(id){
+  const db = await getDatabase();
+  console.log(id);
+  const articleByUserID = await db.all('SELECT * FROM Articles WHERE user_id = ?', id);
+  console.log(articleByUserID);
+  return articleByUserID;
+}
+
+
 
 
 
