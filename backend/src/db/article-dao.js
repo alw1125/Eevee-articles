@@ -42,11 +42,10 @@ export async function deleteArticle(article_id) {
 
 export async function getArticleByUserID(id){
   const db = await getDatabase();
-  console.log(id);
-  const articleByUserID = await db.all('SELECT * FROM Articles WHERE user_id = ?', id);
-  console.log(articleByUserID);
+  const articleByUserID = await db.all('SELECT Articles.*, Users.username FROM Articles INNER JOIN Users ON Articles.user_id = Users.user_id WHERE Articles.user_id = ?', id);
   return articleByUserID;
 }
+
 
 
 //likes below
