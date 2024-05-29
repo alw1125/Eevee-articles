@@ -1,5 +1,5 @@
 <svelte:head><script src="https://cdn.tiny.cloud/1/x0j317jyptd01ki3pnw74apyl45v249opero67lbp6yj5lj7/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script></svelte:head>
-<svelte:window on:mouseup={stopExpand} />
+
 
 <script>
   import { ART_URL } from "$lib/js/api-urls"
@@ -17,49 +17,19 @@
   let user_id = data.user.user_id;
   let tempImage; 
   let image;
-  let imageWidth = 10;
-  let imageHeight = 10;
+  $: imageWidth = 600;
+  $: imageHeight = 200;
 
 
-  const grabberWidth = 10
-  const grabberHeight = 5
-	
-	export let width = 60
+  function handleImageSize () {
+    if (imageWidth > 600) {
+      imageWidth = 600
+      
+    } else if(imageHeight >200) {
+      imageHeight= 200
+    }
+  }
 
-	export let x = 20
-  export let y;
-	
-	let expanding = null
-	let start = null, initial = null
-	
-	function startExpand(type, event) {
-		expanding = type
-		start = event.pageX
-		initial = { x, width }
-	}
-	
-	function stopExpand() {
-		expanding = null
-		start = null
-		initial = null
-	}
-	
-	function expand(event) {
-		if (!expanding) return
-		
-		if (expanding == 'left') {
-			const delta = start-event.pageX
-			x = initial.x - delta
-			width = initial.width + delta
-			return
-		}
-		
-		if (expanding == 'right') {
-			const delta = event.pageX-start
-			width = initial.width + delta
-			return
-		}
-	}
 
   
 
@@ -79,6 +49,7 @@
   }
   
   onMount(() => {
+    
     
     setTimeout(() => {
       tinymce.init({
@@ -125,11 +96,31 @@
 
 
 
+  {#if imageWidth >600}
+  {handleImageSize()}
+  {/if}
+
+  {#if imageHeight >200}
+  {handleImageSize()}
+  {/if}
+
+
+
 
 <form on:submit|preventDefault={handlePost}>
   <label for="title">Title:</label>
   {#if (image != null)}
-  <label for = "image"> <img src={image} alt="" width="341" height="93" on:mousemove={expand} class:expanding>  </label>
+  <label for = "image"> 
+    
+    <img src={image} alt="" width={imageWidth} height={imageHeight}> 
+  
+  </label>
+  <label for = "image width"> Image width (max 600px): </label>
+  <input type ="text" name = "image width" bind:value= {imageWidth} required />
+  <label for = "image height"> Image height (max 200px): </label>
+  <input type ="text" name = "image height" bind:value = {imageHeight} required/>
+
+
   {/if}
   <input type="text" name="title" bind:value={title} required />
   <textarea id='postText' bind:value={text} rows="12" required />
