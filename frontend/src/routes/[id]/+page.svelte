@@ -160,7 +160,9 @@ async function deleteArticle() {
             <div class="article-text">{@html data.text}</div>
             <p class="article-date">{formatDate(data.date)}</p>
             {#if data.isLoggedIn}
+            {#if data.user.user_id==data.user_id}
             <button type="button" on:click={deleteArticle}>DELETE ARTICLE</button>
+            {/if}
             {/if}
         </div>
     </article>
