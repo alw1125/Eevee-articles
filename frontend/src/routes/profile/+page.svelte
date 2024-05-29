@@ -2,6 +2,8 @@
   import UserInfoForm from "$lib/components/UserInfoForm.svelte";
   import { USER_URL } from "$lib/js/api-urls";
   import { goto } from "$app/navigation";
+  import { invalidateAll } from "$app/navigation";
+  import { LOGOUT_URL } from "$lib/js/api-urls";
 
   export let data;
 
@@ -27,15 +29,20 @@ try {
   if (response.ok) {
     // Redirect to home page or another page after successful deletion
     goto('/');
+
+    const response = await fetch(LOGOUT_URL, {
+      method: "POST",
+      credentials: "include"
+    });
+    await invalidateAll();
+  
   } else {
     console.error('Failed to delete user:', response.statusText);
-    alert('Failed to delete user.');
   }
 } catch (error) {
   console.error('Error deleting user:', error);
-  
-  alert('An error occurred while trying to delete the user.');
-}}
+}
+}
 </script>
 
 <svelte:head>
