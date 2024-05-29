@@ -121,7 +121,10 @@ onMount(()=>{{
     checkIfUserLiked();
     handleEnableButton();
 }})
+
+
 // delete
+
 async function deleteArticle() {
 
     let user_id = data.user.user_id;
@@ -156,7 +159,7 @@ async function deleteArticle() {
             <p class="article-author">{data.username}</p>
             <div class="article-text">{@html data.text}</div>
             <p class="article-date">{formatDate(data.date)}</p>
-            {#if data.user.user_id == data.user_id}
+            {#if data.isLoggedIn}
             <button type="button" on:click={deleteArticle}>DELETE ARTICLE</button>
             {/if}
         </div>
