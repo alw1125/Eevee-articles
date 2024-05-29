@@ -5,11 +5,12 @@
   export let onCommentPosted;
 
   let desc = "";
-  let user_id;
+  let user_id = user.user.user_id;
+  let username = user.user.username;
+
   async function handleComment() {
     let error = false;
     let success = false;
-    userId = user.user_id;
 
     //prevents posting empty comment
     if (!desc.trim()) {
@@ -19,7 +20,8 @@
 
     const newComment = {
       desc,
-      userId,
+      user_id,
+      username,
       date: new Date().toISOString().slice(0, 10),
       time: new Date().toISOString().slice(11, 19)
     };

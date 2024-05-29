@@ -1,6 +1,7 @@
 <script>
   export let data;
   import DisplayArticles from '$lib/components/DisplayArticles.svelte';
+  import DisplayComments from '$lib/components/DisplayComments.svelte';
 </script>
 
 <svelte:head>
@@ -11,6 +12,7 @@
 
 <div class="container">
   <DisplayArticles />
+  <DisplayComments user = {data}/>
   <div>
     <slot />
   </div>
