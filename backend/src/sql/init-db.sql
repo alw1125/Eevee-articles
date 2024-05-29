@@ -22,6 +22,8 @@ CREATE TABLE Articles (
     article_id INTEGER PRIMARY KEY AUTOINCREMENT,
     title VARCHAR(255),
     image TEXT,
+    image_width INTEGER,
+    image_height INTEGER,
     user_id INTEGER,
     text TEXT,
     date DATE,
@@ -49,14 +51,14 @@ CREATE TABLE Comments (
     FOREIGN KEY (parent_comment_id) REFERENCES Comments (comment_id)
 );
 
--- Dummy messages data
+
 INSERT INTO Users (username, firstName, lastName, dob, is_admin, desc, avatar, password) VALUES
 ('johndoe', 'John','Doe', '1990-01-15', 1, 'Tech enthusiast and blogger.', 'avatar1.jpg', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW'),
 ('janedoe', 'Jane','Doe', '1985-05-20', 0, 'Health and wellness coach.', 'avatar2.jpg', 'Password!');
 
-INSERT INTO Articles (title, image, user_id, text, date) VALUES
-('The Future of Technology', 'tech_future.jpg', 1, 'Technology is advancing at an unprecedented rate...', '2024-05-01'),
-('Healthy Eating Habits', 'healthy_eating.jpg',2, 'Adopting healthy eating habits can significantly improve...', '2024-05-05');
+INSERT INTO Articles (title, image, image_width, image_height, user_id, text, date) VALUES
+('The Future of Technology', 'tech_future.jpg', 100, 200,  1, 'Technology is advancing at an unprecedented rate...', '2024-05-01'),
+('Healthy Eating Habits', 'healthy_eating.jpg',200, 100, 2, 'Adopting healthy eating habits can significantly improve...', '2024-05-05');
 
 INSERT INTO Comments (desc, date, time, article_id, user_id) VALUES
 ('Great insights on technology!', '2024-05-02', '10:30:00', 1, 2),

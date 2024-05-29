@@ -17,12 +17,17 @@
   let user_id = data.user.user_id;
   let tempImage; 
   let image;
+  let imageWidth = 10;
+  let imageHeight = 10;
 
 
   const grabberWidth = 10
+  const grabberHeight = 5
 	
 	export let width = 60
+
 	export let x = 20
+  export let y;
 	
 	let expanding = null
 	let start = null, initial = null
@@ -64,7 +69,7 @@
     const response = await fetch(ART_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, image, text, user_id })
+      body: JSON.stringify({ title, image, imageWidth, imageHeight, text, user_id })
     });
 
     success = response.status === 204;
