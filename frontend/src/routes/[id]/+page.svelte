@@ -7,9 +7,15 @@ export let data;
 console.log("Article data: ", data);
 
 async function deleteArticle() {
+
+    let user_id = data.user.user_id;
+    let is_admin = data.user.is_admin;
+
     try {
       const response = await fetch(`${ART_URL}/${data.article_id}`, {
         method: 'DELETE',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_id , is_admin })
       });
 
       if (response.ok) {
@@ -34,7 +40,9 @@ async function deleteArticle() {
             <p class="article-author">{data.username}</p>
             <div class="article-text">{@html data.text}</div>
             <p class="article-date">{formatDate(data.date)}</p>
+            {#if data.user.user_id == data.user_id}
             <button type="button" on:click={deleteArticle}>DELETE ARTICLE</button>
+            {/if}
         </div>
     </article>
 </div>
