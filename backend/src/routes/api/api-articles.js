@@ -1,5 +1,5 @@
 import express from "express";
-import { postArticle, getAllArticles, getArticleByID, deleteArticle, deleteArticleAsAdmin } from "../../db/article-dao.js";
+import {getArticleByID, deleteArticle,deleteArticleAsAdmin, postArticle, getAllArticles, likeArticle, unlikeArticle, getArticleLikesCount, checkIfArticleIsLiked} from "../../db/article-dao.js";
 
 const router = express.Router();
 
@@ -37,16 +37,67 @@ router.get("/:article_id", async (req, res) => {
 });
 
 //Edit article
-router.patch("/:article_id", async (req, res) => {});
+router.patch("/:article_id", async (req, res) => {
+});
 
-//Like article
-router.patch("/:article_id/like", async (req, res) => {});
-
-//Dislike article
-router.delete("/:article_id/like", async (req, res) => {});
 
 //Get number of likes
-router.patch("/:article_id/like", async (req, res) => {});
+router.get("/:article_id/like", async (req, res) => {
+    try {
+    
+        const article_id = req.params.article_id;
+        const likeNumber = await getArticleLikesCount(article_id);
+        return res.json( likeNumber );
+       
+    } catch {
+        return res.sendStatus(422);
+        }
+});
+
+// checks if user liked an article 
+router.get("/:article_id/like/:user_id/check", async (req, res) => {
+    try {
+        const user_id = req.params.user_id;
+        const article_id = req.params.article_id;
+        const liked = await checkIfArticleIsLiked(user_id, article_id);
+        return res.json(liked);
+    } catch (error) {
+        console.error(error);
+        return res.sendStatus(422);
+    }
+  });
+
+
+
+
+//Like article
+
+router.post("/:article_id/like", async (req, res) => {
+    try{
+        const user_id  = req.body.user_id;
+        const article_id = req.params.article_id;
+        const liked = await likeArticle(user_id, article_id);
+        return res.sendStatus(liked ? 204 : 404);
+    }catch{
+        return res.sendStatus(422);
+    }
+});
+
+//Dislike article
+router.post("/:article_id/unlike", async (req, res) => {
+    try {
+        const user_id  = req.body.user_id;
+        const article_id = req.params.article_id;
+        const unliked = await unlikeArticle(user_id, article_id);
+        return res.sendStatus(unliked ? 204 : 404);
+      } catch {
+        return res.sendStatus(422);
+      }
+});
+
+
+
+
 
 //Delete article
 router.delete("/:article_id", async (req, res) => {

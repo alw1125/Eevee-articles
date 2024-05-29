@@ -1,11 +1,127 @@
 <script>
-import { formatDate } from "$lib/js/utils";
-import { ART_URL } from "$lib/js/api-urls";
+import { decodeHtml, formatDate } from "$lib/js/utils";
+import { onMount } from "svelte";
+import { ART_URL }from "$lib/js/api-urls"
+import { invalidate } from "$app/navigation";
 import { goto } from "$app/navigation";
-
 export let data;
-console.log("Article data: ", data);
 
+let likeCount
+$: likeNumber = likeCount; 
+let userId;
+let articleId = data.article_id; 
+let isLiked= false; 
+let error = false; 
+let success = false;
+let buttonEnabled = true;
+
+
+
+
+
+
+async function handleEnableButton(){
+   if(userId==null) {
+    buttonEnabled = false;
+   }
+   else {
+    buttonEnabled= true; 
+   }
+
+}
+
+async function getLikeCount (){
+    
+      const response = await fetch(`${ART_URL}/${articleId}/like`, 
+        {
+      method: "GET",
+      credentials: "include"
+      });
+     
+      const result = await response.json();
+      likeCount = result;
+
+      success = response.status===204;
+      error != success
+      console.log(likeCount)
+
+      if (success) invalidate(`${ART_URL}/${articleId}/like`);
+    
+
+}
+
+async function checkIfUserLiked(){
+    userId = data.user.user_id;
+    const response = await fetch(`${ART_URL}/${articleId}/like/${userId}/check`, {
+        method: "GET",
+        credentials: "include"
+      });
+      const result = await response.json();
+      isLiked = result;
+      console.log(isLiked)
+
+      success = response.status===204;
+      error != success
+    
+
+      if (success) invalidate(`${ART_URL}/${articleId}/like/${userId}/check`);
+    
+
+}
+async function like(){
+    userId=data.user.user_id; 
+    const response = await fetch(`${ART_URL}/${articleId}/like`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({  user_id: userId  })
+    });
+
+    success = response.status === 204;
+    error = !success;
+    console.log(`hi`)
+
+    if (success) invalidate(`${ART_URL}/${articleId}/like`);}
+
+async function unLike(){
+    userId=data.user.user_id;
+    const response = await fetch(`${ART_URL}/${articleId}/unlike`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({  user_id: userId  })
+    });
+
+    success = response.status === 204;
+    error = !success;
+    console.log(`bye`)
+
+    if (success) invalidate(`${ART_URL}/${articleId}/unlike`);}
+
+
+    function likeOperation(){
+        if(isLiked==false) {
+            like();
+            getLikeCount();
+            checkIfUserLiked();
+        } 
+
+        else if (isLiked==true) {
+            unLike();
+            getLikeCount();
+            checkIfUserLiked();
+        }
+        else {
+            console.log(`could not conduct like operation`)
+        }
+    }
+
+
+
+onMount(()=>{{
+     getLikeCount();
+    checkIfUserLiked();
+    handleEnableButton();
+}})
+// delete
 async function deleteArticle() {
 
     let user_id = data.user.user_id;
@@ -27,9 +143,9 @@ async function deleteArticle() {
       }
     } catch (error) {
       console.error('Error deleting article:', error);
+      
       alert('An error occurred while trying to delete the article.');
-    }
-  }
+    }}
 </script>
 
 
@@ -45,7 +161,14 @@ async function deleteArticle() {
             {/if}
         </div>
     </article>
+   
 </div>
+
+
+
+
+<button on:click={likeOperation} disabled={!buttonEnabled}>Like</button>
+<div> current likecount is {likeNumber}</div>
 
 
 <style>
