@@ -1,5 +1,7 @@
 <script>
   import UserInfoForm from "$lib/components/UserInfoForm.svelte";
+  import { USER_URL } from "$lib/js/api-urls";
+  import { goto } from "$app/navigation";
 
   export let data;
 
@@ -9,6 +11,31 @@
   function toggleEditMode() {
     editMode = !editMode;
   }
+
+  async function deleteUser() {
+
+let user_id = data.user.user_id;
+let is_admin = data.user.is_admin;
+
+try {
+  const response = await fetch(`${USER_URL}/${user_id}`, {
+    method: 'DELETE',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ user_id , is_admin })
+  });
+
+  if (response.ok) {
+    // Redirect to home page or another page after successful deletion
+    goto('/');
+  } else {
+    console.error('Failed to delete user:', response.statusText);
+    alert('Failed to delete user.');
+  }
+} catch (error) {
+  console.error('Error deleting user:', error);
+  
+  alert('An error occurred while trying to delete the user.');
+}}
 </script>
 
 <svelte:head>
@@ -57,6 +84,7 @@
                   </tbody>
               </table>
               <button on:click={toggleEditMode}>Edit</button>
+              <button on:click={deleteUser}>Delete Account</button>
           </div>
       </div>
   {/if}
