@@ -39,9 +39,15 @@
   });
 
   async function deleteComment(comment_id) {
+
+    let user_id = user.user_id;
+    let is_admin = user.is_admin;
+
     try {
     const response = await fetch(`${COMMENTS_URL}/${comment_id}`, {
       method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_id , is_admin })
     });
     
     // Remove the deleted comment from the comments array
@@ -62,7 +68,9 @@
           <p><strong>{user.username}</strong></p> 
           <p class="comment-date">{comment.time} {comment.date}</p>
           <p>{@html comment.desc}</p>
+          {#if comment.user_id == user.user_id}
           <button type="button" on:click={deleteComment(comment.comment_id)}>DELETE COMMENT</button>
+          {/if}
         </div>
       </div>
     </div>

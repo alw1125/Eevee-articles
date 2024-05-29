@@ -15,7 +15,15 @@ export async function getAllComments() {
   return comments;
 }
 
-export async function deleteComment(comment_id) {
+export async function deleteComment(comment_id, user_id) {
+  const db = await getDatabase();
+  const deleteComm = await db.run(`DELETE FROM Comments WHERE comment_id = ? AND user_id = ?`, comment_id, user_id);
+  console.log(deleteComm.changes);
+  // Return true if changes applied, false otherwise
+  return deleteComm.changes > 0;
+}
+
+export async function deleteCommentAsAdmin(comment_id) {
   const db = await getDatabase();
   const deleteComm = await db.run(`DELETE FROM Comments WHERE comment_id = ?`, comment_id);
   console.log(deleteComm.changes);
