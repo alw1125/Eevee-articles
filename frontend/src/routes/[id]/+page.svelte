@@ -134,6 +134,9 @@ onMount(()=>{{
 
 <div class="container">
   <article class="article-post">
+    {#if data.image !=null}
+    <h1> <img src = {data.image} width={data.image_width} height= {data.image_height} alt = "hi"/></h1>
+    {/if}
     <h1 class="article-title">{data.title}</h1>
     <div class="article-content">
       <p class="article-author">{data.username}</p>

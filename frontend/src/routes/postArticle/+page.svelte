@@ -1,5 +1,6 @@
 <svelte:head><script src="https://cdn.tiny.cloud/1/x0j317jyptd01ki3pnw74apyl45v249opero67lbp6yj5lj7/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script></svelte:head>
 
+
 <script>
   import { ART_URL } from "$lib/js/api-urls"
   import { invalidate } from "$app/navigation";
@@ -16,6 +17,21 @@
   let user_id = data.user.user_id;
   let tempImage; 
   let image;
+  $: imageWidth = 600;
+  $: imageHeight = 200;
+
+
+  function handleImageSize () {
+    if (imageWidth > 600) {
+      imageWidth = 600
+      
+    } else if(imageHeight >200) {
+      imageHeight= 200
+    }
+  }
+
+
+  
 
   async function handlePost() {
     error = false;
@@ -23,7 +39,7 @@
     const response = await fetch(ART_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, image, text, user_id })
+      body: JSON.stringify({ title, image, imageWidth, imageHeight, text, user_id })
     });
 
     success = response.status === 204;
@@ -33,6 +49,7 @@
   }
   
   onMount(() => {
+    
     
     setTimeout(() => {
       tinymce.init({
@@ -78,8 +95,33 @@
 <h1>Post</h1>
 
 
+
+  {#if imageWidth >600}
+  {handleImageSize()}
+  {/if}
+
+  {#if imageHeight >200}
+  {handleImageSize()}
+  {/if}
+
+
+
+
 <form on:submit|preventDefault={handlePost}>
   <label for="title">Title:</label>
+  {#if (image != null)}
+  <label for = "image"> 
+    
+    <img src={image} alt="" width={imageWidth} height={imageHeight}> 
+  
+  </label>
+  <label for = "image width"> Image width (max 600px): </label>
+  <input type ="text" name = "image width" bind:value= {imageWidth} required />
+  <label for = "image height"> Image height (max 200px): </label>
+  <input type ="text" name = "image height" bind:value = {imageHeight} required/>
+
+
+  {/if}
   <input type="text" name="title" bind:value={title} required />
   <textarea id='postText' bind:value={text} rows="12" required />
   
@@ -89,6 +131,10 @@
   {#if error}<span class="error">Could not save!</span>{/if}
   {#if success}<span class="success">Saved!</span>{/if}
 </form>
+
+
+
+
 
 
 <style>
