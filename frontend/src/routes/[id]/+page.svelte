@@ -1,10 +1,10 @@
 <script>
-  import { decodeHtml, formatDate } from "$lib/js/utils";
-  import { onMount } from "svelte";
-  import { ART_URL } from "$lib/js/api-urls";
-  import { invalidate } from "$app/navigation";
-  import { goto } from "$app/navigation";
-  export let data;
+import { decodeHtml, formatDate } from "$lib/js/utils";
+import { onMount } from "svelte";
+import { ART_URL }from "$lib/js/api-urls"
+import { invalidate } from "$app/navigation";
+import { goto } from "$app/navigation";
+export let data;
 
   let likeCount;
   $: likeNumber = likeCount;
@@ -98,15 +98,16 @@
     }
   }
 
-  onMount(() => {
-    {
-      getLikeCount();
-      checkIfUserLiked();
-      handleEnableButton();
-    }
-  });
 
-  // delete
+
+onMount(()=>{{
+     getLikeCount();
+    checkIfUserLiked();
+    handleEnableButton();
+}})
+
+
+// delete
 
   async function deleteArticle() {
     let user_id = data.user.user_id;
@@ -124,12 +125,9 @@
         goto("/");
       } else {
         console.error("Failed to delete article:", response.statusText);
-        alert("Failed to delete article.");
       }
     } catch (error) {
       console.error("Error deleting article:", error);
-
-      alert("An error occurred while trying to delete the article.");
     }
   }
 </script>
