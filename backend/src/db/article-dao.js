@@ -5,10 +5,10 @@
 
 import { getDatabase } from "./database.js";
 
-export async function postArticle(title, image, user_id, text, date) {
+export async function postArticle(title, image, image_width, image_height, user_id, text, date) {
   const db = await getDatabase();
-  const postResult = await db.run(`INSERT INTO Articles (title, image, user_id, text, date) VALUES (?, ?, ?, ?, ?)`,
-  title, image, user_id, text, date);
+  const postResult = await db.run(`INSERT INTO Articles (title, image, image_width, image_height, user_id, text, date) VALUES (?, ?, ?, ?, ?, ?, ?)`,
+  title, image, image_width, image_height, user_id, text, date);
 
   // Return true if changes applied, false otherwise
   return postResult.changes > 0;
