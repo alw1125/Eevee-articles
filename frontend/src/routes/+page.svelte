@@ -10,7 +10,7 @@
 <h1>Home</h1>
 
 <div class="container">
-  <DisplayArticles articles={data.articles} />
+  <DisplayArticles />
   <div>
     <slot />
   </div>

@@ -6,7 +6,6 @@
 
   let comments = [];
   export let user;
-  console.log("User info: ", user);
 
   //fetches already existing comments
   async function fetchComments() {
