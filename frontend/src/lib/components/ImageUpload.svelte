@@ -1,4 +1,3 @@
-
 <script>
     // this is from example 15 but modified for our purposes. 
     import { UPLOAD_URL } from "$lib/js/api-urls.js";

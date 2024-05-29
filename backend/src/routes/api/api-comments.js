@@ -1,5 +1,5 @@
 import express from "express";
-import { postComment, getAllComments, getCommentsByArt } from "../../db/comment-dao.js";
+import { postComment, getAllComments , deleteComment, getCommentsByArt} from "../../db/comment-dao.js";
 
 const router = express.Router();
 
@@ -32,8 +32,18 @@ router.get("/", async (req, res) => {
     return res.sendStatus(422);
   }
 });
+//Delete article comment
+router.delete("/:comment_id", async (req, res) => {
+  try {
+    const comment_id = req.params.comment_id;
+    const deleted = await deleteComment(comment_id);
+    return res.sendStatus(deleted ? 204 : 404);
+  } catch (error) {
+    console.error("Error deleting comment: ", error);
+    return res.sendStatus(422);
+  }
+});
 
-//Get first layer comment by article
 router.get("/:article_id", async (req, res) => {
   try {
     const comments = await getCommentsByArt(req.params.article_id);
@@ -44,3 +54,5 @@ router.get("/:article_id", async (req, res) => {
 });
 
 export default router;
+
+

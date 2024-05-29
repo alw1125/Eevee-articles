@@ -1,8 +1,5 @@
 import express from "express";
-import { postArticle } from "../../db/article-dao.js";
-import {getAllArticles} from "../../db/article-dao.js";
-import { getArticleByID } from "../../db/article-dao.js";
-
+import {getArticleByID, deleteArticle, postArticle, getAllArticles, likeArticle, unlikeArticle, getArticleLikesCount, checkIfArticleIsLiked} from "../../db/article-dao.js";
 const router = express.Router();
 
 //Create a new article
@@ -43,21 +40,76 @@ router.get("/:article_id", async (req, res) => {
 router.patch("/:article_id", async (req, res) => {
 });
 
+
+//Get number of likes
+router.get("/:article_id/like", async (req, res) => {
+    try {
+    
+        const article_id = req.params.article_id;
+        const likeNumber = await getArticleLikesCount(article_id);
+        return res.json( likeNumber );
+       
+    } catch {
+        return res.sendStatus(422);
+        }
+});
+
+// checks if user liked an article 
+router.get("/:article_id/like/:user_id/check", async (req, res) => {
+    try {
+        const user_id = req.params.user_id;
+        const article_id = req.params.article_id;
+        const liked = await checkIfArticleIsLiked(user_id, article_id);
+        return res.json(liked);
+    } catch (error) {
+        console.error(error);
+        return res.sendStatus(422);
+    }
+  });
+
+
+
+
 //Like article
-router.patch("/:article_id/like", async (req, res) => {
+
+router.post("/:article_id/like", async (req, res) => {
+    try{
+        const user_id  = req.body.user_id;
+        const article_id = req.params.article_id;
+        const liked = await likeArticle(user_id, article_id);
+        return res.sendStatus(liked ? 204 : 404);
+    }catch{
+        return res.sendStatus(422);
+    }
 });
 
 //Dislike article
-router.delete("/:article_id/like", async (req, res) => {
+router.post("/:article_id/unlike", async (req, res) => {
+    try {
+        const user_id  = req.body.user_id;
+        const article_id = req.params.article_id;
+        const unliked = await unlikeArticle(user_id, article_id);
+        return res.sendStatus(unliked ? 204 : 404);
+      } catch {
+        return res.sendStatus(422);
+      }
 });
 
-//Get number of likes
-router.patch("/:article_id/like", async (req, res) => {
-});
+
+
+
 
 //Delete article
 router.delete("/:article_id", async (req, res) => {
-});
+    try {
+      const article_id = req.params.article_id;
+      const deleted = await deleteArticle(article_id);
+      return res.sendStatus(deleted ? 204 : 404);
+    } catch (error) {
+      console.error("Error deleting article: ", error);
+      return res.sendStatus(422);
+    }
+  });
 
 //Sort article, need to specify the sort options
 router.get("/sort/{sort_options}", async(req, res) => {

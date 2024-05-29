@@ -5,10 +5,8 @@
   import CommentBox from "./CommentBox.svelte";
 
   let comments = [];
-
-  export let data;
-
-  let article_id = data.article_id;
+  export let user;
+  console.log("User info: ", user);
 
   //fetches already existing comments
   async function fetchComments(article_id) {
@@ -17,8 +15,9 @@
       if (!response.ok) {
         throw new Error("Failed to fetch article comments");
       }
-      const comments = await response.json();
-      comments.forEach((comment) => {
+      const data = await response.json();
+      console.log("comment data: ", data);
+      data.forEach((comment) => {
         comment.desc = decodeHtml(comment.desc);
         comment.date = formatDate(comment.date);
       });
@@ -39,6 +38,19 @@
     comments = await fetchComments(article_id);
   });
 
+  async function deleteComment(comment_id) {
+    try {
+    const response = await fetch(`${COMMENTS_URL}/${comment_id}`, {
+      method: "DELETE",
+    });
+    
+    // Remove the deleted comment from the comments array
+    comments = comments.filter(comment => comment.comment_id !== comment_id);
+
+  } catch (error) {
+    console.error("Error deleting comment: ", error);
+  }
+  }
 </script>
 
 {#if comments}
@@ -47,9 +59,10 @@
       <div class="body">
         <span class="tip tip-up"></span>
         <div class="message">
-          <p>{comment.desc}</p>
-          <p>{comment.username}</p>
+          <p><strong>{user.username}</strong></p> 
           <p class="comment-date">{comment.time} {comment.date}</p>
+          <p>{@html comment.desc}</p>
+          <button type="button" on:click={deleteComment(comment.comment_id)}>DELETE COMMENT</button>
         </div>
       </div>
     </div>

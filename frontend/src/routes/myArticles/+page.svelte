@@ -5,6 +5,7 @@
   import UserArticle from '$lib/components/UserArticle.svelte';
 
   export let data;
+  
 </script>
 
 <svelte:head>
