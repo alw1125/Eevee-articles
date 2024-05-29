@@ -1,7 +1,29 @@
 <script>
-import { decodeHtml, formatDate } from "$lib/js/utils";
-export let data;
+import { formatDate } from "$lib/js/utils";
+import { ART_URL } from "$lib/js/api-urls";
+import { goto } from "$app/navigation";
 
+export let data;
+console.log("Article data: ", data);
+
+async function deleteArticle() {
+    try {
+      const response = await fetch(`${ART_URL}/${data.article_id}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        // Redirect to home page or another page after successful deletion
+        goto('/');
+      } else {
+        console.error('Failed to delete article:', response.statusText);
+        alert('Failed to delete article.');
+      }
+    } catch (error) {
+      console.error('Error deleting article:', error);
+      alert('An error occurred while trying to delete the article.');
+    }
+  }
 </script>
 
 
@@ -12,6 +34,7 @@ export let data;
             <p class="article-author">{data.username}</p>
             <div class="article-text">{@html data.text}</div>
             <p class="article-date">{formatDate(data.date)}</p>
+            <button type="button" on:click={deleteArticle}>DELETE ARTICLE</button>
         </div>
     </article>
 </div>
