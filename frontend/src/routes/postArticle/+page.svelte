@@ -1,4 +1,5 @@
 <svelte:head><script src="https://cdn.tiny.cloud/1/x0j317jyptd01ki3pnw74apyl45v249opero67lbp6yj5lj7/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script></svelte:head>
+<svelte:window on:mouseup={stopExpand} />
 
 <script>
   import { ART_URL } from "$lib/js/api-urls"
@@ -16,6 +17,46 @@
   let user_id = data.user.user_id;
   let tempImage; 
   let image;
+
+
+  const grabberWidth = 10
+	
+	export let width = 60
+	export let x = 20
+	
+	let expanding = null
+	let start = null, initial = null
+	
+	function startExpand(type, event) {
+		expanding = type
+		start = event.pageX
+		initial = { x, width }
+	}
+	
+	function stopExpand() {
+		expanding = null
+		start = null
+		initial = null
+	}
+	
+	function expand(event) {
+		if (!expanding) return
+		
+		if (expanding == 'left') {
+			const delta = start-event.pageX
+			x = initial.x - delta
+			width = initial.width + delta
+			return
+		}
+		
+		if (expanding == 'right') {
+			const delta = event.pageX-start
+			width = initial.width + delta
+			return
+		}
+	}
+
+  
 
   async function handlePost() {
     error = false;
@@ -78,8 +119,13 @@
 <h1>Post</h1>
 
 
+
+
 <form on:submit|preventDefault={handlePost}>
   <label for="title">Title:</label>
+  {#if (image != null)}
+  <label for = "image"> <img src={image} alt="" width="341" height="93" on:mousemove={expand} class:expanding>  </label>
+  {/if}
   <input type="text" name="title" bind:value={title} required />
   <textarea id='postText' bind:value={text} rows="12" required />
   
@@ -89,6 +135,10 @@
   {#if error}<span class="error">Could not save!</span>{/if}
   {#if success}<span class="success">Saved!</span>{/if}
 </form>
+
+
+
+
 
 
 <style>
