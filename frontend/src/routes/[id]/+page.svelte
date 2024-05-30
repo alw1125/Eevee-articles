@@ -13,7 +13,6 @@
   let likeCount;
   $: likeNumber = likeCount;
   let userId;
-  let logInUserId = 2; //need to fix this variable here
   let articleId = data.article_id;
   let isLiked = false;
   let error = false;
@@ -167,11 +166,11 @@
 <div>current likecount is {likeNumber}</div>
 
 <h2>Leave your comment!</h2>
-<CommentForm user_id={logInUserId} article_id={articleId} parent_comment_id={null} />
+<CommentForm article_id={articleId} parent_comment_id={null} />
 <h2>Others comments</h2>
 {#if comments}
   {#each comments as comment}
-    <Comment {comment} user_id={logInUserId} article_id={articleId}/>
+    <Comment {comment} article_id={articleId}/>
   {/each}
 {:else}
   <p>Comments empty</p>
