@@ -85,7 +85,7 @@
     image =tempImage;
   }
 
-   
+
 
 </script>
 
@@ -108,16 +108,16 @@
 
 
 <form on:submit|preventDefault={handlePost}>
-  <label for="title">Title:</label>
+  <label for="title" class = "article-text">Title:</label>
   {#if (image != null)}
   <label for = "image"> 
     
     <img src={image} alt="" width={imageWidth} height={imageHeight}> 
   
   </label>
-  <label for = "image width"> Image width (max 600px): </label>
+  <label for = "image width" class = "dim-text"> Image width (max 600px): </label>
   <input type ="text" name = "image width" bind:value= {imageWidth} required />
-  <label for = "image height"> Image height (max 200px): </label>
+  <label for = "image height" class = "dim-text"> Image height (max 200px): </label>
   <input type ="text" name = "image height" bind:value = {imageHeight} required/>
 
 
@@ -138,15 +138,20 @@
 
 
 <style>
-  form {
-    margin: auto;
-    max-width: 800px;
-    border: 1px dashed green;
+form {
+    
+    margin-bottom: 20px;
     padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.3); 
+    border-radius: 8px;
+    margin-right: 20px; 
+    margin-left: 20px;
+    background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(4px); 
     display: grid;
     grid-template-columns: auto 1fr;
     gap: 10px;
-  }
+}
 
   button,
   textarea,
@@ -170,5 +175,10 @@
   .success {
     color: darkgreen;
     background-color: lightgreen;
+  }
+
+  .dim-text {
+
+    color:white;
   }
 </style>

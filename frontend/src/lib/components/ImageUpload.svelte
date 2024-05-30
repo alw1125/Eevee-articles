@@ -37,9 +37,9 @@
   
   
   <!-- A form -->
-  <h3>A file upload form</h3>
+  <h3 class = "article-text"> A file upload form</h3>
   <form on:submit|preventDefault={handleSubmit}>
-    <label for="imageFile">File to upload:</label>
+    <label for="imageFile" class = "article-text">File to upload:</label>
     <input
       type="file"
       multiple={false}
@@ -53,3 +53,11 @@
     <button type="submit">Upload</button>
   </form>
   
+  <style>
+
+.article-text{
+color: white;
+
+}
+
+  </style>
