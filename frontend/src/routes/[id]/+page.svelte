@@ -151,8 +151,9 @@ onMount(()=>{{
   </article>
 </div>
 
-<button on:click={likeOperation} disabled={!buttonEnabled}>Like</button>
-<div>current likecount is {likeNumber}</div>
+<button on:click={likeOperation} disabled={!buttonEnabled} class="like-button">Like</button>
+<div class="like-text">current like count is {likeNumber}</div>
+
 
 <style>
   .container {
@@ -197,4 +198,11 @@ onMount(()=>{{
       font-style: italic;
       align-self: flex-end;
   }
+  .like-text {
+    color: white;
+}
+.like-button {
+  color: black
+}
+
 </style>
