@@ -2,6 +2,7 @@
   import { COMMENTS_URL } from "$lib/js/api-urls";
   import { load } from "../../routes/+layout";
   export let article_id, parent_comment_id;
+  export let onCommentPosted;
 
   let desc = "Leave your comment here!";
 
@@ -9,13 +10,26 @@
   let success = false;
 
   let user_id;
+  let username;
 
   async function handleComment() {
+
+
+
     try {
       user_id = (await load({ fetch })).user.user_id;
+      username = (await load({ fetch })).user.username;
     } catch (error) {
       error = true;
     }
+
+    const newComment = {
+      desc,
+      user_id,
+      username,
+      date: new Date().toISOString().slice(0, 10),
+      time: new Date().toISOString().slice(11, 19)
+    };
 
     if (!user_id) {
       error = true;
@@ -29,6 +43,8 @@
 
         if (response.status === 204) {
           success = true;
+          desc = ""; //clears the comment box
+        onCommentPosted(newComment); //callback function to display new comments at the instance of posting
         } else {
           error = true;
         }
@@ -38,9 +54,9 @@
       }
     }
 
-    setTimeout(() => {
-      window.location.reload();
-    }, 1000);
+    // setTimeout(() => {
+    //   window.location.reload();
+    // }, 1000);
   }
 </script>
 

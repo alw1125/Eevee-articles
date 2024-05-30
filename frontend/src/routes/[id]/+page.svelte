@@ -150,6 +150,13 @@
       console.error("Error fetching comments:", error);
     }
   }
+  
+    //displays new comment (refer to callback function in CommentBox.svelte)
+    function handleCommentPosted(newComment) {
+    newComment.desc = decodeHtml(newComment.desc);
+    newComment.date = formatDate(newComment.date);
+    comments = [...comments, newComment];
+  }
 </script>
 
 <div class="container">
@@ -176,11 +183,11 @@
 <DisplayComments user = {data}, {articleId}/>
 
 <h2>Leave your comment!</h2>
-<CommentForm article_id={articleId} parent_comment_id={null} />
+<CommentForm article_id={articleId} parent_comment_id={null} onCommentPosted={handleCommentPosted}/>
 <h2>Others comments</h2>
 {#if comments}
   {#each comments as comment}
-    <Comment {comment} article_id={articleId}/>
+    <Comment user = {data} {comment} article_id={articleId}/>
   {/each}
 {:else}
   <p>Comments empty</p>
