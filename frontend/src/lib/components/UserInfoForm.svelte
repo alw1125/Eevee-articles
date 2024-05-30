@@ -3,6 +3,7 @@
   import { USER_URL } from "$lib/js/api-urls.js";
   import { createEventDispatcher } from "svelte";
 
+
   export let user;
 
   const dispatch = createEventDispatcher();
@@ -19,7 +20,7 @@
 
   //once user clicks save, sends info to backend to be updated.
   async function handleSave() {
-    const response = await fetch(USER_URL, {
+    const response = await fetch(`${USER_URL}/me`, {
       method: "PATCH",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
@@ -29,9 +30,10 @@
     success = response.status === 204;
     error = !success;
 
-    if (success) invalidate(USER_URL);
-
+    if (success) invalidate(`${USER_URL}/me`);
+    
     dispatch("save");
+    
   }
 
   //cancel editing profile
