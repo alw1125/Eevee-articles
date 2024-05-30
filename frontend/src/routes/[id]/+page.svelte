@@ -4,6 +4,7 @@ import { onMount } from "svelte";
 import { ART_URL }from "$lib/js/api-urls"
 import { invalidate } from "$app/navigation";
 import { goto } from "$app/navigation";
+    import DisplayComments from "$lib/components/DisplayComments.svelte";
 export let data;
 
   let likeCount;
@@ -154,6 +155,8 @@ onMount(()=>{{
 <button on:click={likeOperation} disabled={!buttonEnabled} class="like-button">Like</button>
 <div class="like-text">current like count is {likeNumber}</div>
 
+
+<DisplayComments user = {data}, {articleId}/>
 
 <style>
   .container {
