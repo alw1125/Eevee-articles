@@ -1,27 +1,21 @@
 <script>
   import { COMMENTS_URL } from "$lib/js/api-urls";
   import { load } from "../../routes/+layout";
-  export let article_id, parent_comment_id;
+  export let user, article_id, parent_comment_id;
   export let onCommentPosted;
 
-  let desc = "Leave your comment here!";
+  let desc;
 
   let error = false;
   let success = false;
 
-  let user_id;
-  let username;
+  let user_id = user.user_id;
+  let username = user.username;
 
   async function handleComment() {
 
-
-
-    try {
-      user_id = (await load({ fetch })).user.user_id;
-      username = (await load({ fetch })).user.username;
-    } catch (error) {
-      error = true;
-    }
+    console.log(user_id);
+    console.log(username);
 
     const newComment = {
       desc,
@@ -61,7 +55,7 @@
 </script>
 
 <form on:submit|preventDefault={handleComment}>
-  <textarea bind:value={desc} required></textarea>
+  <textarea bind:value={desc} placeholder="Leave your comment here!"></textarea>
   <button on:submit={handleComment}>Submit!</button>
   {#if error}<span class="error">Could not save!</span>{/if}
   {#if success}<span class="success" id="success">Saved!</span>{/if}

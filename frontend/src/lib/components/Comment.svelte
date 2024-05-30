@@ -1,7 +1,7 @@
 <script>
   import CommentForm from "$lib/components/CommentForm.svelte";
   import { CollapsibleCard } from "svelte-collapsible";
-  
+
   export let user;
   export let comment, article_id;
 
@@ -31,16 +31,14 @@
       <span><strong>user: {comment.username}</strong></span>
       <span>time: {comment.time} {comment.date}</span>
       <p>{comment.desc}</p>
-      <CommentForm {article_id} parent_comment_id={comment.comment_id} />
       {#if user.isLoggedIn}
-      <!-- {#if comment.user_id == user.user.user_id || user.article.user_id == articleId} -->
-        <button type="button" on:click={deleteComment(comment.comment_id)}>DELETE COMMENT</button>
-      <!-- {/if} -->
-    {/if}
+        <button on:click={deleteComment(comment.comment_id)}>DELETE COMMENT</button>
+        <CommentForm {user} {article_id} parent_comment_id={comment.comment_id} />
+      {/if}
       <li>
         {#if comment.children}
           {#each comment.children as child}
-            <svelte:self comment={child} {article_id} />
+            <svelte:self {user} comment={child} {article_id} />
           {/each}
         {/if}
       </li>

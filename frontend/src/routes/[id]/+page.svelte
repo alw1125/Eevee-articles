@@ -180,10 +180,10 @@
 <button on:click={likeOperation} disabled={!buttonEnabled} class="like-button">Like</button>
 <div class="like-text">current like count is {likeNumber}</div>
 
-<DisplayComments user = {data}, {articleId}/>
-
+{#if data.isLoggedIn}
 <h2>Leave your comment!</h2>
-<CommentForm article_id={articleId} parent_comment_id={null} onCommentPosted={handleCommentPosted}/>
+<CommentForm user = {data} article_id={articleId} parent_comment_id={null} onCommentPosted={handleCommentPosted}/>
+{/if}
 <h2>Others comments</h2>
 {#if comments}
   {#each comments as comment}
