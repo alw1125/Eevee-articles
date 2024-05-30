@@ -4,7 +4,6 @@ import { onMount } from "svelte";
 import { ART_URL }from "$lib/js/api-urls"
 import { invalidate } from "$app/navigation";
 import { goto } from "$app/navigation";
-    import DisplayComments from "$lib/components/DisplayComments.svelte";
 export let data;
 
   let likeCount;
@@ -131,6 +130,12 @@ onMount(()=>{{
       console.error("Error deleting article:", error);
     }
   }
+
+
+
+  function goEdit (){
+    goto(`/ ${articleId} /articleEdit`)
+  }
 </script>
 
 <div class="container">
@@ -156,7 +161,12 @@ onMount(()=>{{
 <div class="like-text">current like count is {likeNumber}</div>
 
 
-<DisplayComments user = {data}, {articleId}/>
+{#if data.isLoggedIn}
+{#if data.user.user_id == data.user_id}
+<button on:click ={goEdit}>edit</button>
+{/if}
+{/if}
+
 
 <style>
   .container {

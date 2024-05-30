@@ -8,18 +8,20 @@
   import ImageUpload from "$lib/components/ImageUpload.svelte";
   import { goto } from "$app/navigation";
 
-  export let data;
+  export let data; 
+  
 
-  let title = "";
+  let title = data.title;
   let getText;
-  let text = "";
+  let text = data.text;
   let error = false;
   let success = false;
   let user_id = data.user.user_id;
+  let article_id = data.article_id;
   let tempImage; 
-  let image;
-  $: imageWidth = 600;
-  $: imageHeight = 200;
+  let image = data.image;
+  let imageWidth = data.image_width;
+  let imageHeight = data.image_height;
 
 
   function handleImageSize () {
@@ -31,28 +33,33 @@
     }
   }
 
-  function goBack() { setTimeout (()=> {
-    goto(`/myArticles`)
-  }, 700); }
-   
 
   
 
-  async function handlePost() {
+  async function handleEdit() {
+    console.log(`handleEdit`)
     error = false;
     
-    const response = await fetch(ART_URL, {
-      method: "POST",
+    const response = await fetch(`${ART_URL}/${article_id}`, {
+      method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, image, imageWidth, imageHeight, text, user_id })
+      body: JSON.stringify({ title, image, imageWidth, imageHeight, user_id, text, article_id})
     });
 
     success = response.status === 204;
     error = !success;
 
-    if (success) invalidate(ART_URL);
+    if (success) {
+         invalidate(ART_URL)
+
+        }
   }
   
+  function goBack() { setTimeout (()=> {
+    goto(`/myArticles`)
+  }, 700);
+   
+  }
   onMount(() => {
     
     
@@ -95,7 +102,7 @@
 </script>
 
 
-  <title>Post articles here!</title> 
+  <title>Edit datas here!</title> 
 
 <h1>Post</h1>
 
@@ -112,7 +119,7 @@
 
 
 
-<form on:submit|preventDefault={handlePost}>
+<form on:submit|preventDefault={handleEdit}>
   <label for="title">Title:</label>
   {#if (image != null)}
   <label for = "image"> 
@@ -133,11 +140,10 @@
   <ImageUpload on:upload={handleUpload} />
   <button type="submit" on:click = {getText}>Post!</button>
   {#if error}<span class="error">Could not save!</span>{/if}
-  {#if success}<span class="success">Saved!</span>
+  {#if success}
+  <span class="success">Saved!</span>
   {goBack()}
-  
   {/if}
-
 </form>
 
 

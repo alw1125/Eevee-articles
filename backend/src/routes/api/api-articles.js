@@ -1,5 +1,5 @@
 import express from "express";
-import {getArticleByID, deleteArticle,deleteArticleAsAdmin, postArticle, getAllArticles, likeArticle, unlikeArticle, getArticleLikesCount, checkIfArticleIsLiked} from "../../db/article-dao.js";
+import {getArticleByID, deleteArticle,deleteArticleAsAdmin, postArticle, getAllArticles, likeArticle, unlikeArticle, getArticleLikesCount, checkIfArticleIsLiked, updateArticle} from "../../db/article-dao.js";
 
 const router = express.Router();
 
@@ -38,9 +38,7 @@ router.get("/:article_id", async (req, res) => {
   return res.json(article);
 });
 
-//Edit article
-router.patch("/:article_id", async (req, res) => {
-});
+
 
 
 //Get number of likes
@@ -125,3 +123,25 @@ router.delete("/:article_id", async (req, res) => {
 router.get("/sort/{sort_options}", async (req, res) => {});
 
 export default router;
+
+
+
+
+//Edit article
+router.patch("/:article_id", async (req, res) => {
+  try {
+    let title = req.body.title;
+    let text = req.body.text;
+    let image = req.body.image;
+    let image_width = req.body.imageWidth;
+    let image_height = req.body.imageHeight;
+    let user_id = req.body.user_id;
+    let dateNow = new Date().toISOString().slice(0, 10);
+    let article_id = req.params.article_id;
+
+  const updated = await updateArticle(title, image, image_width,image_height, user_id, text, dateNow, article_id);
+  return res.sendStatus(updated ? 204 : 404);
+  } 
+  catch {
+  return res.sendStatus(422);
+  }}); 
