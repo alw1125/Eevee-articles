@@ -8,11 +8,13 @@ router.post("/", async (req, res) => {
   try {
     let desc = req.body.desc;
     let user_id = req.body.user_id;
+    let parent_comment_id = req.body.parent_comment_id;
+    let article_id = req.body.article_id;
     let date = new Date().toISOString().slice(0, 10);
     let time = new Date().toISOString().slice(11, 19);
     console.log(desc, user_id, date, time);
 
-    const posted = postComment(desc, date, time, user_id);
+    const posted = postComment(desc, date, time, user_id, article_id, parent_comment_id);
     console.log(posted);
     return res.sendStatus(posted ? 204 : 404);
   } catch (error){
@@ -48,6 +50,15 @@ router.get("/:article_id", async (req, res) => {
   try {
     const comments = await getCommentsByArt(req.params.article_id);
     return res.json(comments);
+  } catch (error) {
+    return res.sendStatus(422);
+  }
+});
+
+router.head("/:comment_id", async (req, res) => {
+  try {
+    const isParent = await commentIsParent(req.params.comment_id);
+    return res.json(isParent);
   } catch (error) {
     return res.sendStatus(422);
   }
