@@ -1,12 +1,11 @@
 <script>
-  import Comment from "$lib/components/Comment.svelte";
   import { decodeHtml, formatDate } from "$lib/js/utils";
   import { onMount } from "svelte";
   import { ART_URL } from "$lib/js/api-urls";
   import { COMMENTS_URL } from "$lib/js/api-urls";
   import { invalidate } from "$app/navigation";
   import { goto } from "$app/navigation";
-    import DisplayComments from "$lib/components/DisplayComments.svelte";
+  import Comment from "$lib/components/Comment.svelte";
   import CommentForm from "$lib/components/CommentForm.svelte";
 
   export let data;
@@ -134,7 +133,7 @@
     }
   }
 
-  async function fetchComments(articleId) {
+  export async function fetchComments(articleId) {
     try {
       const response = await fetch(`${COMMENTS_URL}/${articleId}`);
       if (!response.ok) {
@@ -150,13 +149,7 @@
       console.error("Error fetching comments:", error);
     }
   }
-  
-    //displays new comment (refer to callback function in CommentBox.svelte)
-    function handleCommentPosted(newComment) {
-    newComment.desc = decodeHtml(newComment.desc);
-    newComment.date = formatDate(newComment.date);
-    comments = [...comments, newComment];
-  }
+
 </script>
 
 <div class="container">
@@ -182,7 +175,7 @@
 
 {#if data.isLoggedIn}
 <h2>Leave your comment!</h2>
-<CommentForm user = {data} article_id={articleId} parent_comment_id={null} onCommentPosted={handleCommentPosted}/>
+<CommentForm user = {data} article_id={articleId} parent_comment_id={null}/>
 {/if}
 <h2>Others comments</h2>
 {#if comments}

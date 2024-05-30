@@ -34,6 +34,7 @@ router.get("/", async (req, res) => {
     return res.sendStatus(422);
   }
 });
+
 //Delete article comment
 router.delete("/:comment_id", async (req, res) => {
   try {

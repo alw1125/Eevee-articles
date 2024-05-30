@@ -1,9 +1,13 @@
 <script>
   import CommentForm from "$lib/components/CommentForm.svelte";
   import { CollapsibleCard } from "svelte-collapsible";
+  import { COMMENTS_URL } from "$lib/js/api-urls";
 
   export let user;
   export let comment, article_id;
+
+  let error = false;
+  let success = false;
 
   async function deleteComment(comment_id) {
     let user_id = user.user_id;
@@ -15,9 +19,11 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ user_id, is_admin })
       });
-
-      // Remove the deleted comment from the comments array
-      comments = comments.filter((comment) => comment.comment_id !== comment_id);
+      if (response.ok) {
+        success = true;
+      } else {
+        error = true;
+      }
     } catch (error) {
       console.error("Error deleting comment: ", error);
     }
@@ -33,6 +39,8 @@
       <p>{comment.desc}</p>
       {#if user.isLoggedIn}
         <button on:click={deleteComment(comment.comment_id)}>DELETE COMMENT</button>
+        {#if error}<span class="error">Could not delete!</span>{/if}
+        {#if success}<span class="success" id="success">Deleted!</span>{/if}
         <CommentForm {user} {article_id} parent_comment_id={comment.comment_id} />
       {/if}
       <li>
