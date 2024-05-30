@@ -7,11 +7,15 @@
   import { invalidate } from "$app/navigation";
   import { goto } from "$app/navigation";
   import CommentForm from "$lib/components/CommentForm.svelte";
+  import collapse from 'svelte-collapse'
+
   export let data;
 
   let likeCount;
   $: likeNumber = likeCount;
   let userId;
+  let logInUserId = 2;
+  let open = true
   let articleId = data.article_id;
   let isLiked = false;
   let error = false;
@@ -166,6 +170,10 @@
 
 <h2>Leave your comment!</h2>
 <CommentForm user_id={logInUserId} article_id={articleId} parent_comment_id={null} />
+<!-- <button on:click={() => open = !open}>
+  +
+</button>
+<div use:collapse={{open}}> -->
 <h2>Others comments</h2>
 {#if comments}
   {#each comments as comment}
@@ -174,6 +182,7 @@
 {:else}
   <p>Comments empty</p>
 {/if}
+<!-- </div> -->
 
 <style>
   .container {
