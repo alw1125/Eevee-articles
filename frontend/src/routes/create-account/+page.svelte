@@ -40,9 +40,10 @@
 
   async function handleSubmit() {
     error = false;
-    if (password !== confirmPassword) {
-      error = true;
-      return;
+    if(username_error|| password_error) {
+      error =true;
+      return
+
     }
 
     const response = await fetch(USER_URL, {
@@ -52,9 +53,13 @@
       body: JSON.stringify({ username, firstName, lastName, dob, desc, avatar, password })
     });
 
+   
+
     if (response.status === 401) {
       error = true;
-    } else {
+    }  
+
+    else {
       goto("/login", { invalidateAll: true, replaceState: true });
     }
   }
