@@ -130,6 +130,12 @@ onMount(()=>{{
       console.error("Error deleting article:", error);
     }
   }
+
+
+
+  function goEdit (){
+    goto(`/ ${articleId} /articleEdit`)
+  }
 </script>
 
 <div class="container">
@@ -153,6 +159,11 @@ onMount(()=>{{
 
 <button on:click={likeOperation} disabled={!buttonEnabled} class="like-button">Like</button>
 <div class="like-text">current like count is {likeNumber}</div>
+
+
+{#if data.isLoggedIn}
+<button on:click ={goEdit}>edit</button>
+{/if}
 
 
 <style>
