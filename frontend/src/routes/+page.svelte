@@ -8,11 +8,10 @@
   <title>Authentication lab - Home</title>
 </svelte:head>
 
-<h1>Home</h1>
+<h1></h1>
 
 <div class="container">
   <DisplayArticles />
-  <DisplayComments user = {data}/>
   <div>
     <slot />
   </div>

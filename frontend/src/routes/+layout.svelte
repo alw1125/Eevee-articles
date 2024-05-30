@@ -21,7 +21,7 @@
 
 <nav>
   <ul>
-    <li class="nav-item"><a href="/" class="{path === '/' ? 'active' : ''}"><img src="/images/logo.png" alt="Home" class="nav-img"></a></li>
+    <li class="nav-item"><a href="/" class="{path === '/' ? 'active' : ''}"><img src="/images/logoNew.png" alt="Home" class="nav-img"></a></li>
     {#if data.isLoggedIn}
       <li><a href="/profile" class:active={path.startsWith("/profile")}>Profile</a></li>
       <li><a href="/postArticle" class:active={path.startsWith("/postArticle")}>Post Articles</a></li>
@@ -45,11 +45,9 @@
 
 <style>
   nav {
-    background-image: linear-gradient(139deg, rgb(124, 0, 0), rgb(226, 7, 7), rgb(207, 108, 15), rgb(237, 141, 30));
-    padding-left: 20px;
-    padding-right: 20px;
-    box-shadow: 0 5px 3px lightgray;
-    display: flex;
+      height: 12%;
+      display: flex;
+      align-items: center;
 
     & > ul {
       list-style: none;
@@ -73,8 +71,8 @@
     & :is(a, button) {
     display: inline-flex; 
     align-items: center; 
-    color: white;
-    font-size: 1.1rem;
+    color: #fff;
+    font-size: 15px;
     font-weight: bold;
     text-decoration: none;
     background-color: transparent;
@@ -120,9 +118,10 @@
 }
 
 .nav-img {
-    width: 75px; 
-    height: 60px; 
-    
+    width: 55px; 
+    height: 55px; 
+    cursor: pointer;
+    opacity: 0.5;
 }
 
 </style>

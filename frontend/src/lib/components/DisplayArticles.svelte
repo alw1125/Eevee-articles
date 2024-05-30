@@ -49,15 +49,17 @@
   <title>Articles</title>
 </svelte:head>
 
-<SearchBar />
-<h1>Articles</h1>
+<h1></h1>
 
-<div class="sort-buttons">
-  <span class="sort-text">Sort:</span>
-  <button class="sort-button" on:click={() => sortArticles("username")}>Username</button>
-  <button class="sort-button" on:click={() => sortArticles("title")}>Title</button>
-  <button class="sort-button" on:click={() => sortArticles("date")}>Date</button>
-</div>
+<div class = "toolbar">
+  <SearchBar/>
+  <div class="sort-buttons">
+    <span class="sort-text">Sort:</span>
+    <button class="sort-button" on:click={() => sortArticles('username')}>Username</button>
+    <button class="sort-button" on:click={() => sortArticles('title')}>Title</button>
+    <button class="sort-button" on:click={() => sortArticles('date')}>Date</button>
+  </div>
+  </div>
 
 {#if q != null && articles.length > 0}
   <div>
@@ -93,62 +95,82 @@
 
 <style>
   .articles-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
   }
 
   .article-tile {
     width: calc(30.33% - 20px);
     margin-bottom: 20px;
     padding: 20px;
-    border: 1px solid #ccc;
+    border: 1px solid rgba(255, 255, 255, 0.3); 
     border-radius: 8px;
     text-align: left;
     transition: transform 0.3s ease;
-    margin-right: 20px;
+    margin-right: 20px; 
     margin-left: 20px;
-  }
+    background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(4px); 
+}
 
   .article-tile:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transform: scale(1.05); 
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
 
   .article-date {
-    font-style: italic;
-    align-self: flex-end;
+      font-style: italic;
+      align-self: flex-end;
   }
 
   .author-name {
-    font-size: 1.1em;
-    font-style: italic;
+      font-size: 1.1em;
+      font-style: italic;
   }
 
   .sort-buttons {
-    margin-bottom: 10px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-  }
+}
 
-  .sort-text {
+.sort-text {
     margin-right: 10px;
     font-weight: bold;
-  }
+    color: rgb(224, 224, 224);
+}
 
-  .sort-button {
+.sort-button {
     cursor: pointer;
-    color: blue;
-    text-decoration: underline;
-    background: none;
-    border: none;
-    padding: 0;
+    color: rgb(224, 224, 224);
+    text-decoration: none;
+    background-color: transparent;
+    border: 1px solid rgb(142, 142, 142);
+    border-radius: 4px;
+    padding: 8px 12px;
     font: inherit;
-    outline: inherit;
-  }
+    outline: none;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
+}
 
-  .sort-button:not(:last-child) {
+.sort-button:not(:last-child) {
     margin-right: 10px;
-  }
+}
+
+.sort-button:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.sort-buttons {
+  margin-left: auto; 
+}
 </style>
