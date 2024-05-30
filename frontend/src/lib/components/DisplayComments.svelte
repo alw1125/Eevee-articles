@@ -3,9 +3,11 @@
   import { COMMENTS_URL } from "$lib/js/api-urls";
   import { decodeHtml, formatDate } from "$lib/js/utils";
   import CommentBox from "./CommentBox.svelte";
+  import { ART_URL } from "$lib/js/api-urls";
 
   let comments = [];
   export let user;
+  // export let articleId;
 
   //fetches already existing comments
   async function fetchComments() {
@@ -35,6 +37,7 @@
 
   onMount(async () => {
     comments = await fetchComments();
+    await fetchArticleOwner();
   });
 
   async function deleteComment(comment_id) {
@@ -65,10 +68,12 @@
           <p><strong>{comment.username}</strong></p>
           <p class="comment-date">{comment.time} {comment.date}</p>
           <p>{@html comment.desc}</p>
+          <p>{comment.article_id}</p>
+          <p>{articleOwnerUserId}</p>
           {#if user.isLoggedIn}
-            {#if comment.user_id == user.user.user_id}
+            <!-- {#if comment.user_id == user.user.user_id || user.article.user_id == articleId} -->
               <button type="button" on:click={deleteComment(comment.comment_id)}>DELETE COMMENT</button>
-            {/if}
+            <!-- {/if} -->
           {/if}
         </div>
       </div>

@@ -46,6 +46,7 @@ router.delete("/:comment_id", async (req, res) => {
     } else {
       deleted = await deleteComment(comment_id, user_id);
     }
+
     return res.sendStatus(deleted ? 204 : 404);
   } catch (error) {
     console.error("Error deleting comment: ", error);

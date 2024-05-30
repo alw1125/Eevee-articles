@@ -54,7 +54,7 @@ CREATE TABLE Comments (
 
 INSERT INTO Users (username, firstName, lastName, dob, is_admin, desc, avatar, password) VALUES
 ('johndoe', 'John','Doe', '1990-01-15', 1, 'Tech enthusiast and blogger.', 'avatar1.jpg', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW'),
-('janedoe', 'Jane','Doe', '1985-05-20', 0, 'Health and wellness coach.', 'avatar2.jpg', 'Password!');
+('janedoe', 'Jane','Doe', '1985-05-20', 0, 'Health and wellness coach.', 'avatar2.jpg', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW');
 
 INSERT INTO Articles (title, image, image_width, image_height, user_id, text, date) VALUES
 ('The Future of Technology', 'tech_future.jpg', 100, 200,  1, 'Technology is advancing at an unprecedented rate...', '2024-05-01'),
