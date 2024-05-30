@@ -6,6 +6,7 @@
   import { COMMENTS_URL } from "$lib/js/api-urls";
   import { invalidate } from "$app/navigation";
   import { goto } from "$app/navigation";
+    import DisplayComments from "$lib/components/DisplayComments.svelte";
   import CommentForm from "$lib/components/CommentForm.svelte";
 
   export let data;
@@ -37,9 +38,9 @@
     const result = await response.json();
     likeCount = result;
 
-    success = response.status === 204;
-    error != success;
-    console.log(likeCount);
+      success = response.status===204;
+      error != success
+      console.log(likeCount)
 
     if (success) invalidate(`${ART_URL}/${articleId}/like`);
   }
@@ -113,9 +114,13 @@
   });
   // delete
   async function deleteArticle() {
+    let user_id = data.user.user_id;
+    let is_admin = data.user.is_admin;
     try {
       const response = await fetch(`${ART_URL}/${data.article_id}`, {
-        method: "DELETE"
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_id, is_admin })
       });
 
       if (response.ok) {
@@ -123,12 +128,9 @@
         goto("/");
       } else {
         console.error("Failed to delete article:", response.statusText);
-        alert("Failed to delete article.");
       }
     } catch (error) {
       console.error("Error deleting article:", error);
-
-      alert("An error occurred while trying to delete the article.");
     }
   }
 
@@ -152,18 +154,26 @@
 
 <div class="container">
   <article class="article-post">
+    {#if data.image !=null}
+    <h1> <img src = {data.image} width={data.image_width} height= {data.image_height} alt = "hi"/></h1>
+    {/if}
     <h1 class="article-title">{data.title}</h1>
     <div class="article-content">
       <p class="article-author">{data.username}</p>
       <div class="article-text">{@html data.text}</div>
       <p class="article-date">{formatDate(data.date)}</p>
-      <button type="button" on:click={deleteArticle}>DELETE ARTICLE</button>
+      {#if data.isLoggedIn}
+        {#if data.user.user_id == data.user_id}
+          <button type="button" on:click={deleteArticle}>DELETE ARTICLE</button>
+        {/if}
+      {/if}
     </div>
   </article>
 </div>
+<button on:click={likeOperation} disabled={!buttonEnabled} class="like-button">Like</button>
+<div class="like-text">current like count is {likeNumber}</div>
 
-<button on:click={likeOperation} disabled={!buttonEnabled}>Like</button>
-<div>current likecount is {likeNumber}</div>
+<DisplayComments user = {data}, {articleId}/>
 
 <h2>Leave your comment!</h2>
 <CommentForm article_id={articleId} parent_comment_id={null} />
@@ -178,41 +188,52 @@
 
 <style>
   .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: auto;
-    margin-top: 100px;
-    margin-bottom: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: auto;
+      margin-top: 100px;
+      margin-bottom: 100px;
   }
 
   .article-post {
-    max-width: 600px;
-    padding: 40px;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
+      max-width: 600px;
+      padding: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.3); 
+  border-radius: 8px;
+  text-align: left;
+  transition: transform 0.3s ease;
+  margin-right: 20px; 
+  margin-left: 20px;
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(4px); }
 
   .article-title {
-    font-size: 2em;
-    margin-bottom: 10px;
+      font-size: 2em;
+      margin-bottom: 10px;
   }
 
   .article-author {
-    font-size: 0.9em;
-    color: #666;
-    margin-bottom: 10px;
+      font-size: 0.9em;
+      color: #666;
+      margin-bottom: 10px;
   }
 
   .article-text {
-    font-size: 1.1em;
-    line-height: 1.6;
-    margin-bottom: 20px;
+      font-size: 1.1em;
+      line-height: 1.6;
+      margin-bottom: 20px;
   }
 
   .article-date {
-    font-style: italic;
-    align-self: flex-end;
+      font-style: italic;
+      align-self: flex-end;
   }
+  .like-text {
+    color: white;
+}
+.like-button {
+  color: black
+}
+
 </style>

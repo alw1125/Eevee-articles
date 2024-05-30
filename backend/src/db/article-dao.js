@@ -5,10 +5,10 @@
 
 import { getDatabase } from "./database.js";
 
-export async function postArticle(title, image, user_id, text, date) {
+export async function postArticle(title, image, image_width, image_height, user_id, text, date) {
   const db = await getDatabase();
-  const postResult = await db.run(`INSERT INTO Articles (title, image, user_id, text, date) VALUES (?, ?, ?, ?, ?)`,
-  title, image, user_id, text, date);
+  const postResult = await db.run(`INSERT INTO Articles (title, image, image_width, image_height, user_id, text, date) VALUES (?, ?, ?, ?, ?, ?, ?)`,
+  title, image, image_width, image_height, user_id, text, date);
 
   // Return true if changes applied, false otherwise
   return postResult.changes > 0;
@@ -32,13 +32,29 @@ export async function getArticleByID(id){
   return articleByID;
 }
 
-export async function deleteArticle(article_id) {
+export async function deleteArticle(article_id, user_id) {
+  const db = await getDatabase();
+  const deleteComm = await db.run(`DELETE FROM Articles WHERE article_id = ? AND user_id = ?`, article_id, user_id);
+  console.log(deleteComm.changes);
+  // Return true if changes applied, false otherwise
+  return deleteComm.changes > 0;
+}
+
+export async function deleteArticleAsAdmin(article_id) {
   const db = await getDatabase();
   const deleteComm = await db.run(`DELETE FROM Articles WHERE article_id = ?`, article_id);
   console.log(deleteComm.changes);
   // Return true if changes applied, false otherwise
   return deleteComm.changes > 0;
 }
+
+export async function getArticleByUserID(id){
+  const db = await getDatabase();
+  const articleByUserID = await db.all('SELECT Articles.*, Users.username FROM Articles INNER JOIN Users ON Articles.user_id = Users.user_id WHERE Articles.user_id = ?', id);
+  return articleByUserID;
+}
+
+
 
 //likes below
 
@@ -77,7 +93,6 @@ export async function unlikeArticle(user_id, article_id) {
   
   // Return true if changes applied, false otherwise
   return deleteResult.changes > 0; }
-
 
 
 

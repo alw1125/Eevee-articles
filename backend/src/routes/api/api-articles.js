@@ -1,40 +1,42 @@
 import express from "express";
-import {getArticleByID, deleteArticle, postArticle, getAllArticles, likeArticle, unlikeArticle, getArticleLikesCount, checkIfArticleIsLiked} from "../../db/article-dao.js";
+import {getArticleByID, deleteArticle,deleteArticleAsAdmin, postArticle, getAllArticles, likeArticle, unlikeArticle, getArticleLikesCount, checkIfArticleIsLiked} from "../../db/article-dao.js";
+
 const router = express.Router();
 
 //Create a new article
 router.post("/", async (req, res) => {
-try{
+  try {
     let title = req.body.title;
     let text = req.body.text;
-    let image = req.body.image; 
+    let image = req.body.image;
+    let image_width = req.body.imageWidth;
+    let image_height = req.body.imageHeight;
     let user_id = req.body.user_id;
     let dateNow = new Date().toISOString().slice(0, 10);
 
-    const posted = postArticle(title, image, user_id, text, dateNow);
+    const posted = postArticle(title, image, image_width, image_height, user_id, text, dateNow);
     return res.sendStatus(posted ? 204 : 404);
-}catch{
+  } catch {
     return res.sendStatus(422);
-}
+  }
 });
 
 //Get all articles
 router.get("/", async (req, res) => {
-    try {
+  try {
     const allArticles = await getAllArticles();
     return res.json(allArticles);
-} catch {
+  } catch {
     return res.sendStatus(422);
-    }
+  }
 });
 
 //Get article by article id
 router.get("/:article_id", async (req, res) => {
-    let article_id = req.params.article_id;
-    let article = await getArticleByID(article_id);
-    return res.json(article);
+  let article_id = req.params.article_id;
+  let article = await getArticleByID(article_id);
+  return res.json(article);
 });
-
 
 //Edit article
 router.patch("/:article_id", async (req, res) => {
@@ -101,18 +103,25 @@ router.post("/:article_id/unlike", async (req, res) => {
 
 //Delete article
 router.delete("/:article_id", async (req, res) => {
-    try {
-      const article_id = req.params.article_id;
-      const deleted = await deleteArticle(article_id);
-      return res.sendStatus(deleted ? 204 : 404);
-    } catch (error) {
-      console.error("Error deleting article: ", error);
-      return res.sendStatus(422);
+  try {
+    const article_id = req.params.article_id;
+    const { user_id, is_admin } = req.body;
+
+    let deleted;
+
+    if (is_admin) {
+      deleted = await deleteArticleAsAdmin(article_id);
+    } else {
+      deleted = await deleteArticle(article_id, user_id);
     }
-  });
+    return res.sendStatus(deleted ? 204 : 404);
+  } catch (error) {
+    console.error("Error deleting article: ", error);
+    return res.sendStatus(422);
+  }
+});
 
 //Sort article, need to specify the sort options
-router.get("/sort/{sort_options}", async(req, res) => {
-});
+router.get("/sort/{sort_options}", async (req, res) => {});
 
 export default router;

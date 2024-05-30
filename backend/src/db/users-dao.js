@@ -62,8 +62,9 @@ export async function createUser(createData) {
   });
 
   let dob = new Date(parsedCreatedData.dob).toISOString().slice(0, 10);
+  let is_admin = 0;
 
-  const sql = `INSERT INTO Users (username, firstname, lastName, dob, desc, avatar, password) VALUES (?, ?, ?, ?, ?, ?,?)`;
+  const sql = `INSERT INTO Users (username, firstname, lastName, dob, is_admin, desc, avatar, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
   const db = await getDatabase();
   const dbResult = await db.run(
     sql,
@@ -71,6 +72,7 @@ export async function createUser(createData) {
     parsedCreatedData.firstName,
     parsedCreatedData.lastName,
     dob,
+    is_admin,
     parsedCreatedData.desc,
     parsedCreatedData.avatar,
     parsedCreatedData.password
@@ -122,4 +124,20 @@ function buildUpdateStatement(obj) {
   }
 
   return [updateOperations.join(", "), updateParams];
+}
+
+export async function deleteUser(user_id) {
+  const db = await getDatabase();
+  const deleteUser = await db.run(`DELETE FROM Users WHERE user_id = ?`, user_id);
+  console.log(deleteUser.changes);
+  // Return true if changes applied, false otherwise
+  return deleteUser.changes > 0;
+}
+
+export async function deleteUserAsAdmin() {
+  const db = await getDatabase();
+  const deleteUser = await db.run(`DELETE FROM Users`);
+  console.log(deleteUser.changes);
+  // Return true if changes applied, false otherwise
+  return deleteUser.changes > 0;
 }

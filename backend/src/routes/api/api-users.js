@@ -1,6 +1,7 @@
 import express from "express";
 import { requiresAuthentication } from "../../middleware/auth-middleware.js";
-import { createUser, updateUser, getUserList } from "../../db/users-dao.js";
+import { createUser, updateUser, getUserList, deleteUser, deleteUserAsAdmin } from "../../db/users-dao.js";
+import {getArticleByUserID} from "../../db/article-dao.js"
 
 const router = express.Router();
 
@@ -56,6 +57,12 @@ router.get("/", async (req, res) => {
   return res.json(userList);
 });
 
+router.get("/:user_id/articles", async(req, res) => {
+  let user_id = req.params.user_id;
+  let userArticles = await getArticleByUserID(user_id);
+  return res.json(userArticles);
+});
+
 //User login
 router.post("/login", async(req, res) => {
 });
@@ -65,7 +72,22 @@ router.post("/logout", async(req, res) => {
 });
 
 //Delete user
-router.delete("/user_name", async(req, res) => {
+router.delete("/:user_id", async (req, res) => {
+  try {
+    const { user_id, is_admin } = req.body;
+
+    let deleted;
+
+    if (is_admin) {
+      deleted = await deleteUserAsAdmin();
+    } else {
+      deleted = await deleteUser(user_id);
+    }
+    return res.sendStatus(deleted ? 204 : 404);
+  } catch (error) {
+    console.error("Error deleting user: ", error);
+    return res.sendStatus(422);
+  }
 });
 
 export default router;
