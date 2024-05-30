@@ -162,7 +162,9 @@ onMount(()=>{{
 
 
 {#if data.isLoggedIn}
+{#if data.user.user_id == data.user_id}
 <button on:click ={goEdit}>edit</button>
+{/if}
 {/if}
 
 

@@ -6,6 +6,7 @@
   import { invalidate } from "$app/navigation";
   import {onMount} from 'svelte';
   import ImageUpload from "$lib/components/ImageUpload.svelte";
+  import { goto } from "$app/navigation";
 
   export let data; 
   
@@ -48,9 +49,17 @@
     success = response.status === 204;
     error = !success;
 
-    if (success) invalidate(ART_URL);
+    if (success) {
+         invalidate(ART_URL)
+
+        }
   }
   
+  function goBack() { setTimeout (()=> {
+    goto(`/myArticles`)
+  }, 700);
+   
+  }
   onMount(() => {
     
     
@@ -131,7 +140,10 @@
   <ImageUpload on:upload={handleUpload} />
   <button type="submit" on:click = {getText}>Post!</button>
   {#if error}<span class="error">Could not save!</span>{/if}
-  {#if success}<span class="success">Saved!</span>{/if}
+  {#if success}
+  <span class="success">Saved!</span>
+  {goBack()}
+  {/if}
 </form>
 
 
