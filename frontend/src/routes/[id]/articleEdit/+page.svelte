@@ -19,8 +19,8 @@
   let article_id = data.article_id;
   let tempImage; 
   let image = data.image;
-  $: imageWidth = 600;
-  $: imageHeight = 200;
+  let imageWidth = data.image_width;
+  let imageHeight = data.image_height;
 
 
   function handleImageSize () {

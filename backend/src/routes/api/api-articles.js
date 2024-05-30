@@ -1,5 +1,5 @@
 import express from "express";
-import {getArticleByID, deleteArticle,deleteArticleAsAdmin, postArticle, getAllArticles, likeArticle, unlikeArticle, getArticleLikesCount, checkIfArticleIsLiked} from "../../db/article-dao.js";
+import {getArticleByID, deleteArticle,deleteArticleAsAdmin, postArticle, getAllArticles, likeArticle, unlikeArticle, getArticleLikesCount, checkIfArticleIsLiked, updateArticle} from "../../db/article-dao.js";
 
 const router = express.Router();
 
