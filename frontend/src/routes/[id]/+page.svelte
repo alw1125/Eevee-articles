@@ -125,7 +125,7 @@
 
       if (response.ok) {
         // Redirect to home page or another page after successful deletion
-        goto("/");
+        goto("/myArticle");
       } else {
         console.error("Failed to delete article:", response.statusText);
       }
