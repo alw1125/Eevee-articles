@@ -170,20 +170,14 @@
       {#if data.isLoggedIn}
         {#if data.user.user_id == data.user_id}
           <button type="button" on:click={deleteArticle}>DELETE ARTICLE</button>
+          <button on:click ={goEdit}>edit</button>
+          <button on:click={likeOperation} disabled={!buttonEnabled} class="like-button">Like</button>
         {/if}
       {/if}
     </div>
+    <div class="like-text">current like count: {likeNumber}</div>
   </article>
 </div>
-<button on:click={likeOperation} disabled={!buttonEnabled} class="like-button">Like</button>
-<div class="like-text">current like count is {likeNumber}</div>
-
-
-{#if data.isLoggedIn}
-{#if data.user.user_id == data.user_id}
-<button on:click ={goEdit}>edit</button>
-{/if}
-{/if}
 
 <div class="background-test">
 {#if data.isLoggedIn}
