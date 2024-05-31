@@ -97,8 +97,6 @@
     image =tempImage;
   }
 
-   
-
 </script>
 
 
@@ -139,6 +137,7 @@
   
   <ImageUpload on:upload={handleUpload} />
   <button type="submit" on:click = {getText}>Save!</button>
+  <button type="button" on:click={goBack}>Cancel</button>
   {#if error}<span class="error">Could not save!</span>{/if}
   {#if success}
   <span class="success">Saved!</span>
