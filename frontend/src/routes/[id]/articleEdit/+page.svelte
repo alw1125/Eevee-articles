@@ -56,7 +56,7 @@
   }
   
   function goBack() { setTimeout (()=> {
-    goto(`/myArticles`)
+    goto(`/${article_id}`)
   }, 700);
    
   }
