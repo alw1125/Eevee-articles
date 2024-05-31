@@ -175,12 +175,12 @@
 
 {#if data.isLoggedIn}
 <h2>Leave your comment!</h2>
-<CommentForm user = {data} article_id={articleId} parent_comment_id={null}/>
+<CommentForm {data} article_id={articleId} parent_comment_id={null}/>
 {/if}
 <h2>Others comments</h2>
 {#if comments}
   {#each comments as comment}
-    <Comment user = {data} {comment} article_id={articleId}/>
+    <Comment {data} {comment} article_id={articleId}/>
   {/each}
 {:else}
   <p>Comments empty</p>

@@ -1,6 +1,6 @@
 <script>
   import { COMMENTS_URL } from "$lib/js/api-urls";
-  export let user, article_id, parent_comment_id;
+  export let data, article_id, parent_comment_id;
 
   let desc;
 
@@ -8,7 +8,9 @@
   let success = false;
 
   async function handleComment() {
-    let user_id = user.user_id;
+    let user_id = data.user.user_id;
+
+    console.log(user_id);
 
     if (!user_id) {
       error = true;
