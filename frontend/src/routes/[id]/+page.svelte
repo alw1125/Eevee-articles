@@ -185,7 +185,7 @@
 {/if}
 {/if}
 
-
+<div class="background-test">
 {#if data.isLoggedIn}
 <h2>Leave your comment!</h2>
 <CommentForm {data} article_id={articleId} parent_comment_id={null}/>
@@ -199,8 +199,23 @@
 {:else}
   <p>Comments empty</p>
 {/if}
+</div>
 
 <style>
+  .background-test{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+    background-color: #ddd;
+  }
+
   .container {
       display: flex;
       justify-content: center;
