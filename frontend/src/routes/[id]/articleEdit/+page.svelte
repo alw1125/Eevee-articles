@@ -8,18 +8,20 @@
   import ImageUpload from "$lib/components/ImageUpload.svelte";
   import { goto } from "$app/navigation";
 
-  export let data;
+  export let data; 
+  
 
-  let title = "";
+  let title = data.title;
   let getText;
-  let text = "";
+  let text = data.text;
   let error = false;
   let success = false;
   let user_id = data.user.user_id;
+  let article_id = data.article_id;
   let tempImage; 
-  let image;
-  $: imageWidth = 600;
-  $: imageHeight = 200;
+  let image = data.image;
+  let imageWidth = data.image_width;
+  let imageHeight = data.image_height;
 
 
   function handleImageSize () {
@@ -31,35 +33,40 @@
     }
   }
 
-  function goBack() { setTimeout (()=> {
-    goto(`/myArticles`)
-  }, 700); }
-   
 
   
 
-  async function handlePost() {
+  async function handleEdit() {
+    console.log(`handleEdit`)
     error = false;
     
-    const response = await fetch(ART_URL, {
-      method: "POST",
+    const response = await fetch(`${ART_URL}/${article_id}`, {
+      method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, image, imageWidth, imageHeight, text, user_id })
+      body: JSON.stringify({ title, image, imageWidth, imageHeight, user_id, text, article_id})
     });
 
     success = response.status === 204;
     error = !success;
 
-    if (success) invalidate(ART_URL);
+    if (success) {
+         invalidate(ART_URL)
+
+        }
   }
   
+  function goBack() { setTimeout (()=> {
+    goto(`/myArticles`)
+  }, 700);
+   
+  }
   onMount(() => {
     
     
     setTimeout(() => {
       tinymce.init({
         selector: 'textarea',
-        width: '100%',
+        width: 600,
         height: 300,
         plugins: [
           'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor', 'pagebreak',
@@ -90,12 +97,12 @@
     image =tempImage;
   }
 
-
+   
 
 </script>
 
 
-  <title>Post articles here!</title> 
+  <title>Edit datas here!</title> 
 
 <h1>Post</h1>
 
@@ -112,55 +119,44 @@
 
 
 
-<form on:submit|preventDefault={handlePost}>
-  <div class="title-wrapper">
-    <label for="title" class="article-text">Title:</label>
-    <input type="text" name="title" bind:value={title} required />
-  </div>
-
+<form on:submit|preventDefault={handleEdit}>
+  <label for="title">Title:</label>
   {#if (image != null)}
   <label for = "image"> 
     
     <img src={image} alt="" width={imageWidth} height={imageHeight}> 
   
   </label>
-  <label for = "image width" class = "dim-text"> Image width (max 600px): </label>
+  <label for = "image width"> Image width (max 600px): </label>
   <input type ="text" name = "image width" bind:value= {imageWidth} required />
-  <label for = "image height" class = "dim-text"> Image height (max 200px): </label>
+  <label for = "image height"> Image height (max 200px): </label>
   <input type ="text" name = "image height" bind:value = {imageHeight} required/>
 
 
   {/if}
+  <input type="text" name="title" bind:value={title} required />
   <textarea id='postText' bind:value={text} rows="12" required />
   
   <ImageUpload on:upload={handleUpload} />
-  <label for="imageLink" class = "dim-text">Your image link {image}</label>
   <button type="submit" on:click = {getText}>Post!</button>
   {#if error}<span class="error">Could not save!</span>{/if}
-  {#if success}<span class="success">Saved!</span>
+  {#if success}
+  <span class="success">Saved!</span>
   {goBack()}
-  
   {/if}
-
 </form>
+
+
+
 
 
 
 <style>
   form {
-    margin-bottom: 20px;
+    margin: auto;
+    max-width: 800px;
+    border: 1px dashed green;
     padding: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.3); 
-    border-radius: 8px;
-    margin-right: 50px; 
-    margin-left: 50px;
-    background-color: rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(4px); 
-    display: grid;
-    gap: 10px;
-  }
-
-  .title-wrapper {
     display: grid;
     grid-template-columns: auto 1fr;
     gap: 10px;
@@ -170,7 +166,7 @@
   textarea,
   .error,
   .success {
-    grid-column: 1 / -1;
+    grid-column: 1 / 3;
   }
 
   .error,
@@ -188,12 +184,5 @@
   .success {
     color: darkgreen;
     background-color: lightgreen;
-  }
-
-  .dim-text {
-    color: white;
-  }
-  .article-text {
-    color: white;
   }
 </style>

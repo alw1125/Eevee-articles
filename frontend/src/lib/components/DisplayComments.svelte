@@ -3,16 +3,18 @@
   import { COMMENTS_URL } from "$lib/js/api-urls";
   import { decodeHtml, formatDate } from "$lib/js/utils";
   import CommentBox from "./CommentBox.svelte";
+  import { ART_URL } from "$lib/js/api-urls";
 
   let comments = [];
   export let user;
+  // export let articleId;
 
   //fetches already existing comments
-  async function fetchComments() {
+  async function fetchComments(article_id) {
     try {
-      const response = await fetch(COMMENTS_URL);
+      const response = await fetch(`${COMMENTS_URL}/${article_id}`);
       if (!response.ok) {
-        throw new Error("Failed to fetch comments");
+        throw new Error("Failed to fetch article comments");
       }
       const data = await response.json();
       console.log("comment data: ", data);
@@ -20,7 +22,7 @@
         comment.desc = decodeHtml(comment.desc);
         comment.date = formatDate(comment.date);
       });
-      return data;
+      return comments;
     } catch (error) {
       console.error("Error fetching comments:", error);
     }
@@ -56,7 +58,7 @@
   }
 </script>
 
-{#if comments.length > 0}
+{#if comments}
   {#each comments as comment}
     <div class="dialogbox">
       <div class="body">
@@ -65,17 +67,27 @@
           <p><strong>{comment.username}</strong></p>
           <p class="comment-date">{comment.time} {comment.date}</p>
           <p>{@html comment.desc}</p>
+          <p>{comment.article_id}</p>
+          <p>{articleOwnerUserId}</p>
           {#if user.isLoggedIn}
-            {#if comment.user_id == user.user.user_id}
+            <!-- {#if comment.user_id == user.user.user_id || user.article.user_id == articleId} -->
               <button type="button" on:click={deleteComment(comment.comment_id)}>DELETE COMMENT</button>
-            {/if}
+            <!-- {/if} -->
           {/if}
         </div>
       </div>
     </div>
+    <CommentBox comment_id = {comment.comment_id}/>
   {/each}
 {:else}
-  <p>No comments found.</p>
+  <div class="dialogbox">
+    <div class="body">
+      <span class="tip tip-up"></span>
+      <div class="message">
+        <p class="message">No comments found...</p>
+      </div>
+    </div>
+  </div>
 {/if}
 
 {#if user.isLoggedIn}

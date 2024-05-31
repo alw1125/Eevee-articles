@@ -1,5 +1,5 @@
 import express from "express";
-import { getUserWithCredentials } from "../../db/users-dao.js";
+import { getUserWithCredentials, getUserWithUsername } from "../../db/users-dao.js";
 import { createUserJWT } from "../../utils/jwt-utils.js";
 
 const router = express.Router();
@@ -8,17 +8,25 @@ const router = express.Router();
 const handleLogin = async (req, res) => {
   // Get user with provided login details; return 401 if not found
   const { username, password } = req.body;
+  const userNameValid = await getUserWithUsername (username)
+  if (!userNameValid) return res.sendStatus(401);
   const userValid = await getUserWithCredentials(username, password);
   console.log(userValid);
-  if (!userValid) return res.sendStatus(401);
+  if (!userValid) {
+    return res.sendStatus(401);
+  } 
 
-  const jwtToken = createUserJWT(username);
+  else{
+    const jwtToken = createUserJWT(username);
 
-  // Expires 24 hours from now
-  const expires = new Date(Date.now() + 86400000);
+    // Expires 24 hours from now
+    const expires = new Date(Date.now() + 86400000);
+  
+    // Send the JWT token in an HTTP-only cookie named authToken which expires in 24 hours.
+    return res.cookie("authToken", jwtToken, { httpOnly: true, expires }).json({ username });
+  }
 
-  // Send the JWT token in an HTTP-only cookie named authToken which expires in 24 hours.
-  return res.cookie("authToken", jwtToken, { httpOnly: true, expires }).json({ username });
+  
 }
 
 /**
