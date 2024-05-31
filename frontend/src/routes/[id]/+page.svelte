@@ -109,6 +109,7 @@
       checkIfUserLiked();
       handleEnableButton();
       comments = await fetchComments(articleId);
+      console.log(comments);
     }
   });
   // delete
@@ -177,6 +178,7 @@
 <h2>Leave your comment!</h2>
 <CommentForm {data} article_id={articleId} parent_comment_id={null}/>
 {/if}
+
 <h2>Others comments</h2>
 {#if comments}
   {#each comments as comment}

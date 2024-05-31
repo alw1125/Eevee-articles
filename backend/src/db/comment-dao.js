@@ -41,38 +41,33 @@ const unflatten = data => {
     .find(e => e.comment_id === undefined).children;
 };
 
-export async function deleteCommentAsAdmin(comment_id) {
+export async function deleteComment(comment_id) {
   const db = await getDatabase();
   const deleteComm = await db.run(`DELETE FROM Comments WHERE comment_id = ?`, comment_id);
-  console.log(deleteComm.changes);
-  // Return true if changes applied, false otherwise
+    // Return true if changes applied, false otherwise
   return deleteComm.changes > 0;
 }
 
-export async function deleteComment(comment_id, user_id) {
+export async function isArticleAuth(article_id, user_id){
   const db = await getDatabase();
-
-  // Check if the user owns the comment
-  const comment = await db.get(`SELECT * FROM Comments WHERE comment_id = ? AND user_id = ?`, comment_id, user_id);
-  if (comment) {
-    const deleteComm = await db.run(`DELETE FROM Comments WHERE comment_id = ? AND user_id = ?`, comment_id, user_id);
-    console.log(deleteComm.changes);
-    return deleteComm.changes > 0;
+  let article_author = await db.get(`SELECT user_id FROM Articles WHERE article_id = ?`, article_id);
+  if(article_author.user_id == user_id){
+    console.log(1);
+    return true;
+  }else{
+    console.log(2);
+    return false;
   }
+}
 
-  // Check if the user owns the article related to the comment
-  const article = await db.get(
-    `SELECT Articles.* FROM Articles 
-     JOIN Comments ON Articles.article_id = Comments.article_id 
-     WHERE Comments.comment_id = ? AND Articles.user_id = ?`, 
-     comment_id, user_id
-  );
-  if (article) {
-    const deleteComm = await db.run(`DELETE FROM Comments WHERE comment_id = ?`, comment_id);
-    console.log(deleteComm.changes);
-    return deleteComm.changes > 0;
+export async function isCommentAuth(comment_id, user_id) {
+  const db = await getDatabase();
+  let comment_author = await db.get(`SELECT user_id FROM Comments WHERE comment_id = ?`, comment_id);
+  if (comment_author.user_id == user_id) {
+    console.log(3);
+    return true;
+  }else{
+    console.log(4);
+    return false;
   }
-
-  // If the user is not the owner of the comment or the article, deletion is not allowed
-  return false;
 }

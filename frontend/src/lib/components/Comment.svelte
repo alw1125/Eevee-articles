@@ -19,7 +19,7 @@
       const response = await fetch(`${COMMENTS_URL}/${comment_id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ user_id, is_admin })
+        body: JSON.stringify({ user_id, is_admin, article_id })
       });
       if (response.ok) {
         success = true;

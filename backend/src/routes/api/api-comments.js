@@ -1,5 +1,5 @@
 import express from "express";
-import { postComment, getAllComments , deleteComment, deleteCommentAsAdmin, getCommentsByArt} from "../../db/comment-dao.js";
+import { postComment, getAllComments , deleteComment, getCommentsByArt, isArticleAuth, isCommentAuth} from "../../db/comment-dao.js";
 
 const router = express.Router();
 
@@ -39,16 +39,26 @@ router.get("/", async (req, res) => {
 router.delete("/:comment_id", async (req, res) => {
   try {
     const comment_id = req.params.comment_id;
-    const { user_id, is_admin } = req.body;
+    const { user_id, is_admin, article_id} = req.body;
 
-    let deleted;
-    
-    if (is_admin) {
-      deleted = await deleteCommentAsAdmin(comment_id);
-    } else {
-      deleted = await deleteComment(comment_id, user_id);
+    let deleted = false;
+
+    let is_artAuth = await isArticleAuth(article_id, user_id);
+    let is_commentAuth = await isCommentAuth(comment_id, user_id);
+
+    console.log(is_artAuth);
+    console.log(is_commentAuth);
+
+    if(is_artAuth){
+      deleted = await deleteComment(comment_id);
+    }else if(is_admin){
+      deleted = await deleteComment(comment_id);
+    }else if(is_commentAuth){
+      deleted = await deleteComment(comment_id);
+    }else{
+      deleted = false;
     }
-
+  
     return res.sendStatus(deleted ? 204 : 404);
   } catch (error) {
     console.error("Error deleting comment: ", error);
