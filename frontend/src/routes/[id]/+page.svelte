@@ -151,6 +151,10 @@
     }
   }
 
+  function goEdit(){
+    goto(`/${articleId}/articleEdit`);
+  }
+
 </script>
 
 <div class="container">
@@ -173,6 +177,14 @@
 </div>
 <button on:click={likeOperation} disabled={!buttonEnabled} class="like-button">Like</button>
 <div class="like-text">current like count is {likeNumber}</div>
+
+
+{#if data.isLoggedIn}
+{#if data.user.user_id == data.user_id}
+<button on:click ={goEdit}>edit</button>
+{/if}
+{/if}
+
 
 {#if data.isLoggedIn}
 <h2>Leave your comment!</h2>
