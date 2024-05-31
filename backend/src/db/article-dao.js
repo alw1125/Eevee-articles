@@ -96,3 +96,20 @@ export async function unlikeArticle(user_id, article_id) {
 
 
 
+
+
+
+
+  //edit article 
+  
+
+  export async function updateArticle( title, image, image_width, image_height, user_id, text, date, article_id) {
+    const db = await getDatabase();
+    const updateResult = await db.run(`UPDATE Articles SET title = ?, image = ?, image_width=?, image_height=?, user_id = ?, text = ?, date = ? WHERE article_id = ?`, title, image, image_width, image_height, user_id, text, date, article_id);
+  
+    // Return true if changes applied, false otherwise
+    return updateResult.changes > 0;
+  }
+
+
+
