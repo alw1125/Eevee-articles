@@ -54,7 +54,7 @@
     setTimeout(() => {
       tinymce.init({
         selector: 'textarea',
-        width: 600,
+        width: '100%',
         height: 300,
         plugins: [
           'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor', 'pagebreak',
@@ -108,7 +108,11 @@
 
 
 <form on:submit|preventDefault={handlePost}>
-  <label for="title" class = "article-text">Title:</label>
+  <div class="title-wrapper">
+    <label for="title" class="article-text">Title:</label>
+    <input type="text" name="title" bind:value={title} required />
+  </div>
+
   {#if (image != null)}
   <label for = "image"> 
     
@@ -122,11 +126,10 @@
 
 
   {/if}
-  <input type="text" name="title" bind:value={title} required />
   <textarea id='postText' bind:value={text} rows="12" required />
   
   <ImageUpload on:upload={handleUpload} />
-  <label for="imageLink">Your image link {image}</label>
+  <label for="imageLink" class = "dim-text">Your image link {image}</label>
   <button type="submit" on:click = {getText}>Post!</button>
   {#if error}<span class="error">Could not save!</span>{/if}
   {#if success}<span class="success">Saved!</span>{/if}
@@ -134,30 +137,31 @@
 
 
 
-
-
-
 <style>
-form {
-    
+  form {
     margin-bottom: 20px;
     padding: 10px;
     border: 1px solid rgba(255, 255, 255, 0.3); 
     border-radius: 8px;
-    margin-right: 20px; 
-    margin-left: 20px;
+    margin-right: 50px; 
+    margin-left: 50px;
     background-color: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(4px); 
     display: grid;
+    gap: 10px;
+  }
+
+  .title-wrapper {
+    display: grid;
     grid-template-columns: auto 1fr;
     gap: 10px;
-}
+  }
 
   button,
   textarea,
   .error,
   .success {
-    grid-column: 1 / 3;
+    grid-column: 1 / -1;
   }
 
   .error,
@@ -178,7 +182,9 @@ form {
   }
 
   .dim-text {
-
-    color:white;
+    color: white;
+  }
+  .article-text {
+    color: white;
   }
 </style>

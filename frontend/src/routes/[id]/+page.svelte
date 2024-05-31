@@ -1,11 +1,11 @@
 <script>
-import { decodeHtml, formatDate } from "$lib/js/utils";
-import { onMount } from "svelte";
-import { ART_URL }from "$lib/js/api-urls"
-import { invalidate } from "$app/navigation";
-import { goto } from "$app/navigation";
-export let data;
+  import { decodeHtml, formatDate } from "$lib/js/utils";
+  import { onMount } from "svelte";
+  import { ART_URL } from "$lib/js/api-urls";
+  import { invalidate } from "$app/navigation";
+  import { goto } from "$app/navigation";
 
+  export let data;
   let likeCount;
   $: likeNumber = likeCount;
   let userId;
@@ -16,11 +16,7 @@ export let data;
   let buttonEnabled = true;
 
   async function handleEnableButton() {
-    if (userId == null) {
-      buttonEnabled = false;
-    } else {
-      buttonEnabled = true;
-    }
+    buttonEnabled = userId != null;
   }
 
   async function getLikeCount() {
@@ -54,6 +50,7 @@ export let data;
 
     if (success) invalidate(`${ART_URL}/${articleId}/like/${userId}/check`);
   }
+
   async function like() {
     userId = data.user.user_id;
     const response = await fetch(`${ART_URL}/${articleId}/like`, {
@@ -98,16 +95,11 @@ export let data;
     }
   }
 
-
-
-onMount(()=>{{
-     getLikeCount();
+  onMount(() => {
+    getLikeCount();
     checkIfUserLiked();
     handleEnableButton();
-}})
-
-
-// delete
+  });
 
   async function deleteArticle() {
     let user_id = data.user.user_id;
@@ -130,12 +122,22 @@ onMount(()=>{{
       console.error("Error deleting article:", error);
     }
   }
+
+  function goToNextArticle() {
+    goto(`${data.article_id + 1}`);
+  }
+
+  function goToPreviousArticle() {
+    goto(`${data.article_id - 1}`);
+  }
 </script>
 
 <div class="container">
   <article class="article-post">
-    {#if data.image !=null}
-    <h1> <img src = {data.image} width={data.image_width} height= {data.image_height} alt = "hi"/></h1>
+    {#if data.image != null}
+    <h1>
+      <img src={data.image} width={data.image_width} height={data.image_height} alt="hi" />
+    </h1>
     {/if}
     <h1 class="article-title">{data.title}</h1>
     <div class="article-content">
@@ -143,66 +145,89 @@ onMount(()=>{{
       <div class="article-text">{@html data.text}</div>
       <p class="article-date">{formatDate(data.date)}</p>
       {#if data.isLoggedIn}
-        {#if data.user.user_id == data.user_id}
-          <button type="button" on:click={deleteArticle}>DELETE ARTICLE</button>
-        {/if}
+      {#if data.user.user_id == data.user_id}
+      <button type="button" on:click={deleteArticle}>DELETE ARTICLE</button>
       {/if}
+      {/if}
+      <button on:click={likeOperation} disabled={!buttonEnabled} class="like-button">Like</button>
+      <div class="like-text">current like count is {likeNumber}</div>
     </div>
   </article>
 </div>
 
-<button on:click={likeOperation} disabled={!buttonEnabled} class="like-button">Like</button>
-<div class="like-text">current like count is {likeNumber}</div>
-
+<div class="navigation-buttons">
+  <button on:click={goToPreviousArticle} disabled={data.article_id === 1}>Previous Article</button>
+  <button on:click={goToNextArticle}>Next Article</button>
+</div>
 
 <style>
+
+:global(html),
+  :global(body),
+  .container,
+  .article-date {
+    zoom: 0.9; /* Adjust the zoom level as needed */
+  }
+
   .container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: auto;
-      margin-top: 100px;
-      margin-bottom: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto; /* Center the container horizontally */
+    margin-right: auto; 
   }
 
   .article-post {
-      max-width: 600px;
-      padding: 40px;
-      border: 1px solid rgba(255, 255, 255, 0.3); 
-  border-radius: 8px;
-  text-align: left;
-  transition: transform 0.3s ease;
-  margin-right: 20px; 
-  margin-left: 20px;
-  background-color: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(4px); }
+    max-width: 800px;
+    padding: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    text-align: left;
+    transition: transform 0.3s ease;
+    margin-right: 20px;
+    margin-left: 20px;
+    background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(4px);
+  }
 
   .article-title {
-      font-size: 2em;
-      margin-bottom: 10px;
+    font-size: 2em;
+    margin-bottom: 10px;
   }
 
   .article-author {
-      font-size: 0.9em;
-      color: #666;
-      margin-bottom: 10px;
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 10px;
   }
 
   .article-text {
-      font-size: 1.1em;
-      line-height: 1.6;
-      margin-bottom: 20px;
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    word-wrap: break-word;
+
   }
 
   .article-date {
-      font-style: italic;
-      align-self: flex-end;
+    font-style: italic;
+    align-self: flex-end;
   }
+
   .like-text {
     color: white;
-}
-.like-button {
-  color: black
-}
+  }
 
+  .like-button {
+    color: black;
+  }
+
+  .navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
 </style>

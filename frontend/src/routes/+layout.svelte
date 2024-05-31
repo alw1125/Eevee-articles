@@ -4,6 +4,7 @@
 
   import { page } from "$app/stores";
   import { invalidateAll } from "$app/navigation";
+  
   $: path = $page.url.pathname;
   $: console.log(path);
 
@@ -19,6 +20,8 @@
   }
 </script>
 
+
+
 <nav>
   <ul>
     <li class="nav-item"><a href="/" class="{path === '/' ? 'active' : ''}"><img src="/images/logoNew.png" alt="Home" class="nav-img"></a></li>
@@ -26,6 +29,7 @@
       <li><a href="/profile" class:active={path.startsWith("/profile")}>Profile</a></li>
       <li><a href="/postArticle" class:active={path.startsWith("/postArticle")}>Post Articles</a></li>
       <li><a href="/myArticles" class:active={path.startsWith("/myArticles")}> My Articles</a><li>
+        <li><a href="/newProfile" class:active={path.startsWith("/newProfile")}> test</a><li></li>
     {/if}
   </ul>
   <span />
@@ -48,6 +52,9 @@
       height: 12%;
       display: flex;
       align-items: center;
+      justify-content: flex-start;
+      margin-left: 40px;
+      margin-right: 40px;
 
     & > ul {
       list-style: none;
