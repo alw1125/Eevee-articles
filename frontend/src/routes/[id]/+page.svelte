@@ -116,6 +116,7 @@
   async function deleteArticle() {
     let user_id = data.user.user_id;
     let is_admin = data.user.is_admin;
+
     try {
       const response = await fetch(`${ART_URL}/${data.article_id}`, {
         method: "DELETE",
@@ -125,7 +126,7 @@
 
       if (response.ok) {
         // Redirect to home page or another page after successful deletion
-        goto("/myArticle");
+        goto("/myArticles");
       } else {
         console.error("Failed to delete article:", response.statusText);
       }

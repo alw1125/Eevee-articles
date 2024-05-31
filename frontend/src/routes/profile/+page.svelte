@@ -4,21 +4,33 @@
   import { goto } from "$app/navigation";
   import { invalidateAll } from "$app/navigation";
   import { LOGOUT_URL } from "$lib/js/api-urls";
+  import ConfirmBox from "$lib/components/ConfirmBox.svelte";
 
   export let data;
 
   let editMode = false;
+  let showConfirmBox = false;
 
   //toggles profile editable version when edit button clicked
   function toggleEditMode() {
     editMode = !editMode;
   }
 
+  function confirmDelete() {
+    showConfirmBox = true;
+  }
+
+  function handleConfirm() {
+    showConfirmBox = false;
+    deleteUser();
+  }
+
+  // Handle cancel action
+  function handleCancel() {
+    showConfirmBox = false;
+  }
+
   async function deleteUser() {
-
-    let confirmDelAcc = confirm("Are you sure you want to delete your account?");
-    if (confirmDelAcc) {
-
     let user_id = data.user.user_id;
     let is_admin = data.user.is_admin;
 
@@ -44,7 +56,6 @@
     } catch (error) {
       console.error("Error deleting user:", error);
     }
-  }
   }
 </script>
 
@@ -94,10 +105,18 @@
           </tbody>
         </table>
         <button on:click={toggleEditMode}>Edit</button>
-        <button on:click={deleteUser}>Delete Account</button>
+        <button on:click={confirmDelete}>Delete Account</button>
       </div>
     </div>
   {/if}
+{/if}
+
+{#if showConfirmBox}
+  <ConfirmBox 
+    message="Are you sure you want to delete your account?"
+    onConfirm={handleConfirm}
+    onCancel={handleCancel}
+  />
 {/if}
 
 <style>
