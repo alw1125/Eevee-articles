@@ -40,9 +40,11 @@
       <span>time: {comment.time} {comment.date}</span>
       <p>{comment.desc}</p>
       {#if data.isLoggedIn}
-        <button on:click={deleteComment(comment.comment_id)}>DELETE COMMENT</button>
-        {#if error}<span class="error">Could not delete!</span>{/if}
-        {#if success}<span class="success" id="success">Deleted!</span>{/if}
+        {#if comment.user_id == data.user.user_id || data.user.user_id == data.user_id}
+          <button on:click={deleteComment(comment.comment_id)}>DELETE COMMENT</button>
+          {#if error}<span class="error">Could not delete!</span>{/if}
+          {#if success}<span class="success" id="success">Deleted!</span>{/if}
+        {/if}
         <CommentForm {data} {article_id} parent_comment_id={comment.comment_id} />
       {/if}
       <li>
