@@ -8,6 +8,7 @@
 
   let error = false;
   let success = false;
+  let commentForm = false;
 
   async function deleteComment(comment_id) {
     let user_id = data.user.user_id;
@@ -30,33 +31,84 @@
       console.error("Error deleting comment: ", error);
     }
   }
+
+  function toggleCommentForm() {
+    commentForm = !commentForm;
+  }
 </script>
 
 {#if comment}
-  <CollapsibleCard>
-    <h2 slot="header">{comment.desc}</h2>
-    <div slot="body">
-      <span><strong>user: {comment.username}</strong></span>
-      <span>time: {comment.time} {comment.date}</span>
-      <p>{comment.desc}</p>
-      {#if data.isLoggedIn}
-        {#if comment.user_id == data.user.user_id || data.user.user_id == data.user_id}
-          <button on:click={deleteComment(comment.comment_id)}>DELETE COMMENT</button>
-          {#if error}<span class="error">Could not delete!</span>{/if}
-          {#if success}<span class="success" id="success">Deleted!</span>{/if}
+  <li class="comment">
+    <CollapsibleCard>
+      <div slot="header">
+        <h2>{comment.desc}</h2>
+      </div>
+      <div slot="body">
+        <div><strong>{comment.username}</strong></div>
+        <div>{comment.time} {comment.date}</div>
+        {#if data.isLoggedIn}
+          <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+          />
+          <button on:click={toggleCommentForm} class="btn" title="Reply"
+            ><i class="fa fa-mail-reply"></i></button
+          >
+          {#if comment.user_id == data.user.user_id || data.user.user_id == data.user_id}
+            <button on:click={() => deleteComment(comment.comment_id)}>DELETE COMMENT</button>
+            {#if error}<span class="error">Could not delete!</span>{/if}
+            {#if success}<span class="success" id="success">Deleted!</span>{/if}
+          {/if}
+          {#if commentForm}
+            <CommentForm {data} {article_id} parent_comment_id={comment.comment_id} />
+          {/if}
         {/if}
-        <CommentForm {data} {article_id} parent_comment_id={comment.comment_id} />
-      {/if}
-      <li>
+
         {#if comment.children}
-          {#each comment.children as child}
-            <svelte:self {data} comment={child} {article_id} />
-          {/each}
+          <ul class="nested-comments">
+            {#each comment.children as child}
+              <svelte:self {data} comment={child} {article_id} />
+            {/each}
+          </ul>
         {/if}
-      </li>
-    </div>
-  </CollapsibleCard>
+      </div>
+    </CollapsibleCard>
+  </li>
 {/if}
 
 <style>
+  .comment {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  }
+
+  .comment .header h2 {
+    margin: 0;
+  }
+
+  .nested-comments {
+    list-style-type: none;
+    margin: 10px 0 0 20px;
+    padding: 0;
+  }
+
+  .error {
+    color: red;
+  }
+
+  .success {
+    color: green;
+  }
+
+  .btn {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    font-size: 2em;
+  }
 </style>

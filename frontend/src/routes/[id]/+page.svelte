@@ -94,10 +94,10 @@
     }
   }
 
-  let isGreen = false;
+  let isRed = false;
 
-  function toggleGreen() {
-    isGreen = !isGreen;
+  function toggleRed() {
+    isRed = !isRed;
     likeOperation();
   }
 
@@ -152,7 +152,6 @@
   function goEdit() {
     goto(`/${articleId}/articleEdit`);
   }
-
 </script>
 
 <div class="container">
@@ -170,28 +169,33 @@
           <button type="button" on:click={deleteArticle}>DELETE ARTICLE</button>
           <button on:click={goEdit}>edit</button>
         {/if}
-        <script src="https://use.fontawesome.com/fe459689b4.js"></script>
-        <button on:click={toggleGreen} class="btn"  class:green={isGreen}><i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i></button>
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+        />
+        <button on:click={toggleRed} class="btn" class:red={isRed}
+          ><i class="fa fa-heart"></i></button
+        >
+      {/if}
+      <span class="like-text">Likes: {likeNumber}</span>
+    </div>
+
+    <div class="background-test">
+      {#if data.isLoggedIn}
+        <h2>Leave your comment!</h2>
+        <CommentForm {data} article_id={articleId} parent_comment_id={null} />
+      {/if}
+
+      <h2>Other Comments:</h2>
+      {#if comments}
+        {#each comments as comment}
+          <Comment {data} {comment} article_id={articleId} />
+        {/each}
+      {:else}
+        <p>No comments to display</p>
       {/if}
     </div>
-    <div class="like-text">current like count: {likeNumber}</div>
   </article>
-</div>
-
-<div class="background-test">
-  {#if data.isLoggedIn}
-    <h2>Leave your comment!</h2>
-    <CommentForm {data} article_id={articleId} parent_comment_id={null} />
-  {/if}
-
-  <h2>Others comments</h2>
-  {#if comments}
-    {#each comments as comment}
-      <Comment {data} {comment} article_id={articleId} />
-    {/each}
-  {:else}
-    <p>Comments empty</p>
-  {/if}
 </div>
 
 <style>
@@ -255,21 +259,23 @@
   .like-text {
     color: white;
   }
-  .like-button {
-    color: black;
+
+  button {
+    cursor: pointer;
+    outline: 0;
+    color: #aaa;
   }
 
-button{
-  cursor: pointer;
-  outline: 0;
-  color: #AAA;
-}
+  .red {
+    color: red;
+  }
 
-.btn:focus {
-  outline: none;
-}
-
-.green{
-  color: green;
-}
+  .btn {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    font-size: 2em
+  }
 </style>
