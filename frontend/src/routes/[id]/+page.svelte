@@ -172,8 +172,8 @@
         {#if data.user.user_id == data.user_id}
           <button type="button" on:click={deleteArticle}>DELETE ARTICLE</button>
           <button on:click ={goEdit}>edit</button>
+          {/if}
           <button on:click={likeOperation} disabled={!buttonEnabled} class="like-button">Like</button>
-        {/if}
       {/if}
     </div>
     <div class="like-text">current like count: {likeNumber}</div>
