@@ -17,16 +17,7 @@
   let isLiked = false;
   let error = false;
   let success = false;
-  let buttonEnabled = true;
   let comments = [];
-
-  async function handleEnableButton() {
-    if (userId == null) {
-      buttonEnabled = false;
-    } else {
-      buttonEnabled = true;
-    }
-  }
 
   async function getLikeCount() {
     const response = await fetch(`${ART_URL}/${articleId}/like`, {
@@ -37,9 +28,9 @@
     const result = await response.json();
     likeCount = result;
 
-      success = response.status===204;
-      error != success
-      console.log(likeCount)
+    success = response.status === 204;
+    error != success;
+    console.log(likeCount);
 
     if (success) invalidate(`${ART_URL}/${articleId}/like`);
   }
@@ -103,11 +94,17 @@
     }
   }
 
+  let isGreen = false;
+
+  function toggleGreen() {
+    isGreen = !isGreen;
+    likeOperation();
+  }
+
   onMount(async () => {
     {
       getLikeCount();
       checkIfUserLiked();
-      handleEnableButton();
       comments = await fetchComments(articleId);
       console.log(comments);
     }
@@ -152,7 +149,7 @@
     }
   }
 
-  function goEdit(){
+  function goEdit() {
     goto(`/${articleId}/articleEdit`);
   }
 
@@ -160,8 +157,8 @@
 
 <div class="container">
   <article class="article-post">
-    {#if data.image !=null}
-    <h1> <img src = {data.image} width={data.image_width} height= {data.image_height} alt = "hi"/></h1>
+    {#if data.image != null}
+      <h1><img src={data.image} width={data.image_width} height={data.image_height} alt="hi" /></h1>
     {/if}
     <h1 class="article-title">{data.title}</h1>
     <div class="article-content">
@@ -171,9 +168,10 @@
       {#if data.isLoggedIn}
         {#if data.user.user_id == data.user_id}
           <button type="button" on:click={deleteArticle}>DELETE ARTICLE</button>
-          <button on:click ={goEdit}>edit</button>
-          {/if}
-          <button on:click={likeOperation} disabled={!buttonEnabled} class="like-button">Like</button>
+          <button on:click={goEdit}>edit</button>
+        {/if}
+        <script src="https://use.fontawesome.com/fe459689b4.js"></script>
+        <button on:click={toggleGreen} class="btn"  class:green={isGreen}><i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i></button>
       {/if}
     </div>
     <div class="like-text">current like count: {likeNumber}</div>
@@ -181,23 +179,23 @@
 </div>
 
 <div class="background-test">
-{#if data.isLoggedIn}
-<h2>Leave your comment!</h2>
-<CommentForm {data} article_id={articleId} parent_comment_id={null}/>
-{/if}
+  {#if data.isLoggedIn}
+    <h2>Leave your comment!</h2>
+    <CommentForm {data} article_id={articleId} parent_comment_id={null} />
+  {/if}
 
-<h2>Others comments</h2>
-{#if comments}
-  {#each comments as comment}
-    <Comment {data} {comment} article_id={articleId}/>
-  {/each}
-{:else}
-  <p>Comments empty</p>
-{/if}
+  <h2>Others comments</h2>
+  {#if comments}
+    {#each comments as comment}
+      <Comment {data} {comment} article_id={articleId} />
+    {/each}
+  {:else}
+    <p>Comments empty</p>
+  {/if}
 </div>
 
 <style>
-  .background-test{
+  .background-test {
     margin-top: 10px;
     margin-bottom: 10px;
     width: 100%;
@@ -212,52 +210,66 @@
   }
 
   .container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: auto;
-      margin-top: 100px;
-      margin-bottom: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    margin-top: 100px;
+    margin-bottom: 100px;
   }
 
   .article-post {
-      max-width: 600px;
-      padding: 40px;
-      border: 1px solid rgba(255, 255, 255, 0.3); 
-  border-radius: 8px;
-  text-align: left;
-  transition: transform 0.3s ease;
-  margin-right: 20px; 
-  margin-left: 20px;
-  background-color: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(4px); }
+    max-width: 600px;
+    padding: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    text-align: left;
+    transition: transform 0.3s ease;
+    margin-right: 20px;
+    margin-left: 20px;
+    background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(4px);
+  }
 
   .article-title {
-      font-size: 2em;
-      margin-bottom: 10px;
+    font-size: 2em;
+    margin-bottom: 10px;
   }
 
   .article-author {
-      font-size: 0.9em;
-      color: #666;
-      margin-bottom: 10px;
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 10px;
   }
 
   .article-text {
-      font-size: 1.1em;
-      line-height: 1.6;
-      margin-bottom: 20px;
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 20px;
   }
 
   .article-date {
-      font-style: italic;
-      align-self: flex-end;
+    font-style: italic;
+    align-self: flex-end;
   }
   .like-text {
     color: white;
-}
-.like-button {
-  color: black
+  }
+  .like-button {
+    color: black;
+  }
+
+button{
+  cursor: pointer;
+  outline: 0;
+  color: #AAA;
 }
 
+.btn:focus {
+  outline: none;
+}
+
+.green{
+  color: green;
+}
 </style>
