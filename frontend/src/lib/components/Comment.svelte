@@ -54,7 +54,7 @@
           <button on:click={toggleCommentForm} class="btn" title="Reply"
             ><i class="fa fa-mail-reply"></i></button
           >
-          {#if comment.user_id == data.user.user_id || data.user.user_id == data.user_id}
+          {#if comment.user_id == data.user.user_id || data.user.user_id == data.user_id || data.user.is_admin}
             <button on:click={() => deleteComment(comment.comment_id)}>DELETE COMMENT</button>
             {#if error}<span class="error">Could not delete!</span>{/if}
             {#if success}<span class="success" id="success">Deleted!</span>{/if}

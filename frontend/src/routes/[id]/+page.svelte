@@ -165,7 +165,7 @@
       <div class="article-text">{@html data.text}</div>
       <p class="article-date">{formatDate(data.date)}</p>
       {#if data.isLoggedIn}
-        {#if data.user.user_id == data.user_id}
+        {#if data.user.user_id == data.user_id || data.user.is_admin}
           <button type="button" on:click={deleteArticle}>DELETE ARTICLE</button>
           <button on:click={goEdit}>edit</button>
         {/if}
