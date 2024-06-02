@@ -203,6 +203,14 @@
 </div>
 
 <style>
+
+:global(html),
+    :global(body),
+    .articles-container,
+    .article-tile,
+    .article-date {
+      zoom: 0.9;
+    }
   .background-test{
     margin-top: 10px;
     margin-bottom: 10px;
