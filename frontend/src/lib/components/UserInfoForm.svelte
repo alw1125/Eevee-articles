@@ -32,7 +32,9 @@
 
     if (success) invalidate(`${USER_URL}/me`);
     
-    dispatch("save");
+    setTimeout(() => {
+        dispatch("save");
+      }, 700);
     
   }
 
@@ -57,7 +59,9 @@
   <button type="submit">Save</button>
   <button type="button" on:click={cancel}>Cancel</button>
   {#if error}<span class="error">Could not save!</span>{/if}
-  {#if success}<span class="success">Saved!</span>{/if}
+  {#if success}
+    <span class="success">Saved!</span>
+  {/if}
 </form>
 
 <style>

@@ -1,7 +1,7 @@
 <script>
   import "$lib/css/app.css";
   import { LOGOUT_URL } from "$lib/js/api-urls.js";
-
+  import { goto } from "$app/navigation";
   import { page } from "$app/stores";
   import { invalidateAll } from "$app/navigation";
   
@@ -17,6 +17,7 @@
       credentials: "include"
     });
     await invalidateAll();
+    goto("/login");
   }
 </script>
 
