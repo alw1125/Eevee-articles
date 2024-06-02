@@ -18,6 +18,7 @@
   let error = false;
   let success = false;
   let comments = [];
+  $: isRed = isLiked;
 
   async function getLikeCount() {
     const response = await fetch(`${ART_URL}/${articleId}/like`, {
@@ -62,7 +63,9 @@
     error = !success;
     console.log(`hi`);
 
-    if (success) invalidate(`${ART_URL}/${articleId}/like`);
+    if (success) {
+      invalidate(`${ART_URL}/${articleId}/like`);
+    }
   }
 
   async function unLike() {
@@ -77,7 +80,9 @@
     error = !success;
     console.log(`bye`);
 
-    if (success) invalidate(`${ART_URL}/${articleId}/unlike`);
+    if (success) {
+      invalidate(`${ART_URL}/${articleId}/unlike`);
+    }
   }
 
   function likeOperation() {
@@ -85,20 +90,15 @@
       like();
       getLikeCount();
       checkIfUserLiked();
+      isRed = true;
     } else if (isLiked == true) {
       unLike();
       getLikeCount();
       checkIfUserLiked();
+      isRed = false;
     } else {
       console.log(`could not conduct like operation`);
     }
-  }
-
-  let isRed = false;
-
-  function toggleRed() {
-    isRed = !isRed;
-    likeOperation();
   }
 
   onMount(async () => {
@@ -173,7 +173,7 @@
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
         />
-        <button on:click={toggleRed} class="btn" class:red={isRed}
+        <button on:click={likeOperation} class="btn" class:red={isRed}
           ><i class="fa fa-heart"></i></button
         >
       {/if}
@@ -276,6 +276,6 @@
     padding: 0;
     margin: 0;
     cursor: pointer;
-    font-size: 2em
+    font-size: 2em;
   }
 </style>
