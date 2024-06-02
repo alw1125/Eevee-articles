@@ -12,8 +12,9 @@
 
     console.log(user_id);
 
-    if (!user_id) {
+    if (!desc.trim()) {
       error = true;
+      return;
     } else {
       try {
         const response = await fetch(COMMENTS_URL, {
