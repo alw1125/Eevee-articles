@@ -125,7 +125,7 @@
 
       if (response.ok) {
         // Redirect to home page or another page after successful deletion
-        goto("/myArticles");
+        goto("/newProfile");
       } else {
         console.error("Failed to delete article:", response.statusText);
       }
@@ -162,6 +162,7 @@
     }
   }
 </script>
+
 
 <div class="container">
   <article class="article-post">
@@ -234,56 +235,84 @@
 }
 
 .article-post {
-  max-width: 600px; /* Decreased max-width */
-  padding: 15px; /* Decreased padding */
+  width: 45vw;
+  padding: 15px;
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 8px;
   text-align: left;
   transition: transform 0.3s ease;
   background-color: rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(4px);
-}
-
-.comment-container {
-  width: 100%;
-  padding-left: 20px;
   max-height: 90vh;
   overflow-y: auto; 
 }
 
-  /* Style the scrollbar */
+
+  .article-post::-webkit-scrollbar {
+    width: 6px; 
+  }
+
+  
+  .article-post::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1); 
+    border-radius: 8px; 
+  }
+
+  
+  .article-post::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3); 
+    border-radius: 8px; 
+  }
+
+  
+  .article-post::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5); 
+  }
+
+  .comment-container {
+    margin-left: 50px;
+    width: 30vw;
+    background-color: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    max-height: 92vh;
+    overflow-y: auto; 
+    padding: 10px;
+  }
+
+
+
   .comment-container::-webkit-scrollbar {
-    width: 6px; /* Set the width of the scrollbar */
+    width: 6px; 
   }
 
-  /* Track */
+  
   .comment-container::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1); /* Background color of the scrollbar track */
-    border-radius: 8px; /* Border radius of the scrollbar track */
+    background: rgba(255, 255, 255, 0.1); 
+    border-radius: 8px; 
   }
 
-  /* Handle */
+  
   .comment-container::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.3); /* Background color of the scrollbar handle */
-    border-radius: 8px; /* Border radius of the scrollbar handle */
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 8px; 
   }
 
-  /* Hover style for scrollbar handle */
+  
   .comment-container::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.5); /* Adjust hover color */
+    background: rgba(255, 255, 255, 0.5); 
   }
 
-.comments-tile {
-  background-color: rgba(255, 255, 255, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 8px;
-}
+  .comments-tile {
+  
+    padding: 10px; 
+    margin-bottom: 10px; 
+  }
 
-.leave-comment,
-.comments-container {
-  margin-bottom: 10px;
-  padding: 10px;
-}
+  .leave-comment,
+  .comments-container {
+    margin-bottom: 10px;
+  }
 
 .leave-comment h2,
 .comments-container h2 {
@@ -293,26 +322,27 @@
 
 
 .article-title {
-  font-size: 1.6em; /* Decreased font-size */
-  margin-bottom: 8px; /* Decreased margin */
+  font-size: 1.8em; 
+  margin-bottom: 8px;
 }
 
 .article-author {
-  font-size: 0.7em; /* Decreased font-size */
-  color: #666;
-  margin-bottom: 8px; /* Decreased margin */
+  font-size: 1.0em;
+  font-style: italic;
+  margin-bottom: 8px; 
 }
 
 .article-text {
-  font-size: 0.9em; /* Decreased font-size */
+  font-size: 1.1em; 
   line-height: 1.3;
-  margin-bottom: 12px; /* Decreased margin */
+  margin-bottom: 12px; 
+  word-wrap: break-word;
 }
 
 .article-date {
   font-style: italic;
   align-self: flex-end;
-  font-size: 0.8em; /* Decreased font-size */
+  font-size: 0.8em; 
 }
 
 .like-text {
@@ -335,6 +365,6 @@
   padding: 0;
   margin: 0;
   cursor: pointer;
-  font-size: 1.6em; /* Decreased font-size */
+  font-size: 1.6em;
 }
 </style>

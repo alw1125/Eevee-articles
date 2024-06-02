@@ -102,7 +102,6 @@
 
   <title>Edit datas here!</title> 
 
-<h1>Post</h1>
 
 
 
@@ -152,20 +151,47 @@
 
 <style>
   form {
+    display: flex;
+    width: 75%;
     margin: auto;
-    max-width: 800px;
-    border: 1px dashed green;
     padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.3); 
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(4px); 
     display: grid;
-    grid-template-columns: auto 1fr;
     gap: 10px;
+    max-height: 100vh;
+    overflow-y: auto;
+    }
+
+    
+  ::-webkit-scrollbar {
+    width: 6px; 
+  }
+
+  
+  ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px; 
+  }
+
+  
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3); 
+    border-radius: 8px; 
+  }
+
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5); 
   }
 
   button,
   textarea,
   .error,
   .success {
-    grid-column: 1 / 3;
+    grid-column: 1 / -1;
   }
 
   .error,
@@ -184,4 +210,5 @@
     color: darkgreen;
     background-color: lightgreen;
   }
+
 </style>

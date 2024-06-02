@@ -16,7 +16,7 @@
     let error = false;
     let success = false;
     let avatar; 
-    let images =writable(["/images/logo.png", "/images/favicon.png"])
+    let images =writable(["images/cat.png", "images/duck.png", "images/bunny.png", "images/squirrel.png", "images/bear.png", "images/penguin.png"])
     let selectedAvatar = "1";
   
     function setImage(imgurl1) {
@@ -55,7 +55,7 @@
       if (response.status === 401) {
         error = true;
       } else {
-        goto("/login", { invalidateAll: true, replaceState: true });
+        location.reload();
       }
     }
   
@@ -86,9 +86,8 @@
   <svelte:head>
     <title>Create Account</title>
   </svelte:head>
-  
-  <h1>Create Account</h1>
-  
+
+  <div class="container">
   <form on:submit|preventDefault={handleSubmit}>
     <label for="firstName">First Name:</label>
     <input type="text" name="firstName" bind:value={firstName} required/>
@@ -137,8 +136,14 @@
       <span class="error">Could not create account, please try again.</span>
     {/if}
   </form>
+
+  </div>
   
   <style>
+
+
+
+
     h1 {
         text-align: center;
       }
@@ -152,8 +157,34 @@
       display: grid;
       grid-template-columns: auto 1fr;
       gap: 20px;
-      background-color: #f9f9f9;
+      background-color: rgba(255, 255, 255, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      max-height: 90vh;
+      overflow-y: auto;
     }
+
+    
+  ::-webkit-scrollbar {
+    width: 6px; 
+  }
+
+  
+  ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1); 
+    border-radius: 8px; 
+  }
+
+  
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 8px; 
+  }
+
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5); 
+  }
+
   
     input[type="text"],
     textarea {
@@ -169,7 +200,7 @@
   
     input[type="text"]:focus,
     textarea:focus {
-      border-color: #45a049;
+      border-color: #555555;
       outline: none;
     }
     
@@ -188,7 +219,7 @@
   
     input[type="text"]:focus,
     textarea:focus {
-      border-color: #45a049;
+      border-color: #555555;
       outline: none;
     }
   
@@ -205,16 +236,16 @@
     
     input[type="date"]:focus,
     textarea:focus {
-      border-color: #45a049;
+      border-color: #555555;
       outline: none;
     }
   
     button {
-      grid-column: 1 / 3;
       padding: 10px 20px;
       border: none;
-      border-radius: 5px;
-      background-color: #4caf50;
+      background-color:  rgba(66, 66, 66, 0.4);
+      border: 1px solid rgb(142, 142, 142);
+      border-radius: 4px;
       color: #fff;
       font-size: 16px;
       cursor: pointer;
@@ -222,7 +253,7 @@
     }
   
     button:hover {
-      background-color: #45a049;
+      background-color: rgba(66, 66, 66, 0.8);
     }
   
     .error {

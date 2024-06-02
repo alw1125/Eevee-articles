@@ -124,44 +124,45 @@
   .article-tile,
   .author-name,
   .article-date {
-    zoom: 0.9; /* Adjust the zoom level as needed */
+    zoom: 0.9;
   }
 
   .articles-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    max-height: 83vh; /* Set maximum height for the container */
+    max-height: 83vh; 
     margin-top: 60px;
-    overflow-y: auto; /* Enable vertical scrollbar */
-    padding-right: 20px; /* Add some padding to prevent content from overlapping with the scrollbar */
+    overflow-y: auto; 
+    padding-right: 20px; 
   }
 
-  /* Style the scrollbar */
+  
   .articles-container::-webkit-scrollbar {
-    width: 8px; /* Set the width of the scrollbar */
+    width: 8px; 
   }
 
-  /* Track */
+  
   .articles-container::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1); /* Background color of the scrollbar track */
-    border-radius: 8px; /* Border radius of the scrollbar track */
+    background: rgba(255, 255, 255, 0.1); 
+    border-radius: 8px;
   }
 
-  /* Handle */
+  
   .articles-container::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.3); /* Background color of the scrollbar handle */
-    border-radius: 8px; /* Border radius of the scrollbar handle */
+    background: rgba(255, 255, 255, 0.3); 
+    border-radius: 8px; 
   }
 
-  /* Hover style for scrollbar handle */
+  
   .articles-container::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.5); /* Adjust hover color */
+    background: rgba(255, 255, 255, 0.5); 
   }
 
   .article-tile {
 
     width: 400px;
+    height: 180px;
     margin-top: 5px;
     margin-bottom: 15px;
     padding: 20px;
@@ -173,28 +174,7 @@
     margin-left: 20px;
     background-color: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(4px);
-    overflow: hidden; /* Ensure the pseudo-element doesn't overflow */
-  }
-
-  .article-tile::before {
-    content: "";
-    position: absolute;
-    top: -10px; /* Adjust the position of the glow */
-    left: -10px; /* Adjust the position of the glow */
-    width: calc(100% + 20px); /* Extend the width of the glow */
-    height: calc(100% + 20px); /* Extend the height of the glow */
-    background: radial-gradient(
-      rgba(255, 255, 255, 0.2) 40%,
-      transparent 70%
-    ); /* Adjust the color and opacity of the glow */
-    border-radius: 10px; /* Adjust the radius of the gradient */
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  .article-tile:hover::before {
-    opacity: 1;
+    overflow: hidden; 
   }
 
   .article-tile:hover {

@@ -196,6 +196,7 @@
     border: 1px solid rgb(142, 142, 142);
     border-radius: 4px;
     padding: 8px 12px;
+    margin-right: 10px;
     font: inherit;
     outline: none;
     transition:
@@ -215,9 +216,9 @@
 }
 
 .avatar {
-  width: 50px; /* Adjust the width of the avatar as needed */
-  height: 50px; /* Adjust the height of the avatar as needed */
-  border-radius: 50%; /* Make it a circle */
+  width: 70px;
+  height: 70px; 
+  border-radius: 50%; 
 }
 
   .articles-container {
@@ -225,33 +226,32 @@
     flex-wrap: wrap;
     justify-content: flex-start;
     padding-left: 15%;
-    width: 100%; /* Adjust the width as needed */
+    width: 100%;
     max-height: 70vh;
     margin-top: 50px;
     overflow-y: auto;
     padding-right: 0px;
     margin-right: -200px;
   }
-    /* Style the scrollbar */
+    
     .articles-container::-webkit-scrollbar {
-      width: 8px; /* Set the width of the scrollbar */
+      width: 8px; 
     }
   
-    /* Track */
+    
     .articles-container::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.1); /* Background color of the scrollbar track */
-      border-radius: 8px; /* Border radius of the scrollbar track */
+      background: rgba(255, 255, 255, 0.1); 
+      border-radius: 8px; 
     }
   
-     /* Handle */
       .articles-container::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.3); /* Background color of the scrollbar handle */
-      border-radius: 8px; /* Border radius of the scrollbar handle */
+      background: rgba(255, 255, 255, 0.3); 
+      border-radius: 8px; 
     }
   
-      /* Hover style for scrollbar handle */
+      
       .articles-container::-webkit-scrollbar-thumb:hover {
-      background: rgba(255, 255, 255, 0.5); /* Adjust hover color */
+      background: rgba(255, 255, 255, 0.5);
     }
   
     .article-tile {
@@ -264,7 +264,7 @@
       border-radius: 8px;
       text-align: left;
       transition: transform 0.3s ease;
-      margin-right: 50px; /* Adjust the margin-right for the gap */
+      margin-right: 50px;
       background-color: rgba(255, 255, 255, 0.3);
       backdrop-filter: blur(4px); 
     }

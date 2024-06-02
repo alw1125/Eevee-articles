@@ -53,7 +53,6 @@
       body: JSON.stringify({ username, firstName, lastName, dob, desc, avatar, password })
     });
 
-   
 
     if (response.status === 401) {
       error = true;

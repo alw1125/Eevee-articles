@@ -32,9 +32,9 @@
   }
 
   function goBack() { setTimeout (()=> {
-    goto(`/myArticles`)
+    goto(`/newProfile`)
   }, 700); }
-   
+
 
   
 
@@ -97,8 +97,6 @@
 
   <title>Post articles here!</title> 
 
-<h1>Post</h1>
-
 
 
   {#if imageWidth >600}
@@ -148,16 +146,40 @@
 
 <style>
   form {
-    margin-bottom: 20px;
+    display: flex;
+    width: 75%;
+    margin: auto;
     padding: 10px;
     border: 1px solid rgba(255, 255, 255, 0.3); 
     border-radius: 8px;
-    margin-right: 50px; 
-    margin-left: 50px;
     background-color: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(4px); 
     display: grid;
     gap: 10px;
+    max-height: 100vh;
+    overflow-y: auto;
+    }
+
+    
+  ::-webkit-scrollbar {
+    width: 6px; 
+  }
+
+  
+  ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px; 
+  }
+
+  
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3); 
+    border-radius: 8px; 
+  }
+
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5); 
   }
 
   .title-wrapper {

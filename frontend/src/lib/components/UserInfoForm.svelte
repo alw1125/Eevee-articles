@@ -68,7 +68,7 @@
   form {
     margin: auto;
     max-width: 800px;
-    border: 1px dashed green;
+
     padding: 10px;
     display: grid;
     grid-template-columns: auto 1fr;
