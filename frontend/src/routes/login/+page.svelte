@@ -3,12 +3,13 @@
   import { LOGIN_URL } from "$lib/js/api-urls.js";
   import SignupForm from "$lib/components/SignupForm.svelte"
   import { fade } from 'svelte/transition';
+  import { onMount } from 'svelte';
+
 
   let username = "";
   let password = "";
   let error = false;
-  let showSignupForm = false;
-  let showLoginForm = true;
+  let createAccountMode = false;
 
   /**
    * Handles logging in by sending a POST request to /api/auth, with the given username and password.
@@ -31,10 +32,20 @@
     }
   }
 
-  function toggleLoginForm() {
-    showLoginForm = !showLoginForm;
+function toggleSignUpForm() {
+  createAccountMode = !createAccountMode
+}
+
+function handleLoginClick(event) {
+    createAccountMode = false;
   }
 
+  onMount(() => {
+    window.addEventListener('loginClick', handleLoginClick);
+    return () => {
+      window.removeEventListener('loginClick', handleLoginClick);
+    };
+  });
 </script>
 
 <svelte:head>
@@ -42,24 +53,25 @@
 </svelte:head>
 
 
+{#if createAccountMode}
+  <div transition:fade>
+    <SignupForm />
+  </div>
+{:else}
 
-{#if showLoginForm} <!-- Show the login form if showLoginForm is true -->
+<!-- {#if showLoginForm} Show the login form if showLoginForm is true -->
   <form on:submit|preventDefault={handleSubmit}>
     <label for="username">Username:</label>
     <input type="text" name="username" bind:value={username} required />
     <label for="password">Password:</label>
     <input type="password" name="password" bind:value={password} required />
     <button type="submit">Login</button>
-    <button type="button" on:click={toggleLoginForm}>Create Account</button>
+    <button type="button" on:click={toggleSignUpForm}>Create Account</button>
     {#if error}
       <span class="error">Could not log in with those credentials, please try again.</span>
     {/if}
   </form>
-{:else} <!-- Show the SignupForm component if showLoginForm is false -->
-
-<div transition:fade>
-  <SignupForm />
-</div>
+<!-- {:else} Show the SignupForm component if showLoginForm is false -->
 
 {/if}
 
