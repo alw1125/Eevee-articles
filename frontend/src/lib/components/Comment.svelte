@@ -30,6 +30,11 @@
     } catch (error) {
       console.error("Error deleting comment: ", error);
     }
+
+    setInterval(async () => {
+      success = false;
+      error = false;
+    }, 1000);
   }
 
   function toggleCommentForm() {
@@ -38,7 +43,7 @@
 </script>
 
 {#if comment}
-  <li class="comment">
+  <div class="comment">
     <CollapsibleCard>
       <div slot="header">
         <h2>{comment.desc}</h2>
@@ -65,15 +70,15 @@
         {/if}
 
         {#if comment.children}
-          <ul class="nested-comments">
+          <div class="nested-comments">
             {#each comment.children as child}
               <svelte:self {data} comment={child} {article_id} />
             {/each}
-          </ul>
+          </div>
         {/if}
       </div>
     </CollapsibleCard>
-  </li>
+  </div>
 {/if}
 
 <style>

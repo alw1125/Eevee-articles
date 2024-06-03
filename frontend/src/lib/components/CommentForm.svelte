@@ -25,14 +25,22 @@
 
         if (response.status === 204) {
           success = true;
+          desc = "";
         } else {
           error = true;
+          desc = "";
         }
       } catch (error) {
         console.error("Error posting comment: ", error);
         error = true;
+        desc = "";
       }
     }
+
+    setInterval(async () => {
+      success = false;
+      error = false;
+    }, 1000);
   }
 </script>
 
