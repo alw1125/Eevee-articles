@@ -1,6 +1,5 @@
 package fullstackproject.swingclient.web;
 
-import fullstackproject.swingclient.pojos.DeleteQuery;
 import fullstackproject.swingclient.pojos.User;
 import fullstackproject.swingclient.pojos.LoginQuery;
 import fullstackproject.swingclient.pojos.UserList;

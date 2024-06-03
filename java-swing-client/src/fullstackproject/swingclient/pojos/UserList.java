@@ -1,4 +1,6 @@
 package fullstackproject.swingclient.pojos;
+import fullstackproject.swingclient.ui.Listener;
+
 import java.util.List;
 
 public class UserList {
@@ -27,4 +29,9 @@ public class UserList {
         public int getIndex(User user) {
             return users.indexOf(user);
         }
+
+    public void remove(int index) {
+        if (index >= 0 && index < users.size()) {users.remove(index);} }
+
+
 }

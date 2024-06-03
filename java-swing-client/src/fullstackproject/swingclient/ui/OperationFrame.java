@@ -6,11 +6,13 @@ import fullstackproject.swingclient.ui.Jpanels.UserPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.MalformedURLException;
 
 
 public class OperationFrame extends JFrame {
     private CardLayout cardLayout;
     private JPanel cardPanel;
+    private UserListModelAdaptor userListModelAdaptor;
 
     public OperationFrame(String title) {
         setTitle(title);
@@ -23,7 +25,7 @@ public class OperationFrame extends JFrame {
 
         Container visibleArea = getContentPane();
         visibleArea.add(cardPanel);
-        cardLayout.show(cardPanel, "Login");
+        cardLayout.show(cardPanel, "login");
 
         pack();
         setLocationRelativeTo(null);
@@ -38,15 +40,15 @@ public class OperationFrame extends JFrame {
        cardLayout.show(cardPanel, "User List");
    }
 
-   public  void switchToUserPanel(User user){
-       UserPanel userFrameContent = new UserPanel(user);
+   public  void switchToUserPanel(User user) throws MalformedURLException {
+       UserPanel userFrameContent = new UserPanel(user, this, userListModelAdaptor);
        cardPanel.add(userFrameContent, "User Profile");
        cardLayout.show(cardPanel, "User Profile");
 
    }
 
    public void switchToLogin(){
-       cardLayout.show(cardPanel, "Login");
+       cardLayout.show(cardPanel, "login");
 
    }
     public static void main(String[] args) {

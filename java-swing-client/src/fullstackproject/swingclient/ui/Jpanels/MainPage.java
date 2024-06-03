@@ -11,6 +11,7 @@ import fullstackproject.swingclient.ui.OperationFrame;
 import fullstackproject.swingclient.ui.UserListModelAdaptor;
 import fullstackproject.swingclient.web.API;
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -146,7 +147,11 @@ public class MainPage extends JPanel implements ActionListener {
                     int selectedRow = table.getSelectedRow();
                     if (selectedRow != -1) {
                         User selectedUser = list.get(selectedRow);
-                        operationFrame.switchToUserPanel(selectedUser);
+                        try {
+                            operationFrame.switchToUserPanel(selectedUser);
+                        } catch (MalformedURLException ex) {
+                            throw new RuntimeException(ex);
+                        }
                     }
                 }
             }
