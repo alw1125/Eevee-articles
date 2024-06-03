@@ -26,9 +26,17 @@
         if (response.status === 204) {
           success = true;
           desc = "";
+
+          setTimeout(() => {
+          success = false;
+        }, 1000);
         } else {
           error = true;
           desc = "";
+          
+          setTimeout(() => {
+          error = false;
+        }, 1000);
         }
       } catch (error) {
         console.error("Error posting comment: ", error);
@@ -36,11 +44,6 @@
         desc = "";
       }
     }
-
-    setInterval(async () => {
-      success = false;
-      error = false;
-    }, 1000);
   }
 </script>
 

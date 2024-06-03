@@ -24,17 +24,21 @@
       });
       if (response.ok) {
         success = true;
+
+        setTimeout(() => {
+          success = false;
+        }, 1000);
+
       } else {
         error = true;
+        
+        setTimeout(() => {
+          error = false;
+        }, 1000);
       }
     } catch (error) {
       console.error("Error deleting comment: ", error);
     }
-
-    setInterval(async () => {
-      success = false;
-      error = false;
-    }, 1000);
   }
 
   function toggleCommentForm() {

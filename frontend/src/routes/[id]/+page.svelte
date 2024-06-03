@@ -161,10 +161,6 @@
       comments = await fetchComments(articleId);
     }
   }
-
-  setInterval(async () => {
-    comments = await fetchComments(articleId);
-  }, 1000);
 </script>
 
 <div class="container">
