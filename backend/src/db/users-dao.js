@@ -25,10 +25,19 @@ export async function getUserWithUsername(username) {
  */
 export async function getUserWithCredentials(username, password) {
   const db = await getDatabase();
-  let hashed = await db.get(
-    "SELECT password from Users WHERE username = ?", username
-  );
-    return compareHashed(password, hashed.password);
+  const user = await db.get("SELECT * FROM Users WHERE username = ?", username);
+
+  if (!user) {
+    return null; 
+  }
+
+  const isPasswordValid = await compareHashed(password, user.password);
+  if (!isPasswordValid) {
+    return null; 
+  }
+
+
+  return { ...user, is_admin: user.is_admin };
 }
 
 export async function getUserList() {
@@ -48,7 +57,7 @@ const userSchema = yup
     dob: yup.string().optional(),
     avatar: yup.string().min(1).required(),
     password: yup.string().min(5).optional(),
-    desc: yup.string().max(500).optional()
+    desc: yup.string().max(500).optional(),
   })
   .required();
 
@@ -128,6 +137,8 @@ function buildUpdateStatement(obj) {
 
 export async function deleteUser(user_id) {
   const db = await getDatabase();
+  console.log("I AM BEING CALLED");
+  console.log(user_id);
   const deleteUser = await db.run(`DELETE FROM Users WHERE user_id = ?`, user_id);
   console.log(deleteUser.changes);
   // Return true if changes applied, false otherwise
