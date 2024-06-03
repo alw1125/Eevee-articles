@@ -18,6 +18,7 @@
   let error = false;
   let success = false;
   let comments = [];
+  let showComments = false;
   $: isRed = isLiked;
 
   async function getLikeCount() {
@@ -51,6 +52,7 @@
 
     if (success) invalidate(`${ART_URL}/${articleId}/like/${userId}/check`);
   }
+
   async function like() {
     userId = data.user.user_id;
     const response = await fetch(`${ART_URL}/${articleId}/like`, {
@@ -123,7 +125,7 @@
 
       if (response.ok) {
         // Redirect to home page or another page after successful deletion
-        goto("/myArticles");
+        goto("/newProfile");
       } else {
         console.error("Failed to delete article:", response.statusText);
       }
@@ -152,12 +154,22 @@
   function goEdit() {
     goto(`/${articleId}/articleEdit`);
   }
+
+  async function toggleComments() {
+    showComments = !showComments;
+    if (showComments) {
+      comments = await fetchComments(articleId);
+    }
+  }
 </script>
+
 
 <div class="container">
   <article class="article-post">
     {#if data.image != null}
+    <div class="article-image">
       <h1><img src={data.image} width={data.image_width} height={data.image_height} alt="hi" /></h1>
+    </div>
     {/if}
     <h1 class="article-title">{data.title}</h1>
     <div class="article-content">
@@ -178,87 +190,164 @@
         >
       {/if}
       <span class="like-text">Likes: {likeNumber}</span>
-    </div>
-
-    <div class="background-test">
-      {#if data.isLoggedIn}
-        <h2>Leave your comment!</h2>
-        <CommentForm {data} article_id={articleId} parent_comment_id={null} />
-      {/if}
-
-      <h2>Other Comments:</h2>
-      {#if comments}
-        {#each comments as comment}
-          <Comment {data} {comment} article_id={articleId} />
-        {/each}
-      {:else}
-        <p>No comments to display</p>
-      {/if}
+      <button on:click={toggleComments} class="toggle-comments-btn">
+        {showComments ? 'Hide Comments' : 'Show Comments'}
+      </button>
     </div>
   </article>
+  
+  <div class="comment-container" style="display: {showComments ? 'block' : 'none'};">
+    <div class="comments-tile">
+      <div class="leave-comment">
+        <h2>Leave your comment!</h2>
+        <CommentForm {data} article_id={articleId} parent_comment_id={null} />
+      </div>
+      
+      <div class="comments-container">
+        <h2>Other Comments:</h2>
+        {#if comments}
+          {#each comments as comment}
+            <Comment {data} {comment} article_id={articleId} />
+          {/each}
+        {:else}
+          <p>No comments to display</p>
+        {/if}
+      </div>
+    </div>
+  </div>
 </div>
 
 <style>
-  .background-test {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    width: 100%;
-    padding: 5px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-sizing: border-box;
-    margin-bottom: 5px;
-    font-size: 14px;
-    transition: border-color 0.3s ease;
-    background-color: #ddd;
-  }
+
+:global(html),
+    :global(body),
+    .article-date {
+      zoom: 0.9;
+    }
 
   .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: auto;
-    margin-top: 100px;
-    margin-bottom: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: auto;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.article-post {
+  width: 45vw;
+  padding: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  text-align: left;
+  transition: transform 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(4px);
+  max-height: 90vh;
+  overflow-y: auto; 
+}
+
+
+  .article-post::-webkit-scrollbar {
+    width: 6px; 
   }
 
-  .article-post {
-    max-width: 600px;
-    padding: 40px;
+  
+  .article-post::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1); 
+    border-radius: 8px; 
+  }
+
+  
+  .article-post::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3); 
+    border-radius: 8px; 
+  }
+
+  
+  .article-post::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5); 
+  }
+
+  .comment-container {
+    margin-left: 50px;
+    width: 30vw;
+    background-color: rgba(255, 255, 255, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 8px;
-    text-align: left;
-    transition: transform 0.3s ease;
-    margin-right: 20px;
-    margin-left: 20px;
-    background-color: rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(4px);
+    max-height: 92vh;
+    overflow-y: auto; 
+    padding: 10px;
   }
 
-  .article-title {
-    font-size: 2em;
+
+
+  .comment-container::-webkit-scrollbar {
+    width: 6px; 
+  }
+
+  
+  .comment-container::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1); 
+    border-radius: 8px; 
+  }
+
+  
+  .comment-container::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 8px; 
+  }
+
+  
+  .comment-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5); 
+  }
+
+  .comments-tile {
+  
+    padding: 10px; 
+    margin-bottom: 10px; 
+  }
+
+  .leave-comment,
+  .comments-container {
     margin-bottom: 10px;
   }
 
-  .article-author {
-    font-size: 0.9em;
-    color: #666;
-    margin-bottom: 10px;
-  }
+.leave-comment h2,
+.comments-container h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
 
-  .article-text {
-    font-size: 1.1em;
-    line-height: 1.6;
-    margin-bottom: 20px;
-  }
 
-  .article-date {
-    font-style: italic;
-    align-self: flex-end;
-  }
-  .like-text {
-    color: white;
-  }
+.article-title {
+  font-size: 1.8em; 
+  margin-bottom: 8px;
+}
+
+.article-author {
+  font-size: 1.0em;
+  font-style: italic;
+  margin-bottom: 8px; 
+}
+
+.article-text {
+  font-size: 1.1em; 
+  line-height: 1.3;
+  margin-bottom: 12px; 
+  word-wrap: break-word;
+}
+
+.article-date {
+  font-style: italic;
+  align-self: flex-end;
+  font-size: 0.8em; 
+}
+
+.like-text {
+  color: white;
+}
 
   button {
     cursor: pointer;
@@ -271,11 +360,11 @@
   }
 
   .btn {
-    background: none;
-    border: none;
-    padding: 0;
-    margin: 0;
-    cursor: pointer;
-    font-size: 2em;
-  }
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  font-size: 1.6em;
+}
 </style>

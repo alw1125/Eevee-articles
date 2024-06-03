@@ -4,6 +4,7 @@
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
   import { invalidateAll } from "$app/navigation";
+  
   $: path = $page.url.pathname;
   $: console.log(path);
 
@@ -20,13 +21,15 @@
   }
 </script>
 
+
+
 <nav>
   <ul>
     <li class="nav-item"><a href="/" class="{path === '/' ? 'active' : ''}"><img src="/images/logoNew.png" alt="Home" class="nav-img"></a></li>
     {#if data.isLoggedIn}
-      <li><a href="/profile" class:active={path.startsWith("/profile")}>Profile</a></li>
-      <li><a href="/postArticle" class:active={path.startsWith("/postArticle")}>Post Articles</a></li>
-      <li><a href="/myArticles" class:active={path.startsWith("/myArticles")}> My Articles</a><li>
+    <li><a href="/newProfile" class:active={path.startsWith("/newProfile")}> Profile</a><li></li>
+    <li><a href="/postArticle" class:active={path.startsWith("/postArticle")}>Post Articles</a></li>
+
     {/if}
   </ul>
   <span />
@@ -35,7 +38,6 @@
       <li><button on:click={handleLogout}>Logout</button></li>
     {:else}
       <li><a href="/login" class:active={path.startsWith("/login")}>Login</a></li>
-      <li><a href="/create-account" class:active={path.startsWith("/create-account")}>Create Account</a></li>
     {/if}
   </ul>
 </nav>
@@ -49,13 +51,16 @@
       height: 12%;
       display: flex;
       align-items: center;
+      justify-content: flex-start;
+      margin-left: 40px;
+      margin-right: 40px;
 
     & > ul {
       list-style: none;
       margin: 0;
       padding: 0;
       display: flex;
-      gap: 10px;
+      gap: 2px;
     }
 
     & li {
