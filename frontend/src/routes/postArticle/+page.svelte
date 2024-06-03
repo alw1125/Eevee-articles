@@ -51,6 +51,8 @@
     error = !success;
 
     if (success) invalidate(ART_URL);
+
+    goBack();
   }
   
   onMount(() => {
@@ -136,7 +138,6 @@
   <button type="submit" on:click = {getText}>Post!</button>
   {#if error}<span class="error">Could not save!</span>{/if}
   {#if success}<span class="success">Saved!</span>
-  {goBack()}
   
   {/if}
 

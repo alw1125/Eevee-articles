@@ -50,8 +50,8 @@
     error = !success;
 
     if (success) {
-         invalidate(ART_URL)
-
+         invalidate(ART_URL);
+         goBack();
         }
   }
   
@@ -140,7 +140,6 @@
   {#if error}<span class="error">Could not save!</span>{/if}
   {#if success}
   <span class="success">Saved!</span>
-  {goBack()}
   {/if}
 </form>
 
