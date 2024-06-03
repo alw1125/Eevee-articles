@@ -1,14 +1,21 @@
 <script>
   import CommentForm from "$lib/components/CommentForm.svelte";
+  import { createEventDispatcher } from "svelte";
   import { CollapsibleCard } from "svelte-collapsible";
   import { COMMENTS_URL } from "$lib/js/api-urls";
 
   export let data;
   export let comment, article_id;
 
+  const dispatch = createEventDispatcher();
+
   let error = false;
   let success = false;
   let commentForm = false;
+
+  function commentChange(){
+    dispatch(`comment`);
+  }
 
   async function deleteComment(comment_id) {
     let user_id = data.user.user_id;
@@ -25,6 +32,8 @@
       if (response.ok) {
         success = true;
 
+        commentChange();
+        
         setTimeout(() => {
           success = false;
         }, 1000);
@@ -69,7 +78,7 @@
             {#if success}<span class="success" id="success">Deleted!</span>{/if}
           {/if}
           {#if commentForm}
-            <CommentForm {data} {article_id} parent_comment_id={comment.comment_id} />
+            <CommentForm on:comment={commentChange} {data} {article_id} parent_comment_id={comment.comment_id} />
           {/if}
         {/if}
 

@@ -161,6 +161,14 @@
       comments = await fetchComments(articleId);
     }
   }
+
+  function onComment(){
+    setTimeout(async () => {
+    comments = await fetchComments(articleId);
+    console.log(111);
+  }, 1000);
+  }
+  
 </script>
 
 <div class="container">
@@ -202,14 +210,24 @@
       {#if data.isLoggedIn}
         <div class="leave-comment">
           <h2>Leave your comment!</h2>
-          <CommentForm {data} article_id={articleId} parent_comment_id={null} />
+          <CommentForm
+            on:comment={onComment}
+            {data}
+            article_id={articleId}
+            parent_comment_id={null}
+          />
         </div>
       {/if}
       <div class="comments-container">
         <h2>Other Comments:</h2>
         {#if comments}
           {#each comments as comment}
-            <Comment {data} {comment} article_id={articleId} />
+            <Comment
+              on:comment={onComment}
+              {data}
+              {comment}
+              article_id={articleId}
+            />
           {/each}
         {:else}
           <p>No comments to display</p>

@@ -1,6 +1,14 @@
 <script>
   import { COMMENTS_URL } from "$lib/js/api-urls";
+  import { createEventDispatcher } from "svelte";
+
   export let data, article_id, parent_comment_id;
+
+  const dispatch = createEventDispatcher();
+
+  function commentChange(){
+    dispatch(`comment`);
+  }
 
   let desc;
 
@@ -26,7 +34,7 @@
         if (response.status === 204) {
           success = true;
           desc = "";
-
+          commentChange();
           setTimeout(() => {
           success = false;
         }, 1000);
