@@ -10,6 +10,11 @@
 
   export let data;
 
+  function loginClick() {
+  const loginClickEvent = new CustomEvent('loginClick');
+  dispatchEvent(loginClickEvent);
+}
+
   
   async function handleLogout() {
     const response = await fetch(LOGOUT_URL, {
@@ -18,6 +23,10 @@
     });
     await invalidateAll();
     goto("/login");
+  }
+
+  function toggleLoginPage() {
+    dispatch("toggleSignUpForm");
   }
 </script>
 
@@ -37,7 +46,7 @@
     {#if data.isLoggedIn}
       <li><button on:click={handleLogout}>Logout</button></li>
     {:else}
-      <li><a href="/login" class:active={path.startsWith("/login")}>Login</a></li>
+      <li><a href="/login" class:active={path.startsWith("/login")} on:click={loginClick}>Login</a></li>
     {/if}
   </ul>
 </nav>
