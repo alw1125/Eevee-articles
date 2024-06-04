@@ -181,8 +181,8 @@
       <p class="article-date">{formatDate(data.date)}</p>
       {#if data.isLoggedIn}
         {#if data.user.user_id == data.user_id || data.user.is_admin}
-          <button type="button" on:click={deleteArticle}>Delete Article</button>
-          <button on:click={goEdit}>Edit</button>
+          <button type="button" on:click={deleteArticle} class="toggle-comments-btn">Delete Article</button>
+          <button on:click={goEdit} class="toggle-comments-btn">Edit</button>
         {/if}
         <link
           rel="stylesheet"
@@ -365,4 +365,32 @@
     cursor: pointer;
     font-size: 1.6em;
   }
+
+
+  .toggle-comments-btn {
+    cursor: pointer;
+    color: rgb(224, 224, 224);
+    text-decoration: none;
+    background-color: transparent;
+    border: 1px solid rgb(142, 142, 142);
+    border-radius: 4px;
+    padding: 3px 12px;
+    margin-right: 10px;
+    font: inherit;
+    outline: none;
+    transition:
+    background-color 0.3s,
+    color 0.3s,
+    transform 0.3s;
+}
+
+
+.toggle-comments-btn:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+    color: white;
+    transform: translateY(-2px);
+}
+
+  
+  
 </style>

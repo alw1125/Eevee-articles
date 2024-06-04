@@ -78,15 +78,10 @@ function handleLoginClick(event) {
 <style>
 
 :global(html),
-    :global(body),
-    .article-date {
+    :global(body){
       zoom: 0.9;
     }
 
-
-h1 {
-      text-align: center;
-    }
 
   form {
     display: flex;
@@ -104,8 +99,7 @@ h1 {
     gap: 20px;
   }
 
-  input,
-  textarea {
+  input {
     width: 100%;
     padding: 5px;
     border: 1px solid #ddd;
@@ -116,8 +110,7 @@ h1 {
     transition: border-color 0.3s ease;
   }
 
-  input:focus,
-  textarea:focus {
+  input:focus {
     border-color: #555555;
     outline: none;
   }
@@ -153,7 +146,5 @@ h1 {
     border-radius: 5px;
   }
 
-  textarea {
-    resize: vertical;
-  }
+
 </style>

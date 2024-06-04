@@ -161,28 +161,30 @@
       </div>
     </div>
   </form>
-</div>
 
-<style>
-  h1 {
-    text-align: center;
-  }
+  </div>
+  
+  <style>
 
-  form {
-    margin: auto;
-    max-width: 500px;
-    border: 2px solid #4caf50;
-    border-radius: 10px;
-    padding: 20px;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 20px;
-    background-color: rgba(255, 255, 255, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    max-height: 90vh;
-    overflow-y: auto;
-  }
 
+
+      
+    form {
+      margin: auto;
+      max-width: 500px;
+      border: 2px solid #4caf50;
+      border-radius: 10px;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+      background-color: rgba(255, 255, 255, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    
   ::-webkit-scrollbar {
     width: 6px;
   }
