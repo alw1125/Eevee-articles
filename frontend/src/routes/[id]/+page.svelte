@@ -386,7 +386,7 @@
     background-color: transparent;
     border: 1px solid rgb(142, 142, 142);
     border-radius: 4px;
-    padding: 8px 12px;
+    padding: 3px 12px;
     margin-right: 10px;
     font: inherit;
     outline: none;
