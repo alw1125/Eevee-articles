@@ -53,22 +53,22 @@ CREATE TABLE Comments (
 
 
 INSERT INTO Users (username, firstName, lastName, dob, is_admin, desc, avatar, password) VALUES
-('johndoe', 'John','Doe', '1990-01-15', 1, 'Tech enthusiast and blogger.', 'squirrel.jpg', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW'),
-('janedoe', 'Jane','Doe', '1985-05-20', 0, 'Health and wellness coach.', 'penguin.jpg', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW'),
-('alicew', 'Alice', 'Williams', '1992-03-12', 0, 'Lover of all things nature.', 'duck.jpg', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW'),
-('bobj', 'Bob', 'Johnson', '1988-07-22', 0, 'Fitness enthusiast and personal trainer.', 'bear.jpg', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW'),
-('charlottek', 'Charlotte', 'King', '1995-11-30', 0, 'Bookworm and aspiring author.', 'bunny.jpg', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW'),
-('davem', 'Dave', 'Miller', '1991-06-18', 0, 'Gadget reviewer and tech geek.', 'cat.jpg', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW'),
-('evat', 'Eva', 'Turner', '1983-02-14', 0, 'Travel blogger and photographer.', 'bunny.jpg', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW');
+('johndoe', 'John','Doe', '1990-01-15', 1, 'Tech enthusiast and blogger.', '/images/squirrel.jpg', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW'),
+('janedoe', 'Jane','Doe', '1985-05-20', 0, 'Health and wellness coach.', '/images/penguin.jpg', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW'),
+('alicew', 'Alice', 'Williams', '1992-03-12', 0, 'Lover of all things nature.', 'images/duck.jpg', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW'),
+('bobj', 'Bob', 'Johnson', '1988-07-22', 0, 'Fitness enthusiast and personal trainer.', '/images/bear.jpg', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW'),
+('charlottek', 'Charlotte', 'King', '1995-11-30', 0, 'Bookworm and aspiring author.', '/images/bunny.jpg', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW'),
+('davem', 'Dave', 'Miller', '1991-06-18', 0, 'Gadget reviewer and tech geek.', '/images/cat.jpg', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW'),
+('evat', 'Eva', 'Turner', '1983-02-14', 0, 'Travel blogger and photographer.', '/images/bunny.jpg', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW');
 
 INSERT INTO Articles (title, image, image_width, image_height, user_id, text, date) VALUES
-('The Future of Technology', 'images/tech.jpg', 400, 200,  1, 'Technology is advancing at an unprecedented rate...', '2024-05-01'),
-('Healthy Eating Habits', 'images/diet.jpg',400, 200, 2, 'Adopting healthy eating habits can significantly improve...', '2024-05-05'),
-('The Wonders of Nature', 'images/odi.jpg', 150, 200, 3, 'Exploring the beauty of the natural world...', '2024-05-10'),
-('Top Fitness Tips', 'images/fitness.jpg', 400, 200, 4, 'Here are some top tips to help you stay fit...', '2024-05-12'),
-('Best Books of 2024', 'images/man.jpg', 180, 200, 5, 'A review of the best books released in 2024...', '2024-05-14'),
-('Latest Gadget Reviews', 'images/gadget.jpg', 300, 300, 6, 'In-depth reviews of the latest gadgets...', '2024-05-16'),
-('Traveling on a Budget', 'images/OIG2.jpg', 300, 300, 7, 'How to travel the world without breaking the bank...', '2024-05-18');
+('The Future of Technology', '/images/tech.jpg', 400, 200,  1, 'Technology is advancing at an unprecedented rate...', '2024-05-01'),
+('Healthy Eating Habits', '/images/diet.jpg',400, 200, 2, 'Adopting healthy eating habits can significantly improve...', '2024-05-05'),
+('The Wonders of Nature', '/images/odi.jpg', 150, 200, 3, 'Exploring the beauty of the natural world...', '2024-05-10'),
+('Top Fitness Tips', '/images/fitness.jpg', 400, 200, 4, 'Here are some top tips to help you stay fit...', '2024-05-12'),
+('Best Books of 2024', '/images/man.jpg', 180, 200, 5, 'A review of the best books released in 2024...', '2024-05-14'),
+('Latest Gadget Reviews', '/images/gadget.jpg', 300, 300, 6, 'In-depth reviews of the latest gadgets...', '2024-05-16'),
+('Traveling on a Budget', '/images/OIG2.jpg', 300, 300, 7, 'How to travel the world without breaking the bank...', '2024-05-18');
 
 -- Initial Comments
 INSERT INTO Comments (desc, date, time, article_id, user_id) VALUES
