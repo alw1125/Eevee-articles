@@ -13,8 +13,17 @@ import jwt from "jsonwebtoken";
 export function getUsernameFromJWT(token) {
   // Decode token; will throw an error if the token is invalid or expired.
   const decoded = jwt.verify(token, process.env.JWT_KEY);
+  
   if (!decoded.username) throw `JWT is valid but did not contain a username.`;
+  
   return decoded.username;
+}
+
+export function getAdminStatusFromJWT(token) {
+  const decoded = jwt.verify(token, process.env.JWT_KEY);
+  
+  if (decoded.isAdminString == null) throw `JWT is valid but did not contain admin status.`;
+  return decoded.isAdminString;
 }
 
 /**
@@ -30,6 +39,7 @@ export function getUsernameFromJWT(token) {
  *
  * @author Andrew Meads
  */
-export function createUserJWT(username, expiresIn = "24h") {
-  return jwt.sign({ username }, process.env.JWT_KEY, { expiresIn });
+export function createUserJWT(username, is_admin, expiresIn = "24h") {
+  const isAdminString = is_admin ? '1' : '0';
+  return jwt.sign({ username, isAdminString }, process.env.JWT_KEY, { expiresIn });
 }
