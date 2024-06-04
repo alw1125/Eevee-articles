@@ -39,11 +39,12 @@
     });
   
     async function handleSubmit() {
-      error = false;
-      if (password !== confirmPassword) {
-        error = true;
-        return;
-      }
+    error = false;
+    if(username_error|| password_error) {
+      error =true;
+      return
+
+    }
   
       const response = await fetch(USER_URL, {
         method: "POST",
