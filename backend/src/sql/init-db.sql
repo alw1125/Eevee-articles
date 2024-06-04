@@ -55,7 +55,7 @@ CREATE TABLE Comments (
 INSERT INTO Users (username, firstName, lastName, dob, is_admin, desc, avatar, password) VALUES
 ('johndoe', 'John','Doe', '1990-01-15', 1, 'Tech enthusiast and blogger.', '/images/squirrel.png', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW'),
 ('janedoe', 'Jane','Doe', '1985-05-20', 0, 'Health and wellness coach.', '/images/penguin.png', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW'),
-('alicew', 'Alice', 'Williams', '1992-03-12', 0, 'Lover of all things nature.', 'images/duck.png', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW'),
+('alicew', 'Alice', 'Williams', '1992-03-12', 0, 'Lover of all things nature.', '/images/duck.png', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW'),
 ('bobj', 'Bob', 'Johnson', '1988-07-22', 0, 'Fitness enthusiast and personal trainer.', '/images/bear.png', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW'),
 ('charlottek', 'Charlotte', 'King', '1995-11-30', 0, 'Bookworm and aspiring author.', '/images/bunny.png', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW'),
 ('davem', 'Dave', 'Miller', '1991-06-18', 0, 'Gadget reviewer and tech geek.', '/images/cat.png', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW'),
