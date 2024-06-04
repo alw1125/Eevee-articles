@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import fullstackproject.swingclient.pojos.User;
 import fullstackproject.swingclient.pojos.LoginQuery;
 import fullstackproject.swingclient.pojos.UserList;
-import fullstackproject.swingclient.ui.OperationFrame;
+import fullstackproject.swingclient.OperationFrame;
 import fullstackproject.swingclient.ui.UserListModelAdaptor;
 import fullstackproject.swingclient.web.API;
 import java.io.IOException;
@@ -119,9 +119,11 @@ public class MainPage extends JPanel implements ActionListener {
         UserList preList= API.getInstance().getUserList();
         if(preList ==null){
             API.getInstance().logOut();
-            System.out.println("Logout successful");
+
             reset();
         }
+        preList.removeIfAdmin();
+
         list = preList;
 
        initTable();
@@ -129,7 +131,7 @@ public class MainPage extends JPanel implements ActionListener {
 
 
        logoutButton = new JButton("Logout");
-        logoutButton.setBounds(50, 50, 100, 40);
+        logoutButton.setBounds(50, 300, 100, 40);
         this.add(logoutButton);
 
 
@@ -138,7 +140,7 @@ public class MainPage extends JPanel implements ActionListener {
             public void actionPerformed(ActionEvent e) {
                 try {
                     API.getInstance().logOut();
-                    System.out.println("Logout successful");
+
                     reset();
                 } catch (IOException | InterruptedException ex) {
                     System.out.println("Error during logout: " + ex.getMessage());
@@ -179,7 +181,7 @@ public class MainPage extends JPanel implements ActionListener {
         });
 
         tablePane = new JScrollPane(table);
-        tablePane.setBounds(50, 200, 400, 150);
+        tablePane.setBounds(50, 50, 400, 150);
         this.add(tablePane);
     }
 }

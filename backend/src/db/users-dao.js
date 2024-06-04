@@ -137,8 +137,6 @@ function buildUpdateStatement(obj) {
 
 export async function deleteUser(user_id) {
   const db = await getDatabase();
-  console.log("I AM BEING CALLED");
-  console.log(user_id);
   const deleteUser = await db.run(`DELETE FROM Users WHERE user_id = ?`, user_id);
   console.log(deleteUser.changes);
   // Return true if changes applied, false otherwise

@@ -1,8 +1,9 @@
-package fullstackproject.swingclient.ui;
+package fullstackproject.swingclient;
 
 import fullstackproject.swingclient.pojos.User;
 import fullstackproject.swingclient.ui.Jpanels.MainPage;
 import fullstackproject.swingclient.ui.Jpanels.UserPanel;
+import fullstackproject.swingclient.ui.UserListModelAdaptor;
 
 import javax.swing.*;
 import java.awt.*;

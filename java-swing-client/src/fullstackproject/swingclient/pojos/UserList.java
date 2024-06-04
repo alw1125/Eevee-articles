@@ -1,6 +1,7 @@
 package fullstackproject.swingclient.pojos;
 import fullstackproject.swingclient.ui.Listener;
 
+import java.util.Iterator;
 import java.util.List;
 
 public class UserList  {
@@ -32,6 +33,16 @@ public class UserList  {
 
     public void remove(int index) {
         if (index >= 0 && index < users.size()) {users.remove(index);} }
+
+    public void removeIfAdmin() {
+        Iterator<User> iterator = users.iterator();
+        while (iterator.hasNext()) {
+            User user = iterator.next();
+            if (user.getAdminStatus() == 1) {
+                iterator.remove();
+            }
+        }
+    }
 
 
 

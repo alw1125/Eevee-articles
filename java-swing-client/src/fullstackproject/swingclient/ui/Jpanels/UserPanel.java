@@ -1,7 +1,7 @@
 package fullstackproject.swingclient.ui.Jpanels;
 
 import fullstackproject.swingclient.pojos.User;
-import fullstackproject.swingclient.ui.OperationFrame;
+import fullstackproject.swingclient.OperationFrame;
 import fullstackproject.swingclient.ui.UserListModelAdaptor;
 import fullstackproject.swingclient.web.API;
 
@@ -21,45 +21,49 @@ public class UserPanel extends JPanel implements ActionListener {
     private UserListModelAdaptor model;
     private JTable table;
     private JLabel imgSprite;
-    private JLabel nameLabel;
-    private JLabel id;
+    private JLabel firstName;
+    private JLabel lastName;
 
 
     public UserPanel(User user, OperationFrame operationFrame, JTable table, UserListModelAdaptor model) throws MalformedURLException {
-        this.operationFrame=operationFrame;
+        this.operationFrame = operationFrame;
         this.model = model;
-        this.table=table;
+        this.table = table;
 
-        setLayout(new GridLayout(3, 1));
-        nameLabel = new JLabel("Name: " + user.getFirstName());
-        id = new JLabel(("ID" + user.getId()));
-        userId = user.getId();
+        userId=user.getId();
 
-        delete = new JButton("delete");
-        back = new JButton("Go back");
+        setLayout(new BorderLayout(10, 10));
 
         imgSprite = new JLabel();
-        String url = "http://localhost:3000/" + user.getAvatar();
-        System.out.println(url);
-        imgSprite.setIcon(new ImageIcon(new URL(url)));
-        imgSprite.setBounds(10,10,100,100);
+        String url = "http://localhost:3000" + user.getAvatar();
+        ImageIcon imageIcon = new ImageIcon(new URL(url));
+        Image image = imageIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+        imgSprite.setIcon(new ImageIcon(image));
 
-        this.setLayout(new GridBagLayout());
+        JPanel imagePanel = new JPanel(new GridBagLayout());
+        imagePanel.add(imgSprite);
+        add(imagePanel, BorderLayout.CENTER);
 
+        JPanel infoPanel = new JPanel(new FlowLayout());
+        firstName = new JLabel("First Name: " + user.getFirstName());
+        lastName = new JLabel("Last Name: " + user.getLastName());
+        infoPanel.add(firstName);
+        infoPanel.add(Box.createHorizontalStrut(10));
+        infoPanel.add(lastName);
+        add(infoPanel, BorderLayout.NORTH);
 
-
-        this.add(imgSprite);
-        this.add(nameLabel);
-        this.add(id);
-        this.add(delete);
-        this.add(back);
-
+        JPanel buttonPanel = new JPanel(new FlowLayout());
+        delete = new JButton("Delete");
+        back = new JButton("Go back");
+        buttonPanel.add(delete);
+        buttonPanel.add(Box.createHorizontalStrut(10));
+        buttonPanel.add(back);
+        add(buttonPanel, BorderLayout.PAGE_END);
 
         delete.addActionListener(this);
         back.addActionListener(this);
-
-
     }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -67,7 +71,7 @@ public class UserPanel extends JPanel implements ActionListener {
             try {
 
                 API.getInstance().removeUser(userId);
-                System.out.println("Deleted go look at database.");
+
                 int index = table.getSelectedRow();
 
                 model.removeRow(index);
@@ -82,9 +86,9 @@ public class UserPanel extends JPanel implements ActionListener {
         }
 
         if(e.getSource()==back) {
-            System.out.println("Hi");
+
             int index = table.getSelectedRow();
-            System.out.println("INDEX IS "+index);
+
             operationFrame.switchToLogin();
 
         }

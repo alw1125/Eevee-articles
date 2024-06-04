@@ -59,7 +59,7 @@ public class API {
         if (statusCode == 200) {
             return JSONUtils.toObject(responseJson, User.class);
         } else if (response.statusCode() == 403 || responseJson.contains("Forbidden")) {
-            throw new IOException("Forbidden: User does not have the necessary permissions.");
+            throw new IOException("Unauthorised: User does not have the necessary permissions.");
         } else {
             throw new IOException("Unexpected response status: " + response.statusCode());
         }
@@ -90,15 +90,16 @@ public class API {
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         String responseJson = response.body();
+        int statusCode = response.statusCode();
+        if (statusCode==200) {
+            List<User> users = JSONUtils.toList(responseJson, User.class);
+            return new UserList(users);
+        }
+        else if (statusCode==401) {throw new IOException("Unauthorised user");}
+        else if (statusCode==403) {throw  new IOException("User needs to be an admin to access");}
+        else throw new IOException("Unexpected response status: " + response.statusCode());
 
 
-
-
-
-
-
-        List<User> users = JSONUtils.toList(responseJson, User.class);
-        return new UserList(users);
     }
 
     public void removeUser(int userId) throws IOException, InterruptedException {
@@ -116,16 +117,7 @@ public class API {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         String responseJson = response.body();
 
+
     }
 
-
-    public int getCallCount() {
-        List<HttpCookie> cookies = this.cookieManager.getCookieStore().get(URI.create(BASE_URL));
-        for (HttpCookie cookie : cookies) {
-            if (cookie.getName().equals("callCount")) {
-                return Integer.parseInt(cookie.getValue());
-            }
-        }
-        return 0;
-    }
 }
