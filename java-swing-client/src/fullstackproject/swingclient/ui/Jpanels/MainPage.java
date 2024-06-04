@@ -31,6 +31,7 @@ public class MainPage extends JPanel implements ActionListener {
     private JButton logoutButton;
 
     private UserList list;
+    private User user;
     private JTable table;
 
     private JScrollPane tablePane;
@@ -55,17 +56,33 @@ public class MainPage extends JPanel implements ActionListener {
             LoginQuery type = new LoginQuery();
             type.setUsername(username);
             type.setPassword(password);
-            try {
-                User loggedInUser = API.getInstance().logIn(type);
-                if (loggedInUser != null) {
-                    System.out.println("Login successful");
-                  afterLogin();
-                } else {
-                    System.out.println("Login failed");
+            new Thread(() -> {
+                try {
+                    User loggedInUser = API.getInstance().logIn(type);
+                    if (loggedInUser != null) {
+                        afterLogin();
+                    } else {
+                        SwingUtilities.invokeLater(() -> {
+                            JOptionPane.showMessageDialog(null, "Login failed. Please check your credentials and try again.", "Login Failed", JOptionPane.ERROR_MESSAGE);
+                        });
+                    }
+                } catch (IOException ex) {
+                    if (ex.getMessage().contains("Forbidden")) {
+                        SwingUtilities.invokeLater(() -> {
+                            JOptionPane.showMessageDialog(null, "You are not authorized to access this area.", "Unauthorized Access", JOptionPane.WARNING_MESSAGE);
+                            reset();
+                        });
+                    } else {
+                        SwingUtilities.invokeLater(() -> {
+                            JOptionPane.showMessageDialog(null, "You are not authorized to access this area.", "Unauthorized Access", JOptionPane.WARNING_MESSAGE);
+                        });
+                    }
+                } catch (Exception ex) {
+                    SwingUtilities.invokeLater(() -> {
+                        JOptionPane.showMessageDialog(null, "You are not authorized to access this area.", "Unauthorized Access", JOptionPane.WARNING_MESSAGE);
+                    });
                 }
-            } catch (Exception ex) {
-                System.out.println("Error during login: " + ex.getMessage());
-            }
+            }).start();
         } else if (e.getSource() == resetButton) {
             userNameTextField1.setText("");
             passwordField1.setText("");
@@ -100,11 +117,11 @@ public class MainPage extends JPanel implements ActionListener {
 
         this.removeAll();
         UserList preList= API.getInstance().getUserList();
-//        if(preList ==null){
-//            API.getInstance().logOut();
-//            System.out.println("Logout successful");
-//            reset();
-//        }
+        if(preList ==null){
+            API.getInstance().logOut();
+            System.out.println("Logout successful");
+            reset();
+        }
         list = preList;
 
        initTable();

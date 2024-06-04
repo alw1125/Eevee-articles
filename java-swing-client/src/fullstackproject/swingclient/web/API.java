@@ -53,9 +53,16 @@ public class API {
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         String responseJson = response.body();
+        int statusCode = response.statusCode();
 
 
-        return JSONUtils.toObject(responseJson, User.class);
+        if (statusCode == 200) {
+            return JSONUtils.toObject(responseJson, User.class);
+        } else if (response.statusCode() == 403 || responseJson.contains("Forbidden")) {
+            throw new IOException("Forbidden: User does not have the necessary permissions.");
+        } else {
+            throw new IOException("Unexpected response status: " + response.statusCode());
+        }
     }
 
     public void logOut () throws IOException, InterruptedException {
