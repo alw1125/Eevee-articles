@@ -34,7 +34,9 @@
         if (response.status === 204) {
           success = true;
           desc = "";
+          
           commentChange();
+
           setTimeout(() => {
           success = false;
         }, 1000);

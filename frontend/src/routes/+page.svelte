@@ -1,11 +1,10 @@
 <script>
   export let data;
   import DisplayArticles from '$lib/components/DisplayArticles.svelte';
-  import DisplayComments from '$lib/components/DisplayComments.svelte';
 </script>
 
 <svelte:head>
-  <title>Authentication lab - Home</title>
+  <title>ACNH Blog - Home</title>
 </svelte:head>
 
 
