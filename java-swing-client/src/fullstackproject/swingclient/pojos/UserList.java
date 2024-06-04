@@ -3,7 +3,7 @@ import fullstackproject.swingclient.ui.Listener;
 
 import java.util.List;
 
-public class UserList {
+public class UserList  {
 
         private List<User> users;
 
@@ -32,6 +32,7 @@ public class UserList {
 
     public void remove(int index) {
         if (index >= 0 && index < users.size()) {users.remove(index);} }
+
 
 
 }

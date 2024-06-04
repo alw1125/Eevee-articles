@@ -5,7 +5,7 @@ import fullstackproject.swingclient.pojos.UserList;
 
 import javax.swing.table.AbstractTableModel;
 
-public class UserListModelAdaptor extends AbstractTableModel {
+public class UserListModelAdaptor extends AbstractTableModel implements Listener {
     private UserList userList;
 
     public UserListModelAdaptor(UserList userList) {
@@ -20,7 +20,7 @@ public class UserListModelAdaptor extends AbstractTableModel {
     @Override
     public int getColumnCount() {
 
-        return 8;
+        return 5;
     }
 
     @Override
@@ -38,14 +38,6 @@ public class UserListModelAdaptor extends AbstractTableModel {
                 return user.getLastName();
             case 4:
                 return user.getDob();
-            case 5:
-                return user.getAdminStatus();
-            case 6:
-                return user.getDesc();
-            case 7:
-                return user.getAvatar();
-            case 8:
-                return user.getPassword();
             default:
                 throw new IllegalArgumentException("Unexpected columnIndex");
         }
@@ -64,23 +56,19 @@ public class UserListModelAdaptor extends AbstractTableModel {
                 return "Last Name";
             case 4:
                 return "DOB";
-            case 5:
-                return "Admin Status";
-            case 6:
-                return "Description";
-            case 7:
-                return "Avatar";
-            case 8:
-                return "Password";
             default:
                 throw new IllegalArgumentException("Unexpected column");
         }
     }
 
-    public void removeUser(int rowIndex) {
-        userList.remove(rowIndex);
-        fireTableRowsDeleted(rowIndex, rowIndex);
+    public void removeRow (int row) {
+        userList.remove(row);
+        fireTableRowsDeleted(row, row);
     }
 
 
+    @Override
+    public void update() {
+        fireTableDataChanged();
+    }
 }

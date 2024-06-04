@@ -35,6 +35,8 @@ public class MainPage extends JPanel implements ActionListener {
 
     private JScrollPane tablePane;
 
+    private UserListModelAdaptor model;
+
     public MainPage(OperationFrame operationFrame) {
         this.operationFrame=operationFrame;
         this.setLayout(null);
@@ -110,7 +112,7 @@ public class MainPage extends JPanel implements ActionListener {
 
 
        logoutButton = new JButton("Logout");
-        logoutButton.setBounds(150, 150, 100, 40);
+        logoutButton.setBounds(50, 50, 100, 40);
         this.add(logoutButton);
 
 
@@ -139,7 +141,9 @@ public class MainPage extends JPanel implements ActionListener {
     }
 
     private void initTable() {
-        table = new JTable(new UserListModelAdaptor(list));
+        model = new UserListModelAdaptor(list);
+        table = new JTable(model);
+        table.setBounds(10,100,600,800);
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -148,7 +152,7 @@ public class MainPage extends JPanel implements ActionListener {
                     if (selectedRow != -1) {
                         User selectedUser = list.get(selectedRow);
                         try {
-                            operationFrame.switchToUserPanel(selectedUser);
+                            operationFrame.switchToUserPanel(selectedUser, operationFrame, table, model);
                         } catch (MalformedURLException ex) {
                             throw new RuntimeException(ex);
                         }

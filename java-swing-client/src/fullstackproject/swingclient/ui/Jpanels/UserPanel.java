@@ -18,18 +18,21 @@ public class UserPanel extends JPanel implements ActionListener {
     JButton back;
     int userId;
     private OperationFrame operationFrame;
-    UserListModelAdaptor model;
+    private UserListModelAdaptor model;
+    private JTable table;
     private JLabel imgSprite;
+    private JLabel nameLabel;
+    private JLabel id;
 
 
-    public UserPanel(User user, OperationFrame operationFrame, UserListModelAdaptor model) throws MalformedURLException {
+    public UserPanel(User user, OperationFrame operationFrame, JTable table, UserListModelAdaptor model) throws MalformedURLException {
         this.operationFrame=operationFrame;
         this.model = model;
+        this.table=table;
 
         setLayout(new GridLayout(3, 1));
-        JLabel nameLabel = new JLabel("Name: " + user.getFirstName());
-
-        JLabel id = new JLabel(("ID" + user.getId()));
+        nameLabel = new JLabel("Name: " + user.getFirstName());
+        id = new JLabel(("ID" + user.getId()));
         userId = user.getId();
 
         delete = new JButton("delete");
@@ -40,17 +43,9 @@ public class UserPanel extends JPanel implements ActionListener {
         url.replaceAll("\\s+","");
         System.out.println(url);
         imgSprite.setIcon(new ImageIcon(new URL(url)));
+        imgSprite.setBounds(10,10,100,100);
 
         this.setLayout(new GridBagLayout());
-
-
-
-
-
-
-
-
-
 
 
 
@@ -74,6 +69,10 @@ public class UserPanel extends JPanel implements ActionListener {
 
                 API.getInstance().removeUser(userId);
                 System.out.println("Deleted go look at database.");
+                int index = table.getSelectedRow();
+
+                model.removeRow(index);
+                model.update();
                 operationFrame.switchToLogin();
 
             } catch (IOException ex) {
@@ -85,7 +84,10 @@ public class UserPanel extends JPanel implements ActionListener {
 
         if(e.getSource()==back) {
             System.out.println("Hi");
+            int index = table.getSelectedRow();
+            System.out.println("INDEX IS "+index);
             operationFrame.switchToLogin();
+
         }
 
     }
