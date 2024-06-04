@@ -7,6 +7,5 @@ export async function hashPassword(password) {
 
 export async function compareHashed(plaintext, hashpassword) {
   const isMatch = await bcrypt.compare(plaintext, hashpassword);
-  console.log(hashpassword);
   return isMatch;
 }

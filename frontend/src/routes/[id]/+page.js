@@ -4,6 +4,5 @@ export async function load({ fetch, params }) {
 
     const articleResponse = await fetch(`${ART_URL}/${params.id}`);
     const article = await articleResponse.json();
-    console.log(article);
     return article;
 }

@@ -113,8 +113,6 @@ export async function updateUser(user_id, updateData) {
   // Build and run update statement
   const [updateOperations, updateParams] = buildUpdateStatement(parsedUpdateData);
   const sql = `UPDATE Users SET ${updateOperations} WHERE user_id = ?`;
-  console.log(sql);
-  console.log(parsedUpdateData);
   const db = await getDatabase();
   const dbResult = await db.run(sql, ...updateParams, parseInt(user_id));
 
@@ -138,7 +136,6 @@ function buildUpdateStatement(obj) {
 export async function deleteUser(user_id) {
   const db = await getDatabase();
   const deleteUser = await db.run(`DELETE FROM Users WHERE user_id = ?`, user_id);
-  console.log(deleteUser.changes);
   // Return true if changes applied, false otherwise
   return deleteUser.changes > 0;
 }
@@ -146,7 +143,6 @@ export async function deleteUser(user_id) {
 export async function deleteUserAsAdmin() {
   const db = await getDatabase();
   const deleteUser = await db.run(`DELETE FROM Users`);
-  console.log(deleteUser.changes);
   // Return true if changes applied, false otherwise
   return deleteUser.changes > 0;
 }

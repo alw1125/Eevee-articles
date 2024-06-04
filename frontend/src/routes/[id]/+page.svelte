@@ -32,7 +32,6 @@
 
     success = response.status === 204;
     error != success;
-    console.log(likeCount);
 
     if (success) invalidate(`${ART_URL}/${articleId}/like`);
   }
@@ -45,7 +44,6 @@
     });
     const result = await response.json();
     isLiked = result;
-    console.log(isLiked);
 
     success = response.status === 204;
     error != success;
@@ -63,7 +61,6 @@
 
     success = response.status === 204;
     error = !success;
-    console.log(`hi`);
 
     if (success) {
       invalidate(`${ART_URL}/${articleId}/like`);
@@ -80,7 +77,6 @@
 
     success = response.status === 204;
     error = !success;
-    console.log(`bye`);
 
     if (success) {
       invalidate(`${ART_URL}/${articleId}/unlike`);
@@ -125,7 +121,7 @@
 
       if (response.ok) {
         // Redirect to home page or another page after successful deletion
-        goto("/newProfile");
+        goto("/profile");
       } else {
         console.error("Failed to delete article:", response.statusText);
       }
@@ -162,14 +158,11 @@
     }
   }
 
-  function onComment(){
-    console.log(`before load`);
+  function onComment() {
     setTimeout(async () => {
-    comments = await fetchComments(articleId);
-    console.log(`loading comments`);
-  }, 1000);
+      comments = await fetchComments(articleId);
+    }, 1000);
   }
-  
 </script>
 
 <div class="container">
@@ -223,12 +216,7 @@
         <h2>Other Comments:</h2>
         {#if comments}
           {#each comments as comment}
-            <Comment
-              on:comment={onComment}
-              {data}
-              {comment}
-              article_id={articleId}
-            />
+            <Comment on:comment={onComment} {data} {comment} article_id={articleId} />
           {/each}
         {:else}
           <p>No comments to display</p>

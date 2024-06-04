@@ -52,10 +52,8 @@ export async function isArticleAuth(article_id, user_id){
   const db = await getDatabase();
   let article_author = await db.get(`SELECT user_id FROM Articles WHERE article_id = ?`, article_id);
   if(article_author.user_id == user_id){
-    console.log(1);
     return true;
   }else{
-    console.log(2);
     return false;
   }
 }
@@ -64,10 +62,8 @@ export async function isCommentAuth(comment_id, user_id) {
   const db = await getDatabase();
   let comment_author = await db.get(`SELECT user_id FROM Comments WHERE comment_id = ?`, comment_id);
   if (comment_author.user_id == user_id) {
-    console.log(3);
     return true;
   }else{
-    console.log(4);
     return false;
   }
 }
