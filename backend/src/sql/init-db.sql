@@ -53,13 +53,13 @@ CREATE TABLE Comments (
 
 
 INSERT INTO Users (username, firstName, lastName, dob, is_admin, desc, avatar, password) VALUES
-('johndoe', 'John','Doe', '1990-01-15', 1, 'Tech enthusiast and blogger.', 'avatar1.jpg', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW'),
-('janedoe', 'Jane','Doe', '1985-05-20', 0, 'Health and wellness coach.', 'avatar2.jpg', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW'),
-('alicew', 'Alice', 'Williams', '1992-03-12', 0, 'Lover of all things nature.', 'avatar3.jpg', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW'),
-('bobj', 'Bob', 'Johnson', '1988-07-22', 0, 'Fitness enthusiast and personal trainer.', 'avatar4.jpg', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW'),
-('charlottek', 'Charlotte', 'King', '1995-11-30', 0, 'Bookworm and aspiring author.', 'avatar5.jpg', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW'),
-('davem', 'Dave', 'Miller', '1991-06-18', 0, 'Gadget reviewer and tech geek.', 'avatar6.jpg', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW'),
-('evat', 'Eva', 'Turner', '1983-02-14', 0, 'Travel blogger and photographer.', 'avatar7.jpg', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW');
+('johndoe', 'John','Doe', '1990-01-15', 1, 'Tech enthusiast and blogger.', 'squirrel.jpg', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW'),
+('janedoe', 'Jane','Doe', '1985-05-20', 0, 'Health and wellness coach.', 'penguin.jpg', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW'),
+('alicew', 'Alice', 'Williams', '1992-03-12', 0, 'Lover of all things nature.', 'duck.jpg', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW'),
+('bobj', 'Bob', 'Johnson', '1988-07-22', 0, 'Fitness enthusiast and personal trainer.', 'bear.jpg', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW'),
+('charlottek', 'Charlotte', 'King', '1995-11-30', 0, 'Bookworm and aspiring author.', 'bunny.jpg', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW'),
+('davem', 'Dave', 'Miller', '1991-06-18', 0, 'Gadget reviewer and tech geek.', 'cat.jpg', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW'),
+('evat', 'Eva', 'Turner', '1983-02-14', 0, 'Travel blogger and photographer.', 'bunny.jpg', '$2b$10$vg8railKesnzAEd30VPEYOIgvyWPutHWdYwbDgG78rppc.cjLQ5zW');
 
 INSERT INTO Articles (title, image, image_width, image_height, user_id, text, date) VALUES
 ('The Future of Technology', 'images/tech.jpg', 400, 200,  1, 'Technology is advancing at an unprecedented rate...', '2024-05-01'),

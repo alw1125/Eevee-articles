@@ -28,6 +28,11 @@ Commands to run before commits:
     - `npm install form-data`
     - `npm install @tinymce/tinymce-svelte`
 
+    admin   username: johndoe 
+            password: password123
+    non-admin   username: alicew
+                password: password123
+
 All commits MUST have a brief descriptive message
 
 ## Git
