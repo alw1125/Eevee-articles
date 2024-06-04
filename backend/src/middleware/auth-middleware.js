@@ -1,5 +1,5 @@
 import { getUserWithUsername } from "../db/users-dao.js";
-import { getUsernameFromJWT } from "../utils/jwt-utils.js";
+import { getUsernameFromJWT, getAdminStatusFromJWT } from "../utils/jwt-utils.js";
 
 
 
@@ -14,11 +14,30 @@ export async function requiresAuthentication(req, res, next) {
 
   try {
     const username = getUsernameFromJWT(req.cookies.authToken);
+    console.log('I WANT TO SEE');
+    console.log(username);
     const user = await getUserWithUsername(username);
     if (!user) return res.sendStatus(401);
     req.user = user;
     return next();
   } catch {
+    return res.sendStatus(401);
+  }
+}
+
+export async function requiresAdminAuthentication(req, res, next) {
+  console.log('I WANT TO SEE');
+  console.log(req.cookies.authToken);
+  if (!req.cookies.authToken) return res.sendStatus(401);
+
+  try {
+    const adminStatus = getAdminStatusFromJWT(req.cookies.authToken);
+    
+    if (adminStatus !== '1') return res.sendStatus(403);
+    req.adminStatus = adminStatus;
+    return next();
+  } catch (error) {
+    console.log(error);
     return res.sendStatus(401);
   }
 }

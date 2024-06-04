@@ -1,95 +1,91 @@
 <script>
-  import { invalidate } from "$app/navigation";
-  import { USER_URL } from "$lib/js/api-urls.js";
-  import { onMount } from "svelte";
-  import ImageUpload from "$lib/components/ImageUpload.svelte";
-  import { writable } from "svelte/store";
-  import { goto } from "$app/navigation";
-
-  let firstName = "";
-  let lastName = "";
-  let username = "";
-  let password = "";
-  let confirmPassword = "";
-  let dob = "";
-  let desc = "";
-  let error = false;
-  let success = false;
-  let avatar;
-  let images = writable([
-    "images/cat.png",
-    "images/duck.png",
-    "images/bunny.png",
-    "images/squirrel.png",
-    "images/bear.png",
-    "images/penguin.png"
-  ]);
-  let selectedAvatar = "1";
-
-  function setImage(imgurl1) {
-    avatar = imgurl1;
-  }
-  function handleUpload(event) {
-    const { imageUrl } = event.detail;
-    images.update((imgs) => [...imgs, imageUrl]);
-  }
-
-  function adjustTextarea() {
-    const textarea = document.querySelector('textarea[name="description"]');
-    textarea.style.height = "auto";
-    textarea.style.height = textarea.scrollHeight + "px";
-  }
-  onMount(() => {
-    adjustTextarea();
-  });
-
-  async function handleSubmit() {
-    error = false;
-    if (password !== confirmPassword) {
-      error = true;
-      return;
+    import { invalidate } from "$app/navigation";
+    import { USER_URL } from "$lib/js/api-urls.js";
+    import { onMount } from "svelte";
+    import ImageUpload from "$lib/components/ImageUpload.svelte";
+    import { writable } from "svelte/store";
+    import { goto } from "$app/navigation";
+  
+    let firstName = "";
+    let lastName = "";
+    let username = "";
+    let password = "";
+    let confirmPassword = "";
+    let dob = "";
+    let desc = "";
+    let error = false;
+    let success = false;
+    let avatar; 
+    let images =writable(["/images/cat.png", "/images/duck.png", "/images/bunny.png", "/images/squirrel.png", "/images/bear.png", "/images/penguin.png"])
+    let selectedAvatar = "1";
+  
+    function setImage(imgurl1) {
+      avatar=imgurl1;
+      console.log(avatar)
+  
     }
-
-    const response = await fetch(USER_URL, {
-      method: "POST",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, firstName, lastName, dob, desc, avatar, password })
+    function handleUpload(event) {
+      const { imageUrl } = event.detail;
+      images.update(imgs => [...imgs, imageUrl]);
+    }
+  
+    function adjustTextarea() {
+      const textarea = document.querySelector('textarea[name="description"]');
+      textarea.style.height = "auto"; 
+      textarea.style.height = textarea.scrollHeight + "px"; 
+    }
+    onMount(() => {
+      adjustTextarea();
     });
-
-    if (response.status === 401) {
-      error = true;
-    } else {
-      location.reload();
-    }
-  }
-
-  let username_error;
-
-  async function checkName() {
-    username_error = null;
-    const response = await fetch(USER_URL);
-    const userList = await response.json();
-    userList.forEach((user) => {
-      if (user.username == username) {
-        username_error = "Username occupied";
+  
+    async function handleSubmit() {
+      error = false;
+      if (password !== confirmPassword) {
+        error = true;
+        return;
       }
-    });
-  }
-
-  let password_error;
-
-  function checkPassword() {
-    password_error = null;
-    if (password !== confirmPassword) {
-      password_error = "Password dont match";
+  
+      const response = await fetch(USER_URL, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, firstName, lastName, dob, desc, avatar, password })
+      });
+  
+      if (response.status === 401) {
+        error = true;
+      } else {
+        location.reload();
+      }
     }
-  }
-</script>
-
-<svelte:head>
-  <title>Create Account</title>
-</svelte:head>
+  
+    let username_error;
+    
+    async function checkName(){
+      username_error = null;
+      const response = await fetch(USER_URL);
+      const userList = await response.json()
+      userList.forEach(user => {
+        if(user.username == username){
+          username_error = "Username occupied"
+        }
+      });
+    }
+  
+    let password_error;
+  
+    function checkPassword(){
+      password_error = null;
+      if (password !== confirmPassword) {
+        password_error = "Password dont match";
+      }
+    }
+  
+  </script>
+  
+  <svelte:head>
+    <title>Create Account</title>
+  </svelte:head>
 
 <div class="container">
   <form on:submit|preventDefault={handleSubmit}>

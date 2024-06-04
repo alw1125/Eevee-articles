@@ -1,5 +1,5 @@
 import express from "express";
-import { requiresAuthentication } from "../../middleware/auth-middleware.js";
+import { requiresAuthentication, requiresAdminAuthentication } from "../../middleware/auth-middleware.js";
 import { createUser, updateUser, getUserList, deleteUser, deleteUserAsAdmin } from "../../db/users-dao.js";
 import {getArticleByUserID} from "../../db/article-dao.js"
 
@@ -55,19 +55,17 @@ router.get("/", async (req, res) => {
   return res.json(userList);
 });
 
+router.get("/admin", requiresAdminAuthentication, async (req,res)=>{
+  const list=await getUserList();
+  return res.json(list)
+})
+
 router.get("/:user_id/articles", async(req, res) => {
   let user_id = req.params.user_id;
   let userArticles = await getArticleByUserID(user_id);
   return res.json(userArticles);
 });
 
-//User login
-router.post("/login", async(req, res) => {
-});
-
-//User logput
-router.post("/logout", async(req, res) => {
-});
 
 //Delete user
 router.delete("/:user_id", async (req, res) => {

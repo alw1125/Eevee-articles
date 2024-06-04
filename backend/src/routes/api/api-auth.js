@@ -16,7 +16,8 @@ const handleLogin = async (req, res) => {
   } 
 
   else{
-    const jwtToken = createUserJWT(username);
+    const jwtToken = createUserJWT(username, userValid.is_admin);
+    
 
     // Expires 24 hours from now
     const expires = new Date(Date.now() + 86400000);
