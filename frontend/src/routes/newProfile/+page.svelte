@@ -119,9 +119,6 @@
           <div class="profile-detail">
             <span class="detail-label">Description:</span> {data.user.desc}
           </div>
-          <div class="profile-detail">
-            <span class="detail-label">Avatar:</span> {data.user.avatar}
-          </div>
         </div>
         <div class="profile-actions">
           <button on:click={toggleEditMode}>Edit</button>

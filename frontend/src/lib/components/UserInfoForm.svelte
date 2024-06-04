@@ -2,6 +2,8 @@
   import { invalidate } from "$app/navigation";
   import { USER_URL } from "$lib/js/api-urls.js";
   import { createEventDispatcher } from "svelte";
+  import ImageUpload from "$lib/components/ImageUpload.svelte";
+  import { writable } from "svelte/store";
 
 
   export let user;
@@ -17,6 +19,17 @@
   let password = "";
   let error = false;
   let success = false;
+  let images =writable(["images/cat.png", "images/duck.png", "images/bunny.png", "images/squirrel.png", "images/bear.png", "images/penguin.png"])
+
+  function setImage(imgurl1) {
+      avatar=imgurl1;
+      console.log(avatar)
+  
+    }
+    function handleUpload(event) {
+      const { imageUrl } = event.detail;
+      images.update(imgs => [...imgs, imageUrl]);
+    }
 
   //once user clicks save, sends info to backend to be updated.
   async function handleSave() {
@@ -56,6 +69,20 @@
   <label for="password">Password:</label>
   <input type="text" name="password" bind:value={password} required />
   <textarea bind:value={desc} rows="12" required />
+
+  <label for="profileAvatar">Profile Avatar:</label>
+  <div>
+    <div>
+      {#each $images as imgurl1} 
+
+      <label>
+        <input type="radio" name="profileAvatar" value="1"  on:click={() => setImage(imgurl1)} required />
+        <img src={imgurl1} alt="Profile Icon 1" />
+      </label>
+      
+      {/each}
+      <ImageUpload on:upload={handleUpload}/>
+
   <button type="submit">Save</button>
   <button type="button" on:click={cancel}>Cancel</button>
   {#if error}<span class="error">Could not save!</span>{/if}
@@ -68,12 +95,52 @@
   form {
     margin: auto;
     max-width: 800px;
-
     padding: 10px;
     display: grid;
     grid-template-columns: auto 1fr;
     gap: 10px;
+    max-height: 80vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    }
+
+    
+  ::-webkit-scrollbar {
+    width: 6px; 
   }
+
+  
+  ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1); 
+    border-radius: 8px; 
+  }
+
+  
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 8px; 
+  }
+
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5); 
+  }
+
+  img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+  
+    input[type="radio"] {
+      display: none;
+    }
+  
+    input[type="radio"]:checked + img {
+      transform: scale(1.1);
+    }
 
   button,
   textarea,
