@@ -333,6 +333,7 @@
   .article-title {
     font-size: 1.8em;
     margin-bottom: 8px;
+    word-wrap: break-word;
   }
 
   .article-author {
