@@ -16,7 +16,7 @@
     let error = false;
     let success = false;
     let avatar; 
-    let images =writable(["images/cat.png", "images/duck.png", "images/bunny.png", "images/squirrel.png", "images/bear.png", "images/penguin.png"])
+    let images =writable(["/images/cat.png", "/images/duck.png", "/images/bunny.png", "/images/squirrel.png", "/images/bear.png", "/images/penguin.png"])
     let selectedAvatar = "1";
   
     function setImage(imgurl1) {
