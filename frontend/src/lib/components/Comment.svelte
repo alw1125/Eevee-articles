@@ -14,7 +14,9 @@
   let commentForm = false;
 
   function commentChange(){
+    console.log(`before dispatch`);
     dispatch(`comment`);
+    console.log(`dispatched`);
   }
 
   async function deleteComment(comment_id) {
@@ -73,7 +75,7 @@
             ><i class="fa fa-mail-reply"></i></button
           >
           {#if comment.user_id == data.user.user_id || data.user.user_id == data.user_id || data.user.is_admin}
-            <button on:click={() => deleteComment(comment.comment_id)}>DELETE COMMENT</button>
+            <button on:click={() => deleteComment(comment.comment_id)}>Delete Comment</button>
             {#if error}<span class="error">Could not delete!</span>{/if}
             {#if success}<span class="success" id="success">Deleted!</span>{/if}
           {/if}
@@ -85,7 +87,7 @@
         {#if comment.children}
           <div class="nested-comments">
             {#each comment.children as child}
-              <svelte:self {data} comment={child} {article_id} />
+              <svelte:self on:comment={commentChange} {data} comment={child} {article_id} />
             {/each}
           </div>
         {/if}
@@ -113,12 +115,26 @@
     padding: 0;
   }
 
+  .error,
+  .success {
+    grid-column: 1 / 3;
+  }
+
+  .error,
+  .success {
+    font-weight: bold;
+    padding: 5px;
+    text-align: center;
+  }
+
   .error {
-    color: red;
+    color: darkred;
+    background-color: lightcoral;
   }
 
   .success {
-    color: green;
+    color: darkgreen;
+    background-color: lightgreen;
   }
 
   .btn {
