@@ -57,12 +57,38 @@
 
 <form on:submit|preventDefault={handleComment}>
   <textarea bind:value={desc} placeholder="Leave your comment here!"></textarea>
-  <button on:submit={handleComment}>Post!</button>
+  <button on:submit={handleComment} class="toggle-comments-btn">Post!</button>
   {#if error}<span class="error">Could not post!</span>{/if}
   {#if success}<span class="success" id="success">Posted!</span>{/if}
 </form>
 
 <style>
+
+.toggle-comments-btn {
+    width: 100%;
+    cursor: pointer;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    background-color: transparent;
+    border: 1px solid rgb(142, 142, 142);
+    border-radius: 4px;
+    padding: 3px 12px;
+    margin-right: 10px;
+    font: inherit;
+    outline: none;
+    transition:
+    background-color 0.3s,
+    color 0.3s,
+    transform 0.3s;
+}
+
+
+.toggle-comments-btn:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+    color: rgb(0, 0, 0);
+    transform: translateY(-2px);
+}
+  
   textarea {
     width: 100%;
     background: #f7f7f7;
@@ -83,6 +109,8 @@
     grid-column: 1 / 3;
   
   }
+
+  
 
   .error,
   .success {

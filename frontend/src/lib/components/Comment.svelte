@@ -105,9 +105,9 @@
   
     .comment {
       margin-bottom: 20px;
-      background-color: #f7f7f7;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      background-color: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
     }
   
     .comment-header {
@@ -125,7 +125,7 @@
   
     .comment-time {
       font-size: 0.8em;
-      color: #888;
+      color: #3e3e3e;
       margin-bottom: 10px;
       margin-left: 20px;
     }

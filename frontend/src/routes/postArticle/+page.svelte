@@ -132,7 +132,7 @@
   <textarea id='postText' bind:value={text} rows="12" required />
   
   <ImageUpload on:upload={handleUpload} />
-  <button type="submit" on:click = {getText}>Post!</button>
+  <button type="submit" on:click = {getText} class="toggle-comments-btn">Post!</button>
   {#if error}<span class="error">Could not save!</span>{/if}
   {#if success}<span class="success">Saved!</span>
   
@@ -143,6 +143,31 @@
 
 
 <style>
+
+  .toggle-comments-btn {
+    cursor: pointer;
+    color: rgb(224, 224, 224);
+    text-decoration: none;
+    background-color: transparent;
+    border: 1px solid rgb(142, 142, 142);
+    border-radius: 4px;
+    padding: 3px 12px;
+    margin-right: 10px;
+    font: inherit;
+    outline: none;
+    transition:
+    background-color 0.3s,
+    color 0.3s,
+    transform 0.3s;
+}
+
+
+.toggle-comments-btn:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+    color: white;
+    transform: translateY(-2px);
+}
+
   form {
     display: flex;
     width: 75%;
