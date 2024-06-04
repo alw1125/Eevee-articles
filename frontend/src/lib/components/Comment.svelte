@@ -14,15 +14,11 @@
   let commentForm = false;
 
   function commentChange(){
-    console.log(`before dispatch`);
     dispatch(`comment`);
-    console.log(`dispatched`);
   }
 
   async function deleteComment(comment_id) {
     let user_id = data.user.user_id;
-    console.log("login user");
-    console.log(user_id);
     let is_admin = data.user.is_admin;
 
     try {

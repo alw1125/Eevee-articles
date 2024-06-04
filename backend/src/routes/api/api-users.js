@@ -13,7 +13,6 @@ const router = express.Router();
  * info to req.user. So we just need to return that.
  */
 router.get("/me", requiresAuthentication, (req, res) => {
-  console.log(req.user);
   return res.json(req.user);
 });
 
@@ -41,7 +40,6 @@ router.patch("/me", requiresAuthentication, async (req, res) => {
 
 //Create new user
 router.post("/", async (req, res) => {
-  console.log(req.body);
   
   try{
     const created = createUser(req.body);

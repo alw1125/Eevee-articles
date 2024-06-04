@@ -32,7 +32,7 @@
   }
 
   function goBack() { setTimeout (()=> {
-    goto(`/newProfile`)
+    goto(`/profile`)
   }, 700); }
 
 

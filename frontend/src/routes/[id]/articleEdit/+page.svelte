@@ -37,7 +37,6 @@
   
 
   async function handleEdit() {
-    console.log(`handleEdit`)
     error = false;
     
     const response = await fetch(`${ART_URL}/${article_id}`, {

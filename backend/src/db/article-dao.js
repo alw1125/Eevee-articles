@@ -35,7 +35,6 @@ export async function getArticleByID(id){
 export async function deleteArticle(article_id, user_id) {
   const db = await getDatabase();
   const deleteComm = await db.run(`DELETE FROM Articles WHERE article_id = ? AND user_id = ?`, article_id, user_id);
-  console.log(deleteComm.changes);
   // Return true if changes applied, false otherwise
   return deleteComm.changes > 0;
 }
@@ -43,7 +42,6 @@ export async function deleteArticle(article_id, user_id) {
 export async function deleteArticleAsAdmin(article_id) {
   const db = await getDatabase();
   const deleteComm = await db.run(`DELETE FROM Articles WHERE article_id = ?`, article_id);
-  console.log(deleteComm.changes);
   // Return true if changes applied, false otherwise
   return deleteComm.changes > 0;
 }
