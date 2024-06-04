@@ -39,8 +39,7 @@ public class UserPanel extends JPanel implements ActionListener {
         back = new JButton("Go back");
 
         imgSprite = new JLabel();
-        String url = "http://localhost:3000" + user.getAvatar();
-        url.replaceAll("\\s+","");
+        String url = "http://localhost:3000/" + user.getAvatar();
         System.out.println(url);
         imgSprite.setIcon(new ImageIcon(new URL(url)));
         imgSprite.setBounds(10,10,100,100);

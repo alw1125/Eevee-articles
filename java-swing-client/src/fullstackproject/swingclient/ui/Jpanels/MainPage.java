@@ -100,11 +100,11 @@ public class MainPage extends JPanel implements ActionListener {
 
         this.removeAll();
         UserList preList= API.getInstance().getUserList();
-        if(preList ==null){
-            API.getInstance().logOut();
-            System.out.println("Logout successful");
-            reset();
-        }
+//        if(preList ==null){
+//            API.getInstance().logOut();
+//            System.out.println("Logout successful");
+//            reset();
+//        }
         list = preList;
 
        initTable();

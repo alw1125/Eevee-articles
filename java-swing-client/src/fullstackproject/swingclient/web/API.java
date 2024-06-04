@@ -88,12 +88,14 @@ public class API {
 
 
 
+
+
         List<User> users = JSONUtils.toList(responseJson, User.class);
         return new UserList(users);
     }
 
     public void removeUser(int userId) throws IOException, InterruptedException {
-//        String json = JSONUtils.toJSON(deleteQuery);
+
         String json = "{ \"user_id\": " + userId + " }";
 
         HttpRequest.Builder builder = HttpRequest.newBuilder()
