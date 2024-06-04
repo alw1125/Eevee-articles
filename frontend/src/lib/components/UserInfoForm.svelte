@@ -19,7 +19,7 @@
   let password = "";
   let error = false;
   let success = false;
-  let images =writable(["images/cat.png", "images/duck.png", "images/bunny.png", "images/squirrel.png", "images/bear.png", "images/penguin.png"])
+  let images =writable(["/images/cat.png", "/images/duck.png", "/images/bunny.png", "/images/squirrel.png", "/images/bear.png", "/images/penguin.png"])
 
   function setImage(imgurl1) {
       avatar=imgurl1;
