@@ -247,7 +247,7 @@
     padding-left: 15%;
     width: 100%;
     max-height: 70vh;
-    margin-top: 50px;
+    margin-top: 10px;
     overflow-y: auto;
     padding-right: 0px;
     margin-right: -200px;
