@@ -22,9 +22,8 @@
         article.text = decodeHtml(article.text);
         article.date = formatDate(article.date);
       });
-
       if (sortBy === "date") {
-        data.sort((a, b) => new Date(b.date) - new Date(a.date));
+        data.sort((a, b) => b.date.localeCompare(a.date));
       } else if (sortBy === "username") {
         data.sort((a, b) => a.username.localeCompare(b.username));
       } else if (sortBy === "title") {
@@ -184,6 +183,11 @@
 
   .article-title {
     font-size: 1.7em;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
   }
 

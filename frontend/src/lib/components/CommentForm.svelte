@@ -67,7 +67,8 @@
 <style>
   textarea {
     width: 100%;
-    background: rgb(236, 236, 222);
+    background: #f7f7f7;
+    border-radius: 6px;
   }
 
   form {
@@ -82,6 +83,7 @@
   .error,
   .success {
     grid-column: 1 / 3;
+  
   }
 
   .error,
@@ -89,6 +91,7 @@
     font-weight: bold;
     padding: 5px;
     text-align: center;
+    border-radius: 6px;
   }
 
   .error {

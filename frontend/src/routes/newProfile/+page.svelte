@@ -119,9 +119,6 @@
           <div class="profile-detail">
             <span class="detail-label">Description:</span> {data.user.desc}
           </div>
-          <div class="profile-detail">
-            <span class="detail-label">Avatar:</span> {data.user.avatar}
-          </div>
         </div>
         <div class="profile-actions">
           <button on:click={toggleEditMode}>Edit</button>
@@ -300,6 +297,11 @@
   
     .article-title{
       font-size: 1.9em;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   
     .article-date {
