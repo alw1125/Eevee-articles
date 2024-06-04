@@ -19,5 +19,5 @@ export function formatDate(dateString) {
                 dayOfMonth % 10 == 2 && dayOfMonth != 12 ? "nd" :
                 dayOfMonth % 10 == 3 && dayOfMonth != 13 ? "rd" : "th";
     
-    return `${day} the ${dayOfMonth}${suffix} of ${month}, ${year}`;
+    return `${day}, ${dayOfMonth}${suffix} of ${month}, ${year}`;
 }
