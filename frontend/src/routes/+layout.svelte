@@ -136,7 +136,7 @@
     width: 55px; 
     height: 55px; 
     cursor: pointer;
-    opacity: 0.5;
+    opacity: 0.8;
 }
 
 </style>
