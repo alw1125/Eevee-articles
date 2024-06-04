@@ -4,7 +4,7 @@
 </script>
 
 <svelte:head>
-  <title>ACNH Blog - Home</title>
+  <title>Eevee's Engineers</title>
 </svelte:head>
 
 
