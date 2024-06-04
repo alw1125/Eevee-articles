@@ -64,18 +64,16 @@
         width: '100%',
         height: 300,
         plugins: [
-          'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor', 'pagebreak',
+          'advlist', 'lists', 'charmap', 'anchor', 'pagebreak',
           'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 'fullscreen', 'insertdatetime',
-          'media', 'table', 'emoticons', 'help'
+           'table', 'emoticons'
         ],
         toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | ' +
-          'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
+          'bullist numlist outdent indent  | ' +
           'forecolor backcolor emoticons | help',
           
-        menu: {
-          favs: { title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons' }
-        },
-        menubar: 'favs file edit view insert format tools table help',
+        
+      
         content_css: '',
       });
 
@@ -134,7 +132,6 @@
   <textarea id='postText' bind:value={text} rows="12" required />
   
   <ImageUpload on:upload={handleUpload} />
-  <label for="imageLink" class = "dim-text">Your image link {image}</label>
   <button type="submit" on:click = {getText}>Post!</button>
   {#if error}<span class="error">Could not save!</span>{/if}
   {#if success}<span class="success">Saved!</span>
