@@ -40,22 +40,26 @@
 
   
 
-  async function handlePost() {
+  async function handleEdit() {
+    console.log(`handleEdit`)
     error = false;
     
-    const response = await fetch(ART_URL, {
-      method: "POST",
+    const response = await fetch(`${ART_URL}/${article_id}`, {
+      method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, image, imageWidth, imageHeight, text, user_id })
+      body: JSON.stringify({ title, image, imageWidth, imageHeight, user_id, text, article_id})
     });
 
     success = response.status === 204;
     error = !success;
 
-    if (success) invalidate(ART_URL);
-
-    goBack();
+    if (success) {
+         invalidate(ART_URL);
+         goBack();
+        }
   }
+  
+
   
   onMount(() => {
     
@@ -112,7 +116,7 @@
 
 
 
-<form on:submit|preventDefault={handlePost}>
+<form on:submit|preventDefault={handleEdit}>
   <div class="title-wrapper">
     <label for="title" class="article-text">Title:</label>
     <input type="text" name="title" bind:value={title} required />
