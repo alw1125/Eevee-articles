@@ -108,9 +108,9 @@
       getLikeCount();
       checkIfUserLiked();
       comments = await fetchComments(articleId);
-      console.log(comments);
     }
   });
+
   // delete
   async function deleteArticle() {
     let user_id = data.user.user_id;
@@ -163,9 +163,10 @@
   }
 
   function onComment(){
+    console.log(`before load`);
     setTimeout(async () => {
     comments = await fetchComments(articleId);
-    console.log(111);
+    console.log(`loading comments`);
   }, 1000);
   }
   
@@ -187,8 +188,8 @@
       <p class="article-date">{formatDate(data.date)}</p>
       {#if data.isLoggedIn}
         {#if data.user.user_id == data.user_id || data.user.is_admin}
-          <button type="button" on:click={deleteArticle}>DELETE ARTICLE</button>
-          <button on:click={goEdit}>edit</button>
+          <button type="button" on:click={deleteArticle}>Delete Article</button>
+          <button on:click={goEdit}>Edit</button>
         {/if}
         <link
           rel="stylesheet"
