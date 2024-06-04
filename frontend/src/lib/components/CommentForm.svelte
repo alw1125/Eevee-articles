@@ -18,8 +18,6 @@
   async function handleComment() {
     let user_id = data.user.user_id;
 
-    console.log(user_id);
-
     if (!desc.trim()) {
       error = true;
       return;
@@ -59,9 +57,9 @@
 
 <form on:submit|preventDefault={handleComment}>
   <textarea bind:value={desc} placeholder="Leave your comment here!"></textarea>
-  <button on:submit={handleComment}>Submit!</button>
-  {#if error}<span class="error">Could not save!</span>{/if}
-  {#if success}<span class="success" id="success">Saved!</span>{/if}
+  <button on:submit={handleComment}>Post!</button>
+  {#if error}<span class="error">Could not post!</span>{/if}
+  {#if success}<span class="success" id="success">Posted!</span>{/if}
 </form>
 
 <style>

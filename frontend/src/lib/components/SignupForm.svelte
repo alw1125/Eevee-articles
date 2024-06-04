@@ -88,214 +88,226 @@
     <title>Create Account</title>
   </svelte:head>
 
-  <div class="container">
+<div class="container">
   <form on:submit|preventDefault={handleSubmit}>
     <label for="firstName">First Name:</label>
-    <input type="text" name="firstName" bind:value={firstName} required/>
-  
+    <input type="text" name="firstName" bind:value={firstName} required />
+
     <label for="lastName">Last Name:</label>
-    <input type="text" name="lastName" bind:value={lastName} required/>
-  
+    <input type="text" name="lastName" bind:value={lastName} required />
+
     <label for="username">Username:</label>
-    <input type="text" name="username" id="username" on:blur={checkName} bind:value={username} required/>
+    <input
+      type="text"
+      name="username"
+      id="username"
+      on:blur={checkName}
+      bind:value={username}
+      required
+    />
     {#if username_error}
-    <span class = "error">{username_error}</span>
+      <span class="error">{username_error}</span>
     {/if}
-  
+
     <label for="password">Password:</label>
     <input type="password" name="password" bind:value={password} minlength="5" required />
-  
+
     <label for="confirmPassword">Confirm Password:</label>
-    <input type="password" name="confirmPassword" bind:value={confirmPassword} on:blur={checkPassword} required/>
+    <input
+      type="password"
+      name="confirmPassword"
+      bind:value={confirmPassword}
+      on:blur={checkPassword}
+      required
+    />
     {#if password_error}
-    <span class = "error">{password_error}</span>
+      <span class="error">{password_error}</span>
     {/if}
-  
+
     <label for="dob">Date of Birth:</label>
-    <input type="date" name="dob" bind:value={dob} required/>
-  
+    <input type="date" name="dob" bind:value={dob} required />
+
     <label for="description">Description (max 500 characters):</label>
-    <textarea name="description" bind:value={desc} on:input={adjustTextarea} maxlength="500" required></textarea>
-  
+    <textarea
+      name="description"
+      bind:value={desc}
+      on:input={adjustTextarea}
+      maxlength="500"
+      required
+    ></textarea>
+
     <label for="profileAvatar">Profile Avatar:</label>
     <div>
       <div>
-        {#each $images as imgurl1} 
-  
-        <label>
-          <input type="radio" name="profileAvatar" value="1"  on:click={() => setImage(imgurl1)} required />
-          <img src={imgurl1} alt="Profile Icon 1" />
-        </label>
-        
+        {#each $images as imgurl1}
+          <label>
+            <input
+              type="radio"
+              name="profileAvatar"
+              value="1"
+              on:click={() => setImage(imgurl1)}
+              required
+            />
+            <img src={imgurl1} alt="Profile Icon 1" />
+          </label>
         {/each}
-        <ImageUpload on:upload={handleUpload}/>
-        
-  
-    <button type="submit">Create Account</button>
-  
-    {#if error}
-      <span class="error">Could not create account, please try again.</span>
-    {/if}
+        <ImageUpload on:upload={handleUpload} />
+
+        <button type="submit">Create Account</button>
+
+        {#if error}
+          <span class="error">Could not create account, please try again.</span>
+        {/if}
+      </div>
+    </div>
   </form>
+</div>
 
-  </div>
-  
-  <style>
+<style>
+  h1 {
+    text-align: center;
+  }
 
+  form {
+    margin: auto;
+    max-width: 500px;
+    border: 2px solid #4caf50;
+    border-radius: 10px;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 20px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    max-height: 90vh;
+    overflow-y: auto;
+  }
 
-
-
-    h1 {
-        text-align: center;
-      }
-      
-    form {
-      margin: auto;
-      max-width: 500px;
-      border: 2px solid #4caf50;
-      border-radius: 10px;
-      padding: 20px;
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 20px;
-      background-color: rgba(255, 255, 255, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-
-    
   ::-webkit-scrollbar {
-    width: 6px; 
+    width: 6px;
   }
 
-  
   ::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1); 
-    border-radius: 8px; 
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
   }
 
-  
   ::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.3);
-    border-radius: 8px; 
+    border-radius: 8px;
   }
 
-  
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.5); 
+    background: rgba(255, 255, 255, 0.5);
   }
 
-  
-    input[type="text"],
-    textarea {
-      width: 100%;
-      padding: 5px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      box-sizing: border-box;
-      margin-bottom: 5px;
-      font-size: 14px;
-      transition: border-color 0.3s ease;
-    }
-  
-    input[type="text"]:focus,
-    textarea:focus {
-      border-color: #555555;
-      outline: none;
-    }
-    
-  
-    input[type="password"],
-    textarea {
-      width: 100%;
-      padding: 5px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      box-sizing: border-box;
-      margin-bottom: 5px;
-      font-size: 14px;
-      transition: border-color 0.3s ease;
-    }
-  
-    input[type="text"]:focus,
-    textarea:focus {
-      border-color: #555555;
-      outline: none;
-    }
-  
-    input[type="date"],
-    textarea {
-      width: 100%;
-      padding: 5px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      box-sizing: border-box;
-      margin-bottom: 5px;
-      transition: border-color 0.3s ease;
-    }
-    
-    input[type="date"]:focus,
-    textarea:focus {
-      border-color: #555555;
-      outline: none;
-    }
-  
-    button {
-      padding: 10px 20px;
-      border: none;
-      background-color:  rgba(66, 66, 66, 0.4);
-      border: 1px solid rgb(142, 142, 142);
-      border-radius: 4px;
-      color: #fff;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-  
-    button:hover {
-      background-color: rgba(66, 66, 66, 0.8);
-    }
-  
-    .error {
-      grid-column: 1 / 3;
-      font-weight: bold;
-      color: #ff6347;
-      background-color: #ffe4e1;
-      padding: 10px;
-      text-align: center;
-      border-radius: 5px;
-    }
-  
-    textarea {
-      resize: vertical;
-    }
-  
-    label {
-      display: block;
-      margin-bottom: 5px;
-    }
-  
-    div {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-  
-    img {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-  
-    input[type="radio"] {
-      display: none;
-    }
-  
-    input[type="radio"]:checked + img {
-      transform: scale(1.1);
-    }
-  </style>
-  
+  input[type="text"],
+  textarea {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+  }
+
+  input[type="text"]:focus,
+  textarea:focus {
+    border-color: #555555;
+    outline: none;
+  }
+
+  input[type="password"],
+  textarea {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+  }
+
+  input[type="text"]:focus,
+  textarea:focus {
+    border-color: #555555;
+    outline: none;
+  }
+
+  input[type="date"],
+  textarea {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+    transition: border-color 0.3s ease;
+  }
+
+  input[type="date"]:focus,
+  textarea:focus {
+    border-color: #555555;
+    outline: none;
+  }
+
+  button {
+    padding: 10px 20px;
+    border: none;
+    background-color: rgba(66, 66, 66, 0.4);
+    border: 1px solid rgb(142, 142, 142);
+    border-radius: 4px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: rgba(66, 66, 66, 0.8);
+  }
+
+  .error {
+    grid-column: 1 / 3;
+    font-weight: bold;
+    color: #ff6347;
+    background-color: #ffe4e1;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  input[type="radio"] {
+    display: none;
+  }
+
+  input[type="radio"]:checked + img {
+    transform: scale(1.1);
+  }
+</style>

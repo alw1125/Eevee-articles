@@ -12,10 +12,8 @@ router.post("/", async (req, res) => {
     let article_id = req.body.article_id;
     let date = new Date().toISOString().slice(0, 10);
     let time = new Date().toISOString().slice(11, 19);
-    console.log(desc, user_id, date, time);
 
     const posted = postComment(desc, date, time, user_id, article_id, parent_comment_id);
-    console.log(posted);
     return res.sendStatus(posted ? 204 : 404);
   } catch (error){
     console.error("Post comment error:", error);
@@ -27,7 +25,6 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const allComments = await getAllComments();
-    console.log("Fetched comments:", allComments);
     return res.json(allComments);
   } catch (error) {
     console.error("Error fetching comments:", error);
@@ -45,9 +42,6 @@ router.delete("/:comment_id", async (req, res) => {
 
     let is_artAuth = await isArticleAuth(article_id, user_id);
     let is_commentAuth = await isCommentAuth(comment_id, user_id);
-
-    console.log(is_artAuth);
-    console.log(is_commentAuth);
 
     if(is_artAuth){
       deleted = await deleteComment(comment_id);

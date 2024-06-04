@@ -1,4 +1,4 @@
-# Final project - A personal blogging system - {GROUP_NAME}
+# Final project - A personal blogging system - {EEVEE ENGINEERS}
 
 This repository contains a starting point for your team's final project.
 
@@ -17,8 +17,21 @@ Extensions to install:
 
 Commands to run before commits:
 
-- In Backend `npm run format` to double check code is formatted
-- In Frontend `npm run format` to double check code is formatted
+- In Backend:
+    - `npm run format` to double check code is formatted
+    - `npm install svelte-collapsible`
+    - `npm install express multer`
+    - `npm install @tinymce/tinymce-svelte`
+- In Frontend:
+    - `npm run format` to double check code is formatted
+    - `npm install svelte-collapsible`
+    - `npm install form-data`
+    - `npm install @tinymce/tinymce-svelte`
+
+    admin   username: johndoe 
+            password: password123
+    non-admin   username: alicew
+                password: password123
 
 All commits MUST have a brief descriptive message
 

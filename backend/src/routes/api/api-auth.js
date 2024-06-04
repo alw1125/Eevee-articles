@@ -11,7 +11,6 @@ const handleLogin = async (req, res) => {
   const userNameValid = await getUserWithUsername (username)
   if (!userNameValid) return res.sendStatus(401);
   const userValid = await getUserWithCredentials(username, password);
-  console.log(userValid);
   if (!userValid) {
     return res.sendStatus(401);
   } 
