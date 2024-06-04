@@ -147,8 +147,6 @@
     </button>
   {/each}
 </div>
-{:else}
-  <p>No user articles found.</p>
 {/if}
 </div>
 

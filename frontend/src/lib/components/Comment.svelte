@@ -184,6 +184,7 @@
   
     .nested-comments {
       margin-top: 10px;
+      margin-left: 15px;
     }
   </style>
   
