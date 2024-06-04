@@ -1,6 +1,14 @@
 <script>
   import { COMMENTS_URL } from "$lib/js/api-urls";
+  import { createEventDispatcher } from "svelte";
+
   export let data, article_id, parent_comment_id;
+
+  const dispatch = createEventDispatcher();
+
+  function commentChange(){
+    dispatch(`comment`);
+  }
 
   let desc;
 
@@ -12,8 +20,9 @@
 
     console.log(user_id);
 
-    if (!user_id) {
+    if (!desc.trim()) {
       error = true;
+      return;
     } else {
       try {
         const response = await fetch(COMMENTS_URL, {
@@ -24,12 +33,23 @@
 
         if (response.status === 204) {
           success = true;
+          desc = "";
+          commentChange();
+          setTimeout(() => {
+          success = false;
+        }, 1000);
         } else {
           error = true;
+          desc = "";
+          
+          setTimeout(() => {
+          error = false;
+        }, 1000);
         }
       } catch (error) {
         console.error("Error posting comment: ", error);
         error = true;
+        desc = "";
       }
     }
   }
