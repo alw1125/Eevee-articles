@@ -4,7 +4,7 @@
 </script>
 
 <svelte:head>
-  <title>Authentication lab - Home</title>
+  <title>ACNH Blog - Home</title>
 </svelte:head>
 
 
