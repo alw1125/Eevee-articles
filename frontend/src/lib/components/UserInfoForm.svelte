@@ -67,7 +67,7 @@
   <label for="dob">Date of birth:</label>
   <input type="date" name="dob" bind:value={dob} required />
   <label for="password">Password:</label>
-  <input type="text" name="password" bind:value={password} required />
+  <input type="text" name="password" bind:value={password} minlength="5" required />
   <textarea bind:value={desc} rows="12" required />
 
   <label for="profileAvatar">Profile Avatar:</label>

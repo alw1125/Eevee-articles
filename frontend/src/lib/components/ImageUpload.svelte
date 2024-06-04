@@ -52,7 +52,6 @@
 
 .article-text{
 color: white;
-
 }
 
   </style>
